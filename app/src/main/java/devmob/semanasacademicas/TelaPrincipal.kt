@@ -18,11 +18,6 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_tela_principal)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
@@ -30,6 +25,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+        nav_view.setCheckedItem(R.id.nav_eventos)
     }
 
     override fun onBackPressed() {
@@ -59,22 +55,22 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
-            }
-            R.id.nav_gallery -> {
+            R.id.nav_eventos -> {
 
             }
-            R.id.nav_slideshow -> {
+            R.id.nav_agenda -> {
 
             }
-            R.id.nav_manage -> {
+            R.id.nav_historico-> {
 
             }
-            R.id.nav_share -> {
+            R.id.nav_sorteio -> {
 
             }
-            R.id.nav_send -> {
+            R.id.nav_config -> {
+
+            }
+            R.id.nav_ajuda -> {
 
             }
         }

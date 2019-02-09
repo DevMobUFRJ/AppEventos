@@ -9,6 +9,11 @@
         tools:showIn="@layout/app_bar_tela_principal"
         tools:context=".TelaPrincipal">
 
+    <include
+            layout="@layout/card_semana"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

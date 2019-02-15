@@ -10,16 +10,25 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_tela_de_evento.*
 import kotlinx.android.synthetic.main.app_bar_tela_de_evento.*
+import kotlinx.android.synthetic.main.content_tela_de_evento.*
 
 class TelaDeEvento : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var evento: Evento
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_de_evento)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        evento = intent?.extras!!.get("EVENTO") as Evento
+
+        nomeEvento.text = evento.nome
+        descricaoEvento.text = evento.descricao
+        periodoEvento.text = evento.periodo()
+
+        fab.setOnClickListener {
+            Snackbar.make(it, evento.nome, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
@@ -30,6 +39,7 @@ class TelaDeEvento : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+        nav_view.setCheckedItem(R.id.nav_eventos)
     }
 
     override fun onBackPressed() {

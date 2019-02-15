@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_tela_de_evento"
-            app:menu="@menu/activity_tela_de_evento_drawer"/>
+            app:headerLayout="@layout/nav_header_tela_principal"
+            app:menu="@menu/activity_tela_principal_drawer"/>
 
 </android.support.v4.widget.DrawerLayout>

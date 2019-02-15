@@ -1,17 +1,28 @@
 package devmob.semanasacademicas
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_tela_principal.*
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
+import kotlinx.android.synthetic.main.content_tela_principal.*
+import java.util.*
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+    val eventos = mutableListOf<Evento>()
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +37,30 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.setCheckedItem(R.id.nav_eventos)
+
+        viewAdapter = ListaDeEventosAdapter(eventos)
+        viewManager = LinearLayoutManager(this)
+
+        recyclerView = lista.apply {
+            setHasFixedSize(false)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+
+        db.collection("semanas")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("alexlindo", document.toObject(Evento::class.java).toString())
+                    eventos += document.toObject(Evento::class.java)
+                }
+                viewAdapter.notifyDataSetChanged()
+
+            }
+            .addOnFailureListener { exception ->
+                Log.w("alexlindo", "Error getting documents.", exception)
+            }
+
     }
 
     override fun onBackPressed() {

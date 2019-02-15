@@ -14,24 +14,32 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <ImageView
+
+        <TextView
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dataPagPrincipal"
+                android:textSize="12sp"/>
+        <TextView
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nomePagPrincipal"
+                android:textSize="24sp"/>
+        <TextView
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/descPagPrincipal"
+                android:textSize="17sp"/>
+        <Button
+                android:text="Abrir Evento"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" tools:srcCompat="@tools:sample/backgrounds/scenic[0]"
-                android:id="@+id/imageView3"/>
-        <TextView
-                android:layout_marginLeft="20dp"
-                android:text="27 A 31 DE OUTUBRO"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView1"
-                android:textSize="10dp"/>
-        <TextView
-                android:layout_marginLeft="20dp"
-                android:text="27 A 31 DE OUTUBRO"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView2"
-                android:textSize="10dp"/>
+                android:id="@+id/botaoAbrirEvento"/>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

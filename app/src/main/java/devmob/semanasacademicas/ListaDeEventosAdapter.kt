@@ -14,6 +14,8 @@ import android.support.design.widget.Snackbar
 class ListaDeEventosAdapter(private val eventos:MutableList<Evento>):RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
+        DownloadImage(p0.imageView).execute(eventos[p1].link)
+
         p0.nome.text = eventos[p1].nome
         p0.descricao.text = eventos[p1].descricao
         p0.periodo.text = eventos[p1].periodo()
@@ -34,5 +36,6 @@ class ListaDeEventosAdapter(private val eventos:MutableList<Evento>):RecyclerVie
         val descricao = itemView.descPagPrincipal!!
         val periodo = itemView.dataPagPrincipal!!
         val botao = itemView.botaoAbrirEvento!!
+        val imageView = itemView.imageView2!!
     }
 }

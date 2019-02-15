@@ -3,13 +3,12 @@ package devmob.semanasacademicas
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.firebase.Timestamp
-import java.io.Serializable
-import java.util.*
 
 data class Evento (
     var nome:String = "",
     var descricao:String = "",
     var link:String = "",
+    var id:String = "",
     var inicio: Timestamp = Timestamp.now(),
     var fim: Timestamp = Timestamp.now()
 ):Parcelable {
@@ -17,6 +16,7 @@ data class Evento (
     fun periodo() = inicio.toDate().toString()
 
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -30,6 +30,7 @@ data class Evento (
         parcel.writeString(nome)
         parcel.writeString(descricao)
         parcel.writeString(link)
+        parcel.writeString(id)
         parcel.writeParcelable(inicio, flags)
         parcel.writeParcelable(fim, flags)
     }

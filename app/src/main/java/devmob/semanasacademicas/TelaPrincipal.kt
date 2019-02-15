@@ -48,11 +48,13 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
 
         db.collection("semanas")
+            .orderBy("inicio")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d("alexlindo", document.toObject(Evento::class.java).toString())
-                    eventos += document.toObject(Evento::class.java)
+                    val temp = document.toObject(Evento::class.java)
+                    temp.id = document.id
+                    eventos += temp
                 }
                 viewAdapter.notifyDataSetChanged()
 
@@ -60,7 +62,6 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             .addOnFailureListener { exception ->
                 Log.w("alexlindo", "Error getting documents.", exception)
             }
-
     }
 
     override fun onBackPressed() {
@@ -96,7 +97,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             R.id.nav_agenda -> {
 
             }
-            R.id.nav_historico-> {
+            R.id.nav_historico -> {
 
             }
             R.id.nav_sorteio -> {

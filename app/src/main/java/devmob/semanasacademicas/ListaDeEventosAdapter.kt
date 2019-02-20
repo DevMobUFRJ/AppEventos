@@ -20,9 +20,11 @@ class ListaDeEventosAdapter(private val eventos:MutableList<Evento>):RecyclerVie
         p0.descricao.text = eventos[p1].descricao
         p0.periodo.text = eventos[p1].periodo()
         p0.botao.setOnClickListener {
+
             val intent = Intent(it.context, TelaDeEvento::class.java)
             intent.putExtra("EVENTO",eventos[p1])
             it.context.startActivity(intent)
+
         }
     }
 

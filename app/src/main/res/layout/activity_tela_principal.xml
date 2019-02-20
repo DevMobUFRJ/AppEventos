@@ -9,6 +9,12 @@
         android:fitsSystemWindows="true"
         tools:openDrawer="start">
 
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/contentHome">
+    </FrameLayout>
+
     <include
             layout="@layout/app_bar_tela_principal"
             android:layout_width="match_parent"

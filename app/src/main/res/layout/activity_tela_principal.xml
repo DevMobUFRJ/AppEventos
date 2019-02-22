@@ -28,6 +28,10 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_header_tela_principal"
+            app:itemIconTint="@drawable/drawer_item_selector"
+            app:itemTextColor="@drawable/drawer_item_selector"
+            app:itemBackground="@android:color/white"
+            android:backgroundTint="@android:color/white"
             app:menu="@menu/activity_tela_principal_drawer"/>
 
 </android.support.v4.widget.DrawerLayout>

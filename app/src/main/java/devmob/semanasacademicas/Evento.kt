@@ -5,10 +5,10 @@ import android.os.Parcelable
 import com.google.firebase.Timestamp
 
 data class Evento (
-    var nome:String = "",
-    var descricao:String = "",
-    var link:String = "",
-    var id:String = "",
+    var nome: String = "",
+    var descricao: String = "",
+    var link: String = "",
+    var id: String = "",
     var inicio: Timestamp = Timestamp.now(),
     var fim: Timestamp = Timestamp.now()
 ):Parcelable {

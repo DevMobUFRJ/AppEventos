@@ -47,7 +47,7 @@ class FragmentTelaPrincipal : Fragment() {
 
 
 
-
+        eventos.clear()
         db.collection("semanas")
             .orderBy("inicio")
             .get()

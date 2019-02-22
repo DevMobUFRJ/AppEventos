@@ -3,6 +3,7 @@ package devmob.semanasacademicas
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.firebase.Timestamp
+import java.util.*
 
 data class Evento (
     var nome: String = "",
@@ -14,6 +15,19 @@ data class Evento (
 ):Parcelable {
 
     fun periodo() = inicio.toDate().toString()
+
+    //dar um jeito nessa gambiarra
+    fun dias(): List<Date>{
+        var ms_in_day = 24 * 60 * 60 *1000
+        var lista = mutableListOf<Date>()
+        var i = inicio
+        var ultimoDia = fim
+        while (!i.toDate().after(ultimoDia.toDate())){
+            lista.add(i.toDate())
+            i = Timestamp(Date((i.seconds*1000) + ms_in_day))
+        }
+        return lista
+    }
 
     constructor(parcel: Parcel) : this(
         parcel.readString(),

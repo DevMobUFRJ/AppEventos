@@ -24,6 +24,11 @@
                 android:label="@string/title_activity_tela_de_evento"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+                android:name=".AtividadesActivity"
+                android:label="@string/title_activity_atividades"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

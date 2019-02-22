@@ -51,6 +51,7 @@
                 android:orientation="horizontal">
 
             <Button
+                    android:id="@+id/btnProgramacao"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -58,6 +59,7 @@
                     android:layout_marginLeft="30dp"
                     android:text="Programacao"/>
             <Button
+                    android:id="@+id/btnWorkshops"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -72,6 +74,7 @@
                 android:layout_height="200dp"
                 android:orientation="horizontal">
             <Button
+                    android:id="@+id/btnPalestras"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -79,6 +82,7 @@
                     android:layout_marginLeft="30dp"
                     android:text="Palestras"/>
             <Button
+                    android:id="@+id/btnLoja"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

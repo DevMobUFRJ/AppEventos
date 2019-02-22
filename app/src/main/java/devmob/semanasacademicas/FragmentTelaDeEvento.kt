@@ -1,5 +1,6 @@
 package devmob.semanasacademicas
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -30,6 +31,13 @@ class FragmentTelaDeEvento : Fragment() {
         periodoEvento.text = if (mesFim == mesInicio) "$diaInicio a $diaFim de ${meses[mesInicio]}" else "$diaInicio de ${meses[mesInicio]} a $diaFim de ${meses[mesFim]}"
         nomeEvento.text = evento.nome
         descricaoEvento.text = evento.descricao
+
+        btnProgramacao.setOnClickListener {
+            val intent = Intent(this.context, AtividadesActivity::class.java)
+            intent.putExtra("EVENTO",evento)
+            this.context!!.startActivity(intent)
+        }
+
 
 
     }

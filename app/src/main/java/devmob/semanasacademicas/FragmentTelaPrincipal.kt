@@ -11,10 +11,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_tela_principal.*
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
+import kotlinx.android.synthetic.main.card_semana.*
 import kotlinx.android.synthetic.main.content_tela_principal.*
+import org.jetbrains.anko.sdk27.coroutines.onClick
+import org.jetbrains.anko.support.v4.toast
 import java.util.*
 
 class FragmentTelaPrincipal : Fragment() {
@@ -38,8 +42,11 @@ class FragmentTelaPrincipal : Fragment() {
         recyclerView = lista.apply {
             setHasFixedSize(false)
             layoutManager = viewManager
-            adapter = viewAdapter
+            adapter= viewAdapter
         }
+
+
+
 
         db.collection("semanas")
             .orderBy("inicio")
@@ -56,6 +63,7 @@ class FragmentTelaPrincipal : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w("alexlindo", "Error getting documents.", exception)
             }
+
 
 
     }

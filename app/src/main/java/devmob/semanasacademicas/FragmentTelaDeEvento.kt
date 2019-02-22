@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.content_tela_de_evento.*
 
 class FragmentTelaDeEvento : Fragment() {
 
@@ -14,6 +15,12 @@ class FragmentTelaDeEvento : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //AQUI VAI O CODIGO
+        //pega o evento
+        var bundle = arguments
+        var evento = bundle!!.getParcelable<Evento>("EVENTO")
+
+        nomeEvento.text = evento.nome
+        descricaoEvento.text = evento.descricao
+
     }
 }

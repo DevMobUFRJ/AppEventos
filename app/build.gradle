@@ -41,4 +41,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:18.0.1'
 }
 
+androidExtensions {
+    experimental = true
+}
+
 apply plugin: 'com.google.gms.google-services'

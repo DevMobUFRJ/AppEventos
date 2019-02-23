@@ -9,16 +9,21 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.firestore.FirebaseFirestore
 
 import kotlinx.android.synthetic.main.activity_atividades.*
+import kotlinx.android.synthetic.main.fragment_atividades.*
 import kotlinx.android.synthetic.main.fragment_atividades.view.*
 import org.jetbrains.anko.toast
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.stream.Stream
 
 class AtividadesActivity : AppCompatActivity() {
 
@@ -33,25 +38,14 @@ class AtividadesActivity : AppCompatActivity() {
 
     lateinit var evento: Evento
 
-    fun Date.dayOfWeek(): String{
-        return when (this.day){
-            0 -> "DOM"
-            1 -> "SEG"
-            2 -> "TER"
-            3 -> "QUA"
-            4 -> "QUI"
-            5 -> "SEX"
-            6 -> "SAB"
-            else -> "err"
-        }
-    }
-
     private fun addTab(title: String) {
         tabs.addTab(tabs.newTab().setText(title))
         mSectionsPagerAdapter!!.addTabPage(title)
     }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
+
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,16 +63,29 @@ class AtividadesActivity : AppCompatActivity() {
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
         evento = intent?.extras!!.get("EVENTO") as Evento
+        db.collection("semanas").document(evento.id).collection("atividades")
+            .orderBy("inicio")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.w("alexlindo", document.toString())
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("alexlindo", "Error getting documents.", exception)
+            }
+
+
 
         fab.setOnClickListener { view ->
             var lista = mutableListOf<String>()
             for (dia in evento.dias())
-            lista.add("${dia.date} ${dia.dayOfWeek()}")
+            lista.add(SimpleDateFormat("dd EE", Locale("pt", "BR")).format(dia.time))
             toast(lista.toString())
         }
 
         for (dia in evento.dias()){
-            addTab("${dia.date} ${dia.dayOfWeek()}")
+            addTab(SimpleDateFormat("dd EE", Locale("pt", "BR")).format(dia.time).toUpperCase())
         }
 
     }

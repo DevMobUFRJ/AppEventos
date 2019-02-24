@@ -41,6 +41,19 @@ class FragmentTelaDeEvento : Fragment() {
         btnProgramacao.setOnClickListener {
             val intent = Intent(this.context, AtividadesActivity::class.java)
             intent.putExtra("EVENTO",evento)
+            intent.putExtra("TIPO", "todos")
+            this.context!!.startActivity(intent)
+        }
+        btnWorkshops.setOnClickListener {
+            val intent = Intent(this.context, AtividadesActivity::class.java)
+            intent.putExtra("EVENTO",evento)
+            intent.putExtra("TIPO", "workshop")
+            this.context!!.startActivity(intent)
+        }
+        btnPalestras.setOnClickListener {
+            val intent = Intent(this.context, AtividadesActivity::class.java)
+            intent.putExtra("EVENTO",evento)
+            intent.putExtra("TIPO", "palestra")
             this.context!!.startActivity(intent)
         }
 

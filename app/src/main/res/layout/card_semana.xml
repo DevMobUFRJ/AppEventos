@@ -25,12 +25,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dataPagPrincipal"
+                android:text="data"
                 android:textSize="12sp"/>
         <TextView
                 android:layout_marginStart="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/nomePagPrincipal"
+                android:text="nome"
                 android:textSize="24sp"/>
         <TextView
                 android:layout_marginStart="20dp"
@@ -38,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/descPagPrincipal"
+                android:text="descricao"
                 android:textSize="17sp"/>
         <Button
                 android:text="Abrir Evento"

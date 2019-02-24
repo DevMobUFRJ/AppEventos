@@ -16,7 +16,7 @@ import android.support.v7.app.AppCompatActivity
 
 
 
-class ListaDeEventosAdapter(private val eventos:MutableList<Evento>): RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
+class ListaDeEventosAdapter(private val eventos: MutableList<Evento>): RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         DownloadImage(p0.imageView).execute(eventos[p1].link)

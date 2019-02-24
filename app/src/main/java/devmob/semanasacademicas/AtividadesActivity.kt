@@ -63,12 +63,30 @@ class AtividadesActivity : AppCompatActivity() {
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
         evento = intent?.extras!!.get("EVENTO") as Evento
+        var tipoAtividades = intent?.extras!!.get("TIPO") as String //pega quais atividades deve mostrar na pagina
+
+        val atividades = mutableListOf<Atividade>()
+
         db.collection("semanas").document(evento.id).collection("atividades")
             .orderBy("inicio")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.w("alexlindo", document.toString())
+                    //Log.w("alexlindo", document.toString())
+                    val temp = document.toObject(Atividade::class.java)
+                    temp.id = document.id
+                    atividades.add(temp)
+                }
+                for (dia in evento.dias()){
+                    var bool = false
+                    atividades.forEach {
+                        if (it.inicio.toDate().date == dia.time.date && (tipoAtividades == it.tipo) || (tipoAtividades == "todos")){
+                            bool = true
+                        }
+                    }
+                    if (bool) {
+                        addTab(SimpleDateFormat("dd EE", Locale("pt", "BR")).format(dia.time).toUpperCase())
+                    }
                 }
             }
             .addOnFailureListener { exception ->
@@ -84,9 +102,11 @@ class AtividadesActivity : AppCompatActivity() {
             toast(lista.toString())
         }
 
+        /* TIREI DAQUI PRA NAO ADICIONAR DIAS QUE NAO TEM NADA
         for (dia in evento.dias()){
             addTab(SimpleDateFormat("dd EE", Locale("pt", "BR")).format(dia.time).toUpperCase())
         }
+        */
 
     }
 

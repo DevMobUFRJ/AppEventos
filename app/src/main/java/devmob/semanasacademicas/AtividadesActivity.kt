@@ -15,7 +15,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 import kotlinx.android.synthetic.main.activity_atividades.*
 import kotlinx.android.synthetic.main.fragment_atividades.*
@@ -24,6 +26,7 @@ import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Stream
+import kotlin.collections.HashMap
 
 class AtividadesActivity : AppCompatActivity() {
 
@@ -37,10 +40,11 @@ class AtividadesActivity : AppCompatActivity() {
      */
 
     lateinit var evento: Evento
+    val atividades = HashMap<String, ArrayList<Atividade>>()
 
     private fun addTab(title: String) {
         tabs.addTab(tabs.newTab().setText(title))
-        mSectionsPagerAdapter!!.addTabPage(title)
+        mSectionsPagerAdapter!!.tabItems.add(title)
     }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
@@ -63,31 +67,28 @@ class AtividadesActivity : AppCompatActivity() {
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
         evento = intent?.extras!!.get("EVENTO") as Evento
-        var tipoAtividades = intent?.extras!!.get("TIPO") as String //pega quais atividades deve mostrar na pagina
+        val tipo = intent?.extras!!.get("TIPO") as String //pega quais atividades deve mostrar na pagina
 
-        val atividades = mutableListOf<Atividade>()
+        val referencia = db.collection("semanas").document(evento.id).collection("atividades")
 
-        db.collection("semanas").document(evento.id).collection("atividades")
-            .orderBy("inicio")
-            .get()
+        when(tipo){
+            "workshop", "palestra"  -> referencia.whereEqualTo("tipo", tipo)
+            else-> referencia
+        }.get()
             .addOnSuccessListener { result ->
+                Log.e("sei", "la")
                 for (document in result) {
-                    //Log.w("alexlindo", document.toString())
                     val temp = document.toObject(Atividade::class.java)
                     temp.id = document.id
-                    atividades.add(temp)
-                }
-                for (dia in evento.dias()){
-                    var bool = false
-                    atividades.forEach {
-                        if (it.inicio.toDate().date == dia.time.date && (tipoAtividades == it.tipo) || (tipoAtividades == "todos")){
-                            bool = true
+                    temp.inicio.formataSemana().let {
+                        if(it !in atividades){
+                            atividades[it] = ArrayList()
+                            addTab(it)
                         }
-                    }
-                    if (bool) {
-                        addTab(SimpleDateFormat("dd EE", Locale("pt", "BR")).format(dia.time).toUpperCase())
+                        atividades[it]!!.add(temp)
                     }
                 }
+                mSectionsPagerAdapter!!.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
                 Log.w("alexlindo", "Error getting documents.", exception)
@@ -96,7 +97,7 @@ class AtividadesActivity : AppCompatActivity() {
 
 
         fab.setOnClickListener { view ->
-            var lista = mutableListOf<String>()
+            val lista = mutableListOf<String>()
             for (dia in evento.dias())
             lista.add(SimpleDateFormat("dd EE", Locale("pt", "BR")).format(dia.time))
             toast(lista.toString())
@@ -139,21 +140,11 @@ class AtividadesActivity : AppCompatActivity() {
 
         var tabItems = mutableListOf<String>()
 
-        override fun getItem(position: Int): Fragment {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1)
-        }
+        override fun getItem(position: Int) = PlaceholderFragment.newInstance(position, atividades[tabItems[position]]!!)
 
-        override fun getCount(): Int {
-            // Show 3 total pages.
-            return tabItems.size
-        }
+        override fun getCount() = tabItems.size
 
-        fun addTabPage(title: String) {
-            tabItems.add(title)
-            notifyDataSetChanged()
-        }
+        override fun getItemPosition(obj: Any) = POSITION_NONE
 
     }
 
@@ -168,7 +159,8 @@ class AtividadesActivity : AppCompatActivity() {
             savedInstanceState: Bundle?
         ): View? {
             val rootView = inflater.inflate(R.layout.fragment_atividades, container, false)
-            rootView.section_label.text = getString(R.string.section_format, arguments?.getInt(ARG_SECTION_NUMBER))
+            val a = arguments!!.getParcelableArrayList<Atividade>(ARG_LISTA_ATIVIDADES)
+            rootView.section_label.text = a!!.toString()
             return rootView
         }
 
@@ -178,15 +170,17 @@ class AtividadesActivity : AppCompatActivity() {
              * fragment.
              */
             private val ARG_SECTION_NUMBER = "section_number"
+            private val ARG_LISTA_ATIVIDADES ="lista_de_atividades"
 
             /**
              * Returns a new instance of this fragment for the given section
              * number.
              */
-            fun newInstance(sectionNumber: Int): PlaceholderFragment {
+            fun newInstance(sectionNumber: Int, atividadesDoDia: ArrayList<Atividade>): PlaceholderFragment {
                 val fragment = PlaceholderFragment()
                 val args = Bundle()
                 args.putInt(ARG_SECTION_NUMBER, sectionNumber)
+                args.putParcelableArrayList(ARG_LISTA_ATIVIDADES, atividadesDoDia)
                 fragment.arguments = args
                 return fragment
             }

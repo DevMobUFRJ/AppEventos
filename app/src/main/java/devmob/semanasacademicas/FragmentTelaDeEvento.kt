@@ -57,5 +57,10 @@ class FragmentTelaDeEvento : Fragment() {
             this.context!!.startActivity(intent)
         }
 
+        btnLoja.setOnClickListener {
+            val intent = Intent(this.context, Loja::class.java)
+            intent.putExtra("EVENTO",evento)
+            this.context!!.startActivity(intent)
+        }
     }
 }

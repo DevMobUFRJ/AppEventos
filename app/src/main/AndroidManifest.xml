@@ -31,6 +31,8 @@
         </activity>
         <activity android:name=".DetalhesAtividade">
         </activity>
+        <activity android:name=".Loja">
+        </activity>
     </application>
 
 </manifest>

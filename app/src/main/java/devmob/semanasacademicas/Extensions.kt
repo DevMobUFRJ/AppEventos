@@ -11,3 +11,5 @@ fun Timestamp.formataDia() = SimpleDateFormat("dd MMMM',' EE ", Locale("pt", "BR
 fun Timestamp.formataHora() = SimpleDateFormat("HH:mm", Locale("pt", "BR")).format(this.toDate())
 
 fun Timestamp.formataSemana() = SimpleDateFormat("dd EE", Locale("pt", "BR")).format(this.toDate()).toUpperCase()
+
+fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)

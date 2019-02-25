@@ -1,5 +1,6 @@
 package devmob.semanasacademicas
 
+import android.content.Intent
 import android.support.design.widget.TabLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -168,6 +169,9 @@ class AtividadesActivity : AppCompatActivity() {
                 it.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
                     val atividade = atividadesPorHora[listaDeHorarios[groupPosition]]!![childPosition]
                     Log.e("alexlindo", atividade.toString())
+                    val intent = Intent(it.context, DetalhesAtividade::class.java)
+                    intent.putExtra("ATIVIDADE",atividade)
+                    it.context.startActivity(intent)
                     true
                 }
             }

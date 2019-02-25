@@ -8,24 +8,28 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
-            android:text="TextView"
+            android:text="data"
+            android:fontFamily="@font/roboto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/periodoEvento"
             android:layout_marginTop="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="28dp"
+            android:textColor="@color/gray_dark"
             android:textSize="12sp"/>
     <TextView
-            android:text="TextView"
+            android:text="nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/nomeEvento"
             android:layout_marginTop="14dp"
             app:layout_constraintTop_toBottomOf="@+id/periodoEvento"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="28dp"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/black"
             android:textSize="24sp"/>
     <TextView
             android:text="TextView"
@@ -35,60 +39,156 @@
             android:layout_marginTop="7dp"
             app:layout_constraintTop_toBottomOf="@+id/nomeEvento"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="30dp"
-            android:textSize="17sp"/>
+            android:layout_marginStart="28dp"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/gray_light"
+            android:textSize="14sp"/>
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="4000dp"
+            android:layout_height="340dp"
             app:layout_constraintTop_toBottomOf="@+id/descricaoEvento"
             android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="35dp">
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="170dp"
                 android:orientation="horizontal">
 
-            <Button
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_margin="4dp"
                     android:id="@+id/btnProgramacao"
+                    android:elevation="10dp"
+                    android:layout_weight="1">
+                <LinearLayout 
+                        android:layout_width="match_parent" 
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                    
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/btn_programacao"
+                            android:scaleType="fitCenter"/>
+                    <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="PROGRAMAÇÃO"
+                            android:textColor="@color/gray_light"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="10sp"/>
+                    
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:text="Programacao"/>
-            <Button
                     android:id="@+id/btnWorkshops"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="30dp"
-                    android:text="Workshops"/>
+                    android:layout_height="160dp"
+                    android:layout_margin="4dp"
+                    android:elevation="10dp"
+                    android:layout_weight="1">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/btn_workshop"
+                            android:scaleType="fitCenter"/>
+                    <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="WORKSHOP"
+                            android:textColor="@color/gray_light"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="10sp"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="170dp"
                 android:orientation="horizontal">
-            <Button
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_margin="4dp"
+                    android:elevation="10dp"
                     android:id="@+id/btnPalestras"
+                    android:layout_weight="1">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/btn_palestra"
+                            android:scaleType="fitCenter"/>
+                    <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="PALESTRAS"
+                            android:textColor="@color/gray_light"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="10sp"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:text="Palestras"/>
-            <Button
+                    android:layout_height="160dp"
+                    android:layout_margin="4dp"
+                    android:elevation="10dp"
                     android:id="@+id/btnLoja"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginRight="30dp"
-                    android:text="Loja"/>
+                    android:layout_weight="1">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/btn_shop"
+                            android:scaleType="fitCenter"/>
+                    <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="LOJA"
+                            android:textColor="@color/gray_light"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="10sp"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
 
         </LinearLayout>

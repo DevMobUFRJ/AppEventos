@@ -5,11 +5,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_marginBottom="10dp">
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -17,35 +15,50 @@
 
         <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                tools:srcCompat="@tools:sample/backgrounds/scenic"
+                android:layout_height="180dp"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/backgrounds/scenic"
                 android:id="@+id/imageView2"/>
         <TextView
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dataPagPrincipal"
                 android:text="data"
-                android:textSize="12sp"/>
+                android:textColor="@color/gray_dark"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="10sp"/>
         <TextView
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="17dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/nomePagPrincipal"
                 android:text="nome"
-                android:textSize="24sp"/>
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:fontFamily="@font/roboto"/>
         <TextView
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/gray_light"
                 android:id="@+id/descPagPrincipal"
                 android:text="descricao"
-                android:textSize="17sp"/>
+                android:fontFamily="@font/roboto"
+                android:textSize="14sp"/>
         <Button
-                android:text="Abrir Evento"
-                android:layout_width="match_parent"
+                android:text="VER EVENTO"
+                android:layout_marginTop="35dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:backgroundTint="@color/colorSecondary"
+                android:layout_marginBottom="20dp"
                 android:id="@+id/botaoAbrirEvento"/>
 
     </LinearLayout>

@@ -16,7 +16,8 @@ data class Evento (
     var fim: Timestamp = Timestamp.now()
 ):Parcelable {
 
-    fun periodo() = inicio.formata() + " ate " + fim.formata()
+    //fun periodo() = inicio.formata() + " ate " + fim.formata()
+    fun periodo() = if (inicio.toDate().month == fim.toDate().month) "${inicio.toDate().date} a ${fim.formata()}" else "${inicio.formata()} a ${fim.formata()}"
 
 
     fun dias(): ClosedRange<Calendar> {

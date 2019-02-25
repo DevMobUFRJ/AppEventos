@@ -15,6 +15,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_atividades.*
 import kotlinx.android.synthetic.main.fragment_atividades.*
 import kotlinx.android.synthetic.main.fragment_atividades.view.*
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,9 +44,12 @@ class AtividadesActivity : AppCompatActivity() {
     lateinit var evento: Evento
     val atividades = HashMap<String, ArrayList<Atividade>>()
 
-    private fun addTab(title: String) {
-        tabs.addTab(tabs.newTab().setText(title))
-        mSectionsPagerAdapter!!.tabItems.add(title)
+    private fun addTab() {
+        val dias = atividades.keys.sorted()
+        dias.let {
+            for(dia in dias) tabs.addTab(tabs.newTab().setText(dia))
+            mSectionsPagerAdapter!!.tabItems = it
+        }
     }
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
@@ -81,33 +86,16 @@ class AtividadesActivity : AppCompatActivity() {
                     val temp = document.toObject(Atividade::class.java)
                     temp.id = document.id
                     temp.inicio.formataSemana().let {
-                        if(it !in atividades){
-                            atividades[it] = ArrayList()
-                            addTab(it)
-                        }
+                        if(it !in atividades) atividades[it] = ArrayList()
                         atividades[it]!!.add(temp)
                     }
                 }
+                addTab()
                 mSectionsPagerAdapter!!.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
                 Log.w("alexlindo", "Error getting documents.", exception)
             }
-
-
-
-        fab.setOnClickListener { view ->
-            val lista = mutableListOf<String>()
-            for (dia in evento.dias())
-            lista.add(SimpleDateFormat("dd EE", Locale("pt", "BR")).format(dia.time))
-            toast(lista.toString())
-        }
-
-        /* TIREI DAQUI PRA NAO ADICIONAR DIAS QUE NAO TEM NADA
-        for (dia in evento.dias()){
-            addTab(SimpleDateFormat("dd EE", Locale("pt", "BR")).format(dia.time).toUpperCase())
-        }
-        */
 
     }
 
@@ -138,7 +126,7 @@ class AtividadesActivity : AppCompatActivity() {
      */
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-        var tabItems = mutableListOf<String>()
+        var tabItems = emptyList<String>()
 
         override fun getItem(position: Int) = PlaceholderFragment.newInstance(position, atividades[tabItems[position]]!!)
 
@@ -159,8 +147,32 @@ class AtividadesActivity : AppCompatActivity() {
             savedInstanceState: Bundle?
         ): View? {
             val rootView = inflater.inflate(R.layout.fragment_atividades, container, false)
-            val a = arguments!!.getParcelableArrayList<Atividade>(ARG_LISTA_ATIVIDADES)
-            rootView.section_label.text = a!!.toString()
+
+            val atividades = arguments!!.getParcelableArrayList<Atividade>(ARG_LISTA_ATIVIDADES)
+            val atividadesPorHora = HashMap<String, ArrayList<Atividade>>()
+
+            for(atividade in atividades){
+                atividade.inicio.formataHora().let{
+                    if(it !in atividadesPorHora) atividadesPorHora[it] = ArrayList()
+                    atividadesPorHora[it]!!.add(atividade)
+                }
+            }
+            val listaDeHorarios = atividadesPorHora.keys.toList().sorted()
+            rootView.listaAtividades.let {
+                it.setAdapter(AtividadesListAdapter(this.context!!, listaDeHorarios, atividadesPorHora))
+                for(i in 0..(atividadesPorHora.size-1)) it.expandGroup(i)
+                it.setOnGroupClickListener { _, _, groupPosition, _ ->
+                    it.expandGroup(groupPosition)
+                    true
+                }
+                it.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
+                    val atividade = atividadesPorHora[listaDeHorarios[groupPosition]]!![childPosition]
+                    Log.e("alexlindo", atividade.toString())
+                    true
+                }
+            }
+
+
             return rootView
         }
 

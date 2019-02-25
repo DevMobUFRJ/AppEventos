@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import android.widget.ImageView
 import android.widget.TextView
 
 class AtividadesListAdapter(val context: Context, val headers: List<String>, val items: HashMap<String, ArrayList<Atividade>>): BaseExpandableListAdapter() {
@@ -54,8 +55,17 @@ class AtividadesListAdapter(val context: Context, val headers: List<String>, val
         val nomeView = convertView2!!.findViewById<TextView>(R.id.itemListaNome)
         nomeView.text = atividade.nome
 
-        val tipoView = convertView2.findViewById<TextView>(R.id.itemListaTipo)
-        tipoView.text = atividade.tipo[0].toTitleCase() + atividade.tipo.substring(1)
+        val tipoView = convertView2!!.findViewById<TextView>(R.id.itemListaTipo)
+        //tipoView.text = atividade.tipo[0].toTitleCase() + atividade.tipo.substring(1)
+        tipoView.text = when (atividade.tipo){
+            "workshop" -> "Workshop"
+            "palestra" -> "Palestra"
+            "mesaRedonda" -> "Mesa Redonda"
+            else -> ""
+        }
+
+        val horaView = convertView2!!.findViewById<TextView>(R.id.itemListaHora)
+        horaView.text = "${atividade.inicio.formataHora()} - ${atividade.fim.formataHora()}"
 
         return convertView2
 
@@ -70,6 +80,5 @@ class AtividadesListAdapter(val context: Context, val headers: List<String>, val
     override fun getGroupId(groupPosition: Int) = groupPosition.toLong()
 
     override fun getChildId(groupPosition: Int, childPosition: Int) = childPosition.toLong()
-
 
 }

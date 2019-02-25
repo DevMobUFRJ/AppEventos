@@ -3,78 +3,95 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:id="@+id/tipoAtividade" android:layout_marginTop="20dp" android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" android:layout_marginStart="20dp"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textColor="@color/colorPrimary"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp"
-            android:id="@+id/nomeAtividade"
-            android:layout_marginTop="0dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp" android:layout_below="@+id/tipoAtividade"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/diaAtividade"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/nomeAtividade"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/horasalaAtividade"
-            android:textColor="@color/colorSecondary"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/diaAtividade"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="40dp"/>
-    <android.support.v7.widget.CardView
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp" android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical">
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/tipoAtividade"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="25dp"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginStart="25dp"
+                android:id="@+id/nomeAtividade"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/diaAtividade"
+                android:layout_marginStart="25dp"
+                android:fontFamily="@font/roboto"
+                android:textSize="12sp"
+                android:textColor="@color/gray_dark"
+                android:layout_marginTop="25dp"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/horasalaAtividade"
+                android:textColor="@color/colorSecondary"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_marginStart="25dp"/>
+        <android.support.v7.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp">
 
-        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/apresentadorAtividade"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:textSize="20sp"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="20dp"/>
-            <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/empresaAtividade" android:layout_marginTop="5dp"
-                    android:layout_below="@+id/apresentadorAtividade"
-                    android:layout_marginBottom="20dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="20dp"/>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+                <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/apresentadorAtividade"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="20dp"/>
+                <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/empresaAtividade" android:layout_marginTop="5dp"
+                        android:layout_below="@+id/apresentadorAtividade"
+                        android:layout_marginBottom="20dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="20dp"/>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+
+
+    <Button
+            android:id="@+id/btnInscrever"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:fontFamily="@font/roboto"
+            android:backgroundTint="@color/colorSecondary"
+            android:textColor="@color/white"
+            android:text="INSCREVER-ME"/>
 
 
 </RelativeLayout>

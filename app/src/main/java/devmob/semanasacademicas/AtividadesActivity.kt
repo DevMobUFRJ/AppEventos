@@ -168,10 +168,12 @@ class AtividadesActivity : AppCompatActivity() {
                 }
                 it.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
                     val atividade = atividadesPorHora[listaDeHorarios[groupPosition]]!![childPosition]
-                    Log.e("alexlindo", atividade.toString())
-                    val intent = Intent(it.context, DetalhesAtividade::class.java)
-                    intent.putExtra("ATIVIDADE",atividade)
-                    it.context.startActivity(intent)
+                    if (atividade.tipo != "intervalo"){
+                        Log.e("alexlindo", atividade.toString())
+                        val intent = Intent(it.context, DetalhesAtividade::class.java)
+                        intent.putExtra("ATIVIDADE",atividade)
+                        it.context.startActivity(intent)
+                    }
                     true
                 }
             }

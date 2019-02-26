@@ -13,5 +13,6 @@ data class Atividade (
     var inicio: Timestamp = Timestamp.now(),
     var fim: Timestamp = Timestamp.now(),
     var apresentador: String = "Apresentador não informado",
-    var local: String = "Local não informado"
+    var local: String = "Local não informado",
+    var link: String = "https://fb.com/SemanaDaComputacaoUFRJ"
 ): Parcelable

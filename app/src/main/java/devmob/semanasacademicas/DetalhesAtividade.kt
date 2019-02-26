@@ -1,7 +1,10 @@
 package devmob.semanasacademicas
 
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.customtabs.CustomTabsIntent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_detalhes_atividade.*
 
@@ -27,6 +30,15 @@ class DetalhesAtividade : AppCompatActivity() {
         }
         if (atividade.tipo != "workshop"){
             btnInscrever.visibility = View.INVISIBLE
+        }
+
+        btnInscrever.setOnClickListener {
+            val builder = CustomTabsIntent.Builder()
+            builder.setToolbarColor(resources.getColor(R.color.colorPrimary))
+            val customTabsIntent = builder.build()
+            if(!atividade.link.startsWith("https://") && !atividade.link.startsWith("http://"))
+                atividade.link = "https://" + atividade.link
+            customTabsIntent.launchUrl(this, Uri.parse(atividade.link))
         }
 
     }

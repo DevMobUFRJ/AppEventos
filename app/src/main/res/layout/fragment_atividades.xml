@@ -7,13 +7,13 @@
                                              android:layout_height="match_parent"
                                              tools:context=".AtividadesActivity$PlaceholderFragment">
 
-    <ExpandableListView
-            android:id="@+id/listaAtividades"
+    <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:groupIndicator="@null"
-            android:layout_margin="8dp"
-            android:layout_marginBottom="8dp"
+            android:id="@+id/listaAtividades"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

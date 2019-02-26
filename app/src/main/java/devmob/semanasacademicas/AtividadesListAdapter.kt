@@ -1,84 +1,45 @@
 package devmob.semanasacademicas
 
 import android.content.Context
+import android.content.Intent
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.atividades_lista_items.view.*
 
-class AtividadesListAdapter(val context: Context, val headers: List<String>, val items: HashMap<String, ArrayList<Atividade>>): BaseExpandableListAdapter() {
-    override fun getGroup(groupPosition: Int) = headers[groupPosition]
+class AtividadesListAdapter(private val items: List<Atividade>): RecyclerView.Adapter<AtividadesListAdapter.ViewHolder>() {
 
-    override fun getGroupCount() = headers.size
 
-    override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
-        val titulo = getGroup(groupPosition)
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int) =
+        AtividadesListAdapter.ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.atividades_lista_items, p0, false))
 
-        val convertView2: View?
-        if(convertView == null){
-            val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView2 = layoutInflater.inflate(R.layout.atividades_lista_headers, null)
-        }else{
-            convertView2 = convertView
+    override fun getItemCount() = items.size
+
+    override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItens(items[p1])
+
+
+    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+        val hora = itemView.itemListaHora
+        val tipo = itemView.itemListaTipo
+        val nome = itemView.itemListaNome
+
+        fun bindItens(atividade: Atividade){
+            hora.text = atividade.inicio.formataHora() + "-" + atividade.fim.formataHora()
+            nome.text = atividade.nome
+            tipo.text = atividade.tipo.formataTipo()
+
+            itemView.setOnClickListener {
+                val intent = Intent(it.context, DetalhesAtividade::class.java)
+                intent.putExtra("ATIVIDADE",atividade)
+                it.context.startActivity(intent)
+            }
         }
-
-        val tituloView = convertView2!!.findViewById<TextView>(R.id.atividadesHeader)
-        tituloView.text = titulo
-
-        return convertView2
     }
 
-    override fun getChild(groupPosition: Int, childPosition: Int) = items[headers[groupPosition]]!![childPosition]
-
-    override fun getChildrenCount(groupPosition: Int) = items[headers[groupPosition]]!!.size
-
-    override fun getChildView(
-        groupPosition: Int,
-        childPosition: Int,
-        isLastChild: Boolean,
-        convertView: View?,
-        parent: ViewGroup?
-    ): View {
-
-        val atividade = getChild(groupPosition, childPosition)
-        val convertView2: View?
-
-        if(convertView == null){
-            val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView2 = layoutInflater.inflate(R.layout.atividades_lista_items, null)
-        }else{
-            convertView2 = convertView
-        }
-
-        val nomeView = convertView2!!.findViewById<TextView>(R.id.itemListaNome)
-        nomeView.text = atividade.nome
-
-        val tipoView = convertView2!!.findViewById<TextView>(R.id.itemListaTipo)
-        //tipoView.text = atividade.tipo[0].toTitleCase() + atividade.tipo.substring(1)
-        tipoView.text = when (atividade.tipo){
-            "workshop" -> "Workshop"
-            "palestra" -> "Palestra"
-            "mesaRedonda" -> "Mesa Redonda"
-            else -> ""
-        }
-
-        val horaView = convertView2!!.findViewById<TextView>(R.id.itemListaHora)
-        horaView.text = "${atividade.inicio.formataHora()} - ${atividade.fim.formataHora()}"
-
-        return convertView2
-
-    }
-
-
-
-    override fun isChildSelectable(groupPosition: Int, childPosition: Int) = true
-
-    override fun hasStableIds() = false
-
-    override fun getGroupId(groupPosition: Int) = groupPosition.toLong()
-
-    override fun getChildId(groupPosition: Int, childPosition: Int) = childPosition.toLong()
 
 }

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -150,33 +151,17 @@ class AtividadesActivity : AppCompatActivity() {
             val rootView = inflater.inflate(R.layout.fragment_atividades, container, false)
 
             val atividades = arguments!!.getParcelableArrayList<Atividade>(ARG_LISTA_ATIVIDADES)
-            val atividadesPorHora = HashMap<String, ArrayList<Atividade>>()
+            val atividadesOrdenadas = atividades.sortedWith(compareBy { it.inicio })
 
-            for(atividade in atividades){
-                atividade.inicio.formataHora().let{
-                    if(it !in atividadesPorHora) atividadesPorHora[it] = ArrayList()
-                    atividadesPorHora[it]!!.add(atividade)
-                }
+            var viewAdapter = AtividadesListAdapter(atividadesOrdenadas)
+            var viewManager = LinearLayoutManager(this.context)
+
+            rootView.listaAtividades.apply {
+                setHasFixedSize(false)
+                layoutManager = viewManager
+                adapter= viewAdapter
             }
-            val listaDeHorarios = atividadesPorHora.keys.toList().sorted()
-            rootView.listaAtividades.let {
-                it.setAdapter(AtividadesListAdapter(this.context!!, listaDeHorarios, atividadesPorHora))
-                for(i in 0..(atividadesPorHora.size-1)) it.expandGroup(i)
-                it.setOnGroupClickListener { _, _, groupPosition, _ ->
-                    it.expandGroup(groupPosition)
-                    true
-                }
-                it.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
-                    val atividade = atividadesPorHora[listaDeHorarios[groupPosition]]!![childPosition]
-                    if (atividade.tipo != "intervalo"){
-                        Log.e("alexlindo", atividade.toString())
-                        val intent = Intent(it.context, DetalhesAtividade::class.java)
-                        intent.putExtra("ATIVIDADE",atividade)
-                        it.context.startActivity(intent)
-                    }
-                    true
-                }
-            }
+
 
 
             return rootView

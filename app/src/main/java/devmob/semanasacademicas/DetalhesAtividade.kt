@@ -15,12 +15,7 @@ class DetalhesAtividade : AppCompatActivity() {
         atividade = intent?.extras!!.get("ATIVIDADE") as Atividade
 
         //tipoAtividade.text = atividade.tipo[0].toTitleCase() + atividade.tipo.substring(1)
-        tipoAtividade.text = when (atividade.tipo){
-            "workshop" -> "Workshop"
-            "palestra" -> "Palestra"
-            "mesaRedonda" -> "Mesa Redonda"
-            else -> ""
-        }
+        tipoAtividade.text = atividade.tipo.formataTipo()
         nomeAtividade.text = atividade.nome
         diaAtividade.text = atividade.inicio.formataDia()
         horasalaAtividade.text = atividade.inicio.formataHora() + " - " + atividade.fim.formataHora() + " | " + atividade.local

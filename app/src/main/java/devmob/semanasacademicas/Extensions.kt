@@ -13,3 +13,10 @@ fun Timestamp.formataHora() = SimpleDateFormat("HH:mm", Locale("pt", "BR")).form
 fun Timestamp.formataSemana() = SimpleDateFormat("dd EE", Locale("pt", "BR")).format(this.toDate()).toUpperCase()
 
 fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
+
+fun String.formataTipo() = when (this){
+    "workshop" -> "Workshop"
+    "palestra" -> "Palestra"
+    "mesaRedonda" -> "Mesa Redonda"
+    else -> ""
+}

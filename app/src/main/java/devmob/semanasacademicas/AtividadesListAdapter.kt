@@ -34,9 +34,11 @@ class AtividadesListAdapter(private val items: List<Atividade>): RecyclerView.Ad
             tipo.text = atividade.tipo.formataTipo()
 
             itemView.setOnClickListener {
-                val intent = Intent(it.context, DetalhesAtividade::class.java)
-                intent.putExtra("ATIVIDADE",atividade)
-                it.context.startActivity(intent)
+                if(atividade.tipo != "intervalo") {
+                    val intent = Intent(it.context, DetalhesAtividade::class.java)
+                    intent.putExtra("ATIVIDADE", atividade)
+                    it.context.startActivity(intent)
+                }
             }
         }
     }

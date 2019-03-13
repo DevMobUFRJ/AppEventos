@@ -151,10 +151,10 @@ class AtividadesActivity : AppCompatActivity() {
             val rootView = inflater.inflate(R.layout.fragment_atividades, container, false)
 
             val atividades = arguments!!.getParcelableArrayList<Atividade>(ARG_LISTA_ATIVIDADES)
-            val atividadesOrdenadas = atividades.sortedWith(compareBy { it.inicio })
+            val atividadesOrdenadas = atividades!!.sortedWith(compareBy { it.inicio })
 
-            var viewAdapter = AtividadesListAdapter(atividadesOrdenadas)
-            var viewManager = LinearLayoutManager(this.context)
+            val viewAdapter = AtividadesListAdapter(atividadesOrdenadas)
+            val viewManager = LinearLayoutManager(this.context)
 
             rootView.listaAtividades.apply {
                 setHasFixedSize(false)

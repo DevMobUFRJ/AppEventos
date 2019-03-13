@@ -32,7 +32,7 @@ class ListaDeEventosAdapter(private val eventos: MutableList<Evento>): RecyclerV
 
             val activity = it.context as AppCompatActivity
             val fragment = FragmentTelaDeEvento()
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putParcelable("EVENTO", eventos[p1])
             fragment.arguments = bundle
             activity.supportFragmentManager.beginTransaction().replace(R.id.contentHome, fragment)

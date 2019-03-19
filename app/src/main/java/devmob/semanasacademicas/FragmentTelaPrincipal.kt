@@ -12,7 +12,9 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_tela_principal.*
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.card_semana.*
@@ -26,13 +28,13 @@ class FragmentTelaPrincipal : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var listener: ListenerRegistration
     val eventos = mutableListOf<Evento>()
     val db = FirebaseFirestore.getInstance()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.content_tela_principal, null)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
+            = inflater.inflate(R.layout.content_tela_principal, null)
 
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,31 +42,47 @@ class FragmentTelaPrincipal : Fragment() {
         viewManager = LinearLayoutManager(this.context)
 
         recyclerView = lista.apply {
-            setHasFixedSize(false)
             layoutManager = viewManager
             adapter= viewAdapter
         }
 
+        listener = db.collection("semanas").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            if(firebaseFirestoreException != null){
+                Log.w("aaaaa", "Listen error", firebaseFirestoreException)
+                return@addSnapshotListener
+            }
+            for(doc in querySnapshot!!.documentChanges){
 
+                val temp = doc.document.toObject(Evento::class.java)
+                temp.id = doc.document.id
 
-        eventos.clear()
-        db.collection("semanas")
-            .orderBy("inicio")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val temp = document.toObject(Evento::class.java)
-                    temp.id = document.id
-                    eventos += temp
+                when(doc.type){
+                    DocumentChange.Type.ADDED -> {
+                        Log.w("aaaaa", "add" + doc.document.toString())
+                        eventos += temp
+                    }
+                    DocumentChange.Type.MODIFIED -> {
+                        Log.w("aaaaa", "mod" + doc.document.toString())
+                        for(i in 0 until eventos.size)
+                            if(eventos[i].id == temp.id) eventos[i] = temp
+                    }
+                    DocumentChange.Type.REMOVED -> {
+                        Log.w("aaaaa", "rem" + doc.document.toString())
+                        var idx: Int? = null
+                        for(i in 0 until eventos.size)
+                            if(eventos[i].id == temp.id) idx = i
+                        idx?.let {
+                            eventos.removeAt(it)
+                        }
+                    }
                 }
-                viewAdapter.notifyDataSetChanged()
-
             }
-            .addOnFailureListener { exception ->
-                Log.w("alexlindo", "Error getting documents.", exception)
-            }
+            viewAdapter.notifyDataSetChanged()
+        }
+    }
 
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        listener.remove()
     }
 }

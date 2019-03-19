@@ -18,9 +18,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.*
 
 import kotlinx.android.synthetic.main.activity_atividades.*
 import kotlinx.android.synthetic.main.fragment_atividades.*
@@ -46,17 +44,19 @@ class AtividadesActivity : AppCompatActivity() {
     lateinit var evento: Evento
     val atividades = HashMap<String, ArrayList<Atividade>>()
 
-    private fun addTab() {
-        val dias = atividades.keys.sorted()
-        dias.let {
-            for(dia in dias) tabs.addTab(tabs.newTab().setText(dia))
-            mSectionsPagerAdapter!!.tabItems = it
-        }
-    }
+    private lateinit var listener: ListenerRegistration
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
     val db = FirebaseFirestore.getInstance()
+
+    private fun addTab() {
+        val dias = atividades.keys.sorted()
+        dias.let {
+            for(dia in it) if(dia !in mSectionsPagerAdapter!!.tabItems) tabs.addTab(tabs.newTab().setText(dia))
+            mSectionsPagerAdapter!!.tabItems = it
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,26 +78,58 @@ class AtividadesActivity : AppCompatActivity() {
 
         val referencia = db.collection("semanas").document(evento.id).collection("atividades")
 
-        when(tipo){
-            "workshop", "palestra"  -> referencia.whereEqualTo("tipo", tipo)
-            else-> referencia
-        }.get()
-            .addOnSuccessListener { result ->
-                Log.e("sei", "la")
-                for (document in result) {
-                    val temp = document.toObject(Atividade::class.java)
-                    temp.id = document.id
-                    temp.inicio.formataSemana().let {
-                        if(it !in atividades) atividades[it] = ArrayList()
-                        atividades[it]!!.add(temp)
+        listener = when(tipo) {
+            "workshop", "palestra" -> referencia.whereEqualTo("tipo", tipo)
+            else -> referencia
+        }.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            if(firebaseFirestoreException != null){
+                Log.w("aaaaa", "Listen error", firebaseFirestoreException)
+                return@addSnapshotListener
+            }
+            for(change in querySnapshot!!.documentChanges){
+
+                val temp = change.document.toObject(Atividade::class.java)
+                temp.id = change.document.id
+
+                when(change.type){
+                    DocumentChange.Type.ADDED -> {
+                        Log.w("aaaaa", "add" + change.document.toString())
+
+                        temp.inicio.formataSemana().also {
+                            if(it !in atividades) atividades[it] = ArrayList()
+                            atividades[it]!!.add(temp)
+                        }
+
+
+                    }
+                    DocumentChange.Type.MODIFIED -> {
+                        Log.w("aaaaa", "mod" + change.document.toString())
+
+                        temp.inicio.formataSemana().also {
+                            for(i in 0 until (atividades[it]?.size ?: 0))
+                                if(atividades[it]!![i].id == temp.id)
+                                    atividades[it]!![i] = temp
+                        }
+
+                    }
+                    DocumentChange.Type.REMOVED -> {
+                        Log.w("aaaaa", "rem" + change.document.toString())
+
+                        temp.inicio.formataSemana().also {
+                            var idx: Int? = null
+
+                            for(i in 0 until (atividades[it]?.size ?: 0))
+                                if(atividades[it]!![i].id == temp.id)
+                                    idx = i
+
+                            atividades[it]!!.removeAt(idx!!)
+                        }
                     }
                 }
-                addTab()
-                mSectionsPagerAdapter!!.notifyDataSetChanged()
             }
-            .addOnFailureListener { exception ->
-                Log.w("alexlindo", "Error getting documents.", exception)
-            }
+            addTab()
+            mSectionsPagerAdapter!!.notifyDataSetChanged()
+        }
 
     }
 
@@ -119,6 +151,11 @@ class AtividadesActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        listener.remove()
     }
 
 
@@ -172,8 +209,8 @@ class AtividadesActivity : AppCompatActivity() {
              * The fragment argument representing the section number for this
              * fragment.
              */
-            private val ARG_SECTION_NUMBER = "section_number"
-            private val ARG_LISTA_ATIVIDADES ="lista_de_atividades"
+            private const val ARG_SECTION_NUMBER = "section_number"
+            private const val ARG_LISTA_ATIVIDADES ="lista_de_atividades"
 
             /**
              * Returns a new instance of this fragment for the given section

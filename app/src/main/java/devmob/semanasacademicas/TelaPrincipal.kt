@@ -15,6 +15,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_tela_principal.*
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.content_tela_principal.*
+import kotlinx.android.synthetic.main.nav_header_tela_principal.*
+import kotlinx.android.synthetic.main.nav_header_tela_principal.view.*
+import org.jetbrains.anko.toast
 import java.util.*
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -37,12 +40,17 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_tela_principal)
         setSupportActionBar(toolbar)
 
+
         val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.setCheckedItem(R.id.nav_eventos)
         displayScreen(R.id.nav_eventos)
+
+        nav_view.getHeaderView(0).setOnClickListener {
+            toast("Clicou")
+        }
 
     }
 

@@ -12,14 +12,15 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
-
-
+import com.bumptech.glide.Glide
 
 
 class ListaDeEventosAdapter(private val eventos: MutableList<Evento>): RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        DownloadImage(p0.imageView).execute(eventos[p1].link)
+
+        Glide.with(p0.view).load(eventos[p1].link).thumbnail(0.1f).into(p0.imageView)
+        //DownloadImage(p0.imageView).execute(eventos[p1].link)
 
         p0.nome.text = eventos[p1].nome
         p0.descricao.text = eventos[p1].descricao
@@ -54,6 +55,7 @@ class ListaDeEventosAdapter(private val eventos: MutableList<Evento>): RecyclerV
         val periodo = itemView.dataPagPrincipal!!
         val botao = itemView.botaoAbrirEvento!!
         val imageView = itemView.imageView2!!
+        val view = itemView
     }
 
 }

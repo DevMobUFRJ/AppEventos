@@ -86,5 +86,6 @@ class FragmentTelaPrincipal : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         listener.remove()
+        eventos.clear()
     }
 }

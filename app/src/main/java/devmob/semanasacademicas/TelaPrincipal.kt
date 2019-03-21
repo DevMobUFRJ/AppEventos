@@ -11,7 +11,9 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirestoreRegistrar
 import kotlinx.android.synthetic.main.activity_tela_principal.*
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.content_tela_principal.*
@@ -22,18 +24,7 @@ import java.util.*
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    //troca o layout da tela home pelo layout do item selecionado
-    fun displayScreen(id: Int){
-        val fragment = when (id) {
-            R.id.nav_eventos -> FragmentTelaPrincipal()
-            R.id.nav_agenda -> FragmentMinhaSemana()
-            else -> FragmentTelaPrincipal()
-        }
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.contentHome, fragment)
-            .commit()
-    }
+    lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +37,29 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.setCheckedItem(R.id.nav_eventos)
-        displayScreen(R.id.nav_eventos)
+
+        mAuth = FirebaseAuth.getInstance()
+
+        nav_view.getHeaderView(0).textView.text = mAuth.currentUser!!.email!!
 
         nav_view.getHeaderView(0).setOnClickListener {
             toast("Clicou")
         }
 
+        displayScreen(R.id.nav_eventos)
+    }
+
+    //troca o layout da tela home pelo layout do item selecionado
+    fun displayScreen(id: Int){
+        val fragment = when (id) {
+            R.id.nav_eventos -> FragmentTelaPrincipal()
+            R.id.nav_agenda -> FragmentMinhaSemana()
+            else -> FragmentTelaPrincipal()
+        }
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.contentHome, fragment)
+            .commit()
     }
 
     override fun onBackPressed() {

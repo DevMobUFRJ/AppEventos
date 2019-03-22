@@ -90,6 +90,7 @@ class AtividadesActivity : AppCompatActivity() {
 
                 val temp = change.document.toObject(Atividade::class.java)
                 temp.id = change.document.id
+                temp.weekId = evento.id
 
                 when(change.type){
                     DocumentChange.Type.ADDED -> {

@@ -43,12 +43,10 @@ class DetalhesAtividade : AppCompatActivity() {
             horasalaAtividade.text = inicio.formataHora() + " - " + atividade.fim.formataHora() + " | " + atividade.local
         }
 
-        if (atividade.tipo == "outros" || atividade.tipo == "mesaRedonda"){
+        if (atividade.tipo == "outros" || atividade.tipo == "mesaRedonda")
             cardView.visibility = View.INVISIBLE
-        }
-        if (atividade.tipo != "workshop"){
+        if (atividade.tipo != "workshop")
             btnInscrever.visibility = View.INVISIBLE
-        }
 
         btnInscrever.setOnClickListener {
             val builder = CustomTabsIntent.Builder()

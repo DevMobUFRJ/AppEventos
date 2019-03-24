@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirestoreRegistrar
 import kotlinx.android.synthetic.main.activity_tela_principal.*
@@ -25,6 +26,7 @@ import java.util.*
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var mAuth: FirebaseAuth
+    lateinit var user: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +41,15 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         nav_view.setCheckedItem(R.id.nav_eventos)
 
         mAuth = FirebaseAuth.getInstance()
+        user = mAuth.currentUser!!
 
-        nav_view.getHeaderView(0).textView.text = mAuth.currentUser!!.email!!
+        nav_view.getHeaderView(0).run {
+            email.text = user.email!!
+            nome.text = user.displayName!!
 
-        nav_view.getHeaderView(0).setOnClickListener {
-            toast("Clicou")
+            setOnClickListener {
+                toast("Clicou")
+            }
         }
 
         displayScreen(R.id.nav_eventos)

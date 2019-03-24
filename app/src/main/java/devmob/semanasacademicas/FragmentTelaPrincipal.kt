@@ -59,17 +59,12 @@ class FragmentTelaPrincipal : Fragment() {
                 temp.id = doc.document.id
 
                 when(doc.type){
-                    DocumentChange.Type.ADDED -> {
-                        Log.w("aaaaa", "add" + doc.document.toString())
-                        eventos += temp
-                    }
-                    DocumentChange.Type.MODIFIED -> {
-                        Log.w("aaaaa", "mod" + doc.document.toString())
-                        for(i in 0 until eventos.size)
-                            if(eventos[i].id == temp.id) eventos[i] = temp
-                    }
+                    DocumentChange.Type.ADDED -> eventos += temp
+
+                    DocumentChange.Type.MODIFIED ->
+                        for(i in 0 until eventos.size) if(eventos[i].id == temp.id) eventos[i] = temp
+
                     DocumentChange.Type.REMOVED -> {
-                        Log.w("aaaaa", "rem" + doc.document.toString())
                         var idx: Int? = null
                         for(i in 0 until eventos.size)
                             if(eventos[i].id == temp.id) idx = i

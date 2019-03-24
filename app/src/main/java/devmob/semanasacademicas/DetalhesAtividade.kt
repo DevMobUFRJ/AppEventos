@@ -17,8 +17,13 @@ import org.jetbrains.anko.toast
 class DetalhesAtividade : AppCompatActivity() {
 
     lateinit var atividade: Atividade
+
+    lateinit var weekId: String
+    lateinit var atividadeId: String
+
     lateinit var db: FirebaseFirestore
     lateinit var mAuth: FirebaseAuth
+
     lateinit var newFavorite: CollectionReference
     lateinit var favoriteId: String
     var favorite = true
@@ -31,31 +36,43 @@ class DetalhesAtividade : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         mAuth = FirebaseAuth.getInstance()
 
-        atividade = intent?.extras!!.get("ATIVIDADE") as Atividade
+        atividadeId = intent?.extras!!.getString(ARG_ATIVIDADE_ID)!!
+        weekId = intent?.extras!!.getString(ARG_WEEK_ID)!!
 
-        //tipoAtividade.text = atividade.tipo[0].toTitleCase() + atividade.tipo.substring(1)
-        atividade.run {
-            tipoAtividade.text = tipo.formataTipo()
-            nomeAtividade.text = nome
-            diaAtividade.text = inicio.formataDia()
-            apresentadorAtividade.text = apresentador
-            empresaAtividade.text = grupo
-            horasalaAtividade.text = inicio.formataHora() + " - " + atividade.fim.formataHora() + " | " + atividade.local
-        }
+        db.collection("semanas").document(weekId).collection("atividades").document(atividadeId).get().addOnCompleteListener {
+                if(it.isSuccessful){
+                    atividade = it.result?.toObject(Atividade::class.java)!!
+                    atividade.id = atividadeId
+                    atividade.weekId = weekId
 
-        if (atividade.tipo == "outros" || atividade.tipo == "mesaRedonda")
-            cardView.visibility = View.INVISIBLE
-        if (atividade.tipo != "workshop")
-            btnInscrever.visibility = View.INVISIBLE
+                    atividade.run {
+                        tipoAtividade.text = tipo.formataTipo()
+                        nomeAtividade.text = nome
+                        diaAtividade.text = inicio.formataDia()
+                        apresentadorAtividade.text = apresentador
+                        empresaAtividade.text = grupo
+                        horasalaAtividade.text = inicio.formataHora() + " - " + atividade.fim.formataHora() + " | " + atividade.local
 
-        btnInscrever.setOnClickListener {
-            val builder = CustomTabsIntent.Builder()
-            builder.setToolbarColor(resources.getColor(R.color.colorPrimary))
-            val customTabsIntent = builder.build()
-            if(!atividade.link.startsWith("https://") && !atividade.link.startsWith("http://"))
-                atividade.link = "https://" + atividade.link
-            customTabsIntent.launchUrl(this, Uri.parse(atividade.link))
-        }
+                        if (tipo == "outros" || tipo == "mesaRedonda")
+                            cardView.visibility = View.INVISIBLE
+                        if (tipo != "workshop")
+                            btnInscrever.visibility = View.INVISIBLE
+
+                        btnInscrever.setOnClickListener {view ->
+                            val builder = CustomTabsIntent.Builder()
+                            builder.setToolbarColor(resources.getColor(R.color.colorPrimary))
+                            val customTabsIntent = builder.build()
+                            if(!link.startsWith("https://") && !link.startsWith("http://"))
+                                atividade.link = "https://" + atividade.link
+                            customTabsIntent.launchUrl(view.context, Uri.parse(atividade.link))
+                        }
+
+
+
+                    }
+                }
+
+            }
 
         newFavorite = db.collection("users").document(mAuth.currentUser!!.uid).collection("favorites")
         favoriteOrUnfavorite()
@@ -69,8 +86,8 @@ class DetalhesAtividade : AppCompatActivity() {
     private fun addFavorite(){
         val favorite = HashMap<String, Any>()
 
-        favorite["id"] = atividade.id
-        favorite["weekId"] = atividade.weekId
+        favorite["id"] = atividadeId
+        favorite["weekId"] = weekId
 
         newFavorite.add(favorite).addOnSuccessListener {
             toast("Favorito adicionado!")
@@ -87,7 +104,7 @@ class DetalhesAtividade : AppCompatActivity() {
     }
 
     private fun favoriteOrUnfavorite(){
-        newFavorite.whereEqualTo("id", atividade.id).get().addOnCompleteListener {
+        newFavorite.whereEqualTo("id", atividadeId).get().addOnCompleteListener {
             if(it.isSuccessful){
                 if(it.result!!.isEmpty){
                     favorite = true

@@ -21,3 +21,6 @@ fun String.formataTipo() = when (this){
     "mesaRedonda" -> "Mesa Redonda"
     else -> ""
 }
+
+const val ARG_WEEK_ID = "week_id"
+const val ARG_ATIVIDADE_ID = "atividade_id"

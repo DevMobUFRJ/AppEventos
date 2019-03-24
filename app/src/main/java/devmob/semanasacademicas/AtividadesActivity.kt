@@ -168,7 +168,8 @@ class AtividadesActivity : AppCompatActivity() {
 
         var tabItems = emptyList<String>()
 
-        override fun getItem(position: Int) = PlaceholderFragment.newInstance(position, atividades[tabItems[position]]!!)
+        override fun getItem(position: Int)
+                = PlaceholderFragment.newInstance(position, atividades[tabItems[position]]!!, evento.id)
 
         override fun getCount() = tabItems.size
 
@@ -189,9 +190,10 @@ class AtividadesActivity : AppCompatActivity() {
             val rootView = inflater.inflate(R.layout.fragment_atividades, container, false)
 
             val atividades = arguments!!.getParcelableArrayList<Atividade>(ARG_LISTA_ATIVIDADES)
+            val weekId = arguments!!. getString(ARG_WEEK_ID)
             val atividadesOrdenadas = atividades!!.sortedWith(compareBy { it.inicio })
 
-            val viewAdapter = AtividadesListAdapter(atividadesOrdenadas)
+            val viewAdapter = AtividadesListAdapter(atividadesOrdenadas, weekId)
             val viewManager = LinearLayoutManager(this.context)
 
             rootView.listaAtividades.apply {
@@ -217,11 +219,12 @@ class AtividadesActivity : AppCompatActivity() {
              * Returns a new instance of this fragment for the given section
              * number.
              */
-            fun newInstance(sectionNumber: Int, atividadesDoDia: ArrayList<Atividade>): PlaceholderFragment {
+            fun newInstance(sectionNumber: Int, atividadesDoDia: ArrayList<Atividade>, weekId: String): PlaceholderFragment {
                 val fragment = PlaceholderFragment()
                 val args = Bundle()
                 args.putInt(ARG_SECTION_NUMBER, sectionNumber)
                 args.putParcelableArrayList(ARG_LISTA_ATIVIDADES, atividadesDoDia)
+                args.putString(ARG_WEEK_ID,   weekId)
                 fragment.arguments = args
                 return fragment
             }

@@ -10,9 +10,11 @@ exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{sema
 
     return admin.firestore().collection("semanas").doc(splitedPath[1]).get().then(semanaModificada => {
         const notificationContent = {
-            notification: {
+            data: {
                 title: semanaModificada.data().nome,
                 body: event.after.data().nome + " sofreu uma alteração, venha ver!",
+                activityId: splitedPath[3],
+                weekId: splitedPath[1]
             }
         };
 

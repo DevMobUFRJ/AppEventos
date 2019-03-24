@@ -10,9 +10,10 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import org.jetbrains.anko.*
 import kotlinx.android.synthetic.main.atividades_lista_items.view.*
 
-class AtividadesListAdapter(private val items: List<Atividade>): RecyclerView.Adapter<AtividadesListAdapter.ViewHolder>() {
+class AtividadesListAdapter(private val items: List<Atividade>, private val weekId: String): RecyclerView.Adapter<AtividadesListAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int) =
@@ -20,7 +21,7 @@ class AtividadesListAdapter(private val items: List<Atividade>): RecyclerView.Ad
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItens(items[p1])
+    override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItens(items[p1], weekId)
 
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
@@ -28,20 +29,18 @@ class AtividadesListAdapter(private val items: List<Atividade>): RecyclerView.Ad
         val tipo = itemView.itemListaTipo
         val nome = itemView.itemListaNome
 
-        fun bindItens(atividade: Atividade){
+        fun bindItens(atividade: Atividade, weekId: String){
             hora.text = atividade.inicio.formataHora() + "-" + atividade.fim.formataHora()
             nome.text = atividade.nome
             tipo.text = atividade.tipo.formataTipo()
 
             itemView.setOnClickListener {
-                if(atividade.tipo != "intervalo") {
-                    val intent = Intent(it.context, DetalhesAtividade::class.java)
-                    intent.putExtra("ATIVIDADE", atividade)
-                    it.context.startActivity(intent)
-                }
+                if(atividade.tipo != "intervalo")
+                    it.context.startActivity<DetalhesAtividade>(
+                        ARG_ATIVIDADE_ID to atividade.id,
+                        ARG_WEEK_ID to weekId
+                    )
             }
         }
     }
-
-
 }

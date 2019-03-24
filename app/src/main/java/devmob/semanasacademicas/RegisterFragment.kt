@@ -10,6 +10,7 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
 
@@ -49,12 +50,15 @@ class RegisterFragment : Fragment() {
 
         emailR.error = null
         passwordR.error = null
+        username.error = null
 
         val emailStr = emailR.text.toString().trim()
         val passwordStr = passwordR.text.toString().trim()
+        val name = username.text.toString().trim()
 
         var validEmail = false
         var validPassword = false
+        var validUserName = false
 
         when{
             emailStr.isBlank() -> emailR.error = "Email nao pode ser vazio"
@@ -68,7 +72,12 @@ class RegisterFragment : Fragment() {
             else -> validPassword = true
         }
 
-        if (validEmail && validPassword) {
+        when{
+            name.isBlank() -> username.error = "Nome não pode ser vazio"
+            else -> validUserName = true
+        }
+
+        if (validEmail && validPassword && validUserName) {
             mAuth.createUserWithEmailAndPassword(emailStr, passwordStr)
                 .addOnCompleteListener {
                     if (it.isSuccessful){
@@ -76,13 +85,22 @@ class RegisterFragment : Fragment() {
                         mAuth.signInWithEmailAndPassword(emailStr, passwordStr).addOnSuccessListener {
                             val user = mAuth.currentUser!!
 
-                            val campos = HashMap<String, Any>()
-                            campos["uid"] = user.uid
-                            campos["email"] = user.email!!
-                            campos["token"] = FirebaseInstanceId.getInstance().token!!
+                            val changeBuilder = UserProfileChangeRequest.Builder()
+                                .setDisplayName(name).build()
 
-                            db.collection("users").document(user.uid).set(campos)
-                            startActivity<TelaPrincipal>()
+                            user.updateProfile(changeBuilder).addOnCompleteListener {
+                                val campos = HashMap<String, Any>()
+                                campos["uid"] = user.uid
+                                campos["email"] = user.email!!
+                                campos["token"] = FirebaseInstanceId.getInstance().token!!
+
+                                db.collection("users").document(user.uid).set(campos).addOnCompleteListener {
+                                    startActivity<TelaPrincipal>()
+                                    activity?.finish()
+                                }
+                            }
+
+
                         }
 
                     }
@@ -107,7 +125,12 @@ class RegisterFragment : Fragment() {
                     }
                 }
         } else {
-            focusView = if (validEmail) passwordR else emailR
+            focusView = when{
+                !validEmail -> emailR
+                !validPassword -> passwordR
+                !validUserName -> username
+                else -> null
+            }
             focusView?.requestFocus()
         }
     }

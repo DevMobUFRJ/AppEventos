@@ -39,7 +39,10 @@ class LoginFragment : Fragment() {
 
         mAuth = FirebaseAuth.getInstance()
 
-        if(mAuth.currentUser != null) startActivity<TelaPrincipal>()
+        if(mAuth.currentUser != null){
+            startActivity<TelaPrincipal>()
+            activity?.finish()
+        }
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
         email_register_button.setOnClickListener { activity?.mPager!!.currentItem = 1 }
@@ -81,6 +84,8 @@ class LoginFragment : Fragment() {
                             .collection("users").document(mAuth.uid!!).set(campos, SetOptions.merge())
 
                         startActivity<TelaPrincipal>()
+                        activity?.finish()
+
                     }
                     else {
                         try {

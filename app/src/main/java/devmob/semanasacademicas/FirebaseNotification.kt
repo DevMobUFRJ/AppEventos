@@ -37,14 +37,12 @@ public class FirebaseNotification: FirebaseMessagingService() {
             setupChannel()
 
         val notificationId = Random().nextInt(500000)
-//        val defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(data?.get("title"))
             .setContentText(data?.get("body"))
             .setAutoCancel(true)
-//            .setSound(defaultSound)
             .setDefaults(Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)

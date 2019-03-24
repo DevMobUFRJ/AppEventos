@@ -1,5 +1,6 @@
 package devmob.semanasacademicas
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -36,14 +37,16 @@ public class FirebaseNotification: FirebaseMessagingService() {
             setupChannel()
 
         val notificationId = Random().nextInt(500000)
-        val defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+//        val defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(data?.get("title"))
             .setContentText(data?.get("body"))
             .setAutoCancel(true)
-            .setSound(defaultSound)
+//            .setSound(defaultSound)
+            .setDefaults(Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
 
         Log.e("aaaaaa", data.toString())
@@ -56,7 +59,7 @@ public class FirebaseNotification: FirebaseMessagingService() {
         val adminChannelName = "APPEVENTOS_NOTIFICATION_CHANNEL"
         val adminChannelDescription = "Channel for appeventos"
 
-        val adminChannel = NotificationChannel(CHANNEL_ID, adminChannelName, NotificationManager.IMPORTANCE_DEFAULT)
+        val adminChannel = NotificationChannel(CHANNEL_ID, adminChannelName, NotificationManager.IMPORTANCE_HIGH)
         adminChannel.run {
             description = adminChannelDescription
             lightColor = Color.RED

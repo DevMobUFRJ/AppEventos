@@ -8,24 +8,27 @@ admin.initializeApp();
 exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{semana}/atividades/{atividade}").onUpdate(event =>{
     const splitedPath = event.after.ref.path.split("/");
 
-    return admin.firestore().collection("semanas").doc(splitedPath[1]).get().then(semanaModificada => {
-        const notificationContent = {
-            data: {
-                title: semanaModificada.data().nome,
-                body: event.after.data().nome + " sofreu uma alteração, venha ver!",
-                activityId: splitedPath[3],
-                weekId: splitedPath[1]
-            }
-        };
+    const notificationContent = {
+        data: {
+            body: event.after.data().nome + " sofreu uma alteração, venha ver!",
+            activityId: splitedPath[3],
+            weekId: splitedPath[1]
+        }
+    }
 
-        admin.firestore().collection("users").get().then(users => {
-            users.forEach(user => {
-                const favorites = admin.firestore().collection("users").doc(user.data().uid).collection("favorites");
-                favorites.where("id", "=", splitedPath[3]).get().then(favoritouEvento => {
-                    if(!favoritouEvento.empty) admin.messaging().sendToDevice(user.data().token, notificationContent);
-                });
+    const weekDetails = admin.firestore().collection("semanas").doc(splitedPath[1]).get().then(semanaModificada => {
+        notificationContent.data.title = semanaModificada.data().nome
+    });
+
+    const listUsers =  admin.firestore().collection("users").get()
+
+    return Promise.all([listUsers, weekDetails]).then(result =>{
+        const users = result[0]
+        users.forEach(user => {
+            const favorites = admin.firestore().collection("users").doc(user.data().uid).collection("favorites");
+            favorites.where("id", "=", splitedPath[3]).get().then(favoritouEvento => {
+                if(!favoritouEvento.empty) admin.messaging().sendToDevice(user.data().token, notificationContent);
             });
         });
-        
     });
 });

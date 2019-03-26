@@ -5,7 +5,7 @@
                                                  android:id="@+id/main_content"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
-                                                 tools:context=".AtividadesActivity">
+                                                 tools:context=".activities.AtividadesActivity">
 
     <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"

@@ -1,4 +1,4 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.dataclass
 
 import android.os.Parcelable
 import com.google.firebase.Timestamp

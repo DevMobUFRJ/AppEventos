@@ -1,10 +1,11 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import devmob.semanasacademicas.R
 
 class FragmentMinhaSemana : Fragment() {
     //essa parte aqui eh padrao pra todos fragment

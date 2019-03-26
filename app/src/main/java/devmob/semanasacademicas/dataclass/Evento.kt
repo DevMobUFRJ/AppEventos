@@ -1,8 +1,8 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.dataclass
 
 import android.os.Parcelable
-import android.util.Log
 import com.google.firebase.Timestamp
+import devmob.semanasacademicas.formata
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 

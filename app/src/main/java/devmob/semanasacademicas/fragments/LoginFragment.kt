@@ -1,4 +1,4 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,14 +12,14 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.iid.FirebaseInstanceId
+import devmob.semanasacademicas.R
+import devmob.semanasacademicas.activities.TelaPrincipal
 import kotlinx.android.synthetic.main.activity_login_or_register.*
 
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.viewPager
 import java.util.HashMap
 
 /**

@@ -1,32 +1,21 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirestoreRegistrar
+import devmob.semanasacademicas.R
+import devmob.semanasacademicas.fragments.FragmentMinhaSemana
+import devmob.semanasacademicas.fragments.FragmentTelaPrincipal
 import kotlinx.android.synthetic.main.activity_tela_principal.*
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
-import kotlinx.android.synthetic.main.content_tela_principal.*
-import kotlinx.android.synthetic.main.nav_header_tela_principal.*
 import kotlinx.android.synthetic.main.nav_header_tela_principal.view.*
-import org.jetbrains.anko.toast
-import java.util.*
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    lateinit var mAuth: FirebaseAuth
-    lateinit var user: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,29 +23,24 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         setSupportActionBar(toolbar)
 
 
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.setCheckedItem(R.id.nav_eventos)
 
-        mAuth = FirebaseAuth.getInstance()
-        user = mAuth.currentUser!!
-
+        val user = FirebaseAuth.getInstance().currentUser!!
         nav_view.getHeaderView(0).run {
             email.text = user.email!!
             nome.text = user.displayName!!
-
-            setOnClickListener {
-                toast("Clicou")
-            }
         }
 
         displayScreen(R.id.nav_eventos)
     }
 
-    //troca o layout da tela home pelo layout do item selecionado
-    fun displayScreen(id: Int){
+    private fun displayScreen(id: Int){
         val fragment = when (id) {
             R.id.nav_eventos -> FragmentTelaPrincipal()
             R.id.nav_agenda -> FragmentMinhaSemana()

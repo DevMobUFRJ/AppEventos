@@ -1,27 +1,24 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.adapters
 
-import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseExpandableListAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import devmob.semanasacademicas.*
+import devmob.semanasacademicas.activities.DetalhesAtividade
+import devmob.semanasacademicas.dataclass.Atividade
 import org.jetbrains.anko.*
 import kotlinx.android.synthetic.main.atividades_lista_items.view.*
 
-class AtividadesListAdapter(private val items: List<Atividade>, private val weekId: String): RecyclerView.Adapter<AtividadesListAdapter.ViewHolder>() {
+class AtividadesListAdapter(private val items: List<Atividade>): RecyclerView.Adapter<AtividadesListAdapter.ViewHolder>() {
 
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int) =
-        AtividadesListAdapter.ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.atividades_lista_items, p0, false))
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int)
+            = ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.atividades_lista_items, p0, false))
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItens(items[p1], weekId)
+    override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItens(items[p1])
 
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
@@ -29,7 +26,8 @@ class AtividadesListAdapter(private val items: List<Atividade>, private val week
         val tipo = itemView.itemListaTipo
         val nome = itemView.itemListaNome
 
-        fun bindItens(atividade: Atividade, weekId: String){
+        fun bindItens(atividade: Atividade){
+
             hora.text = atividade.inicio.formataHora() + "-" + atividade.fim.formataHora()
             nome.text = atividade.nome
             tipo.text = atividade.tipo.formataTipo()
@@ -38,7 +36,7 @@ class AtividadesListAdapter(private val items: List<Atividade>, private val week
                 if(atividade.tipo != "intervalo")
                     it.context.startActivity<DetalhesAtividade>(
                         ARG_ATIVIDADE_ID to atividade.id,
-                        ARG_WEEK_ID to weekId
+                        ARG_WEEK_ID to atividade.weekId
                     )
             }
         }

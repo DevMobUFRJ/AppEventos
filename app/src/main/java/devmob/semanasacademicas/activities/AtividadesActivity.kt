@@ -1,91 +1,71 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.activities
 
-import android.content.Intent
 import android.support.design.widget.TabLayout
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ExpandableListView
 import com.google.firebase.firestore.*
+import devmob.semanasacademicas.*
+import devmob.semanasacademicas.R
+import devmob.semanasacademicas.adapters.AtividadesListAdapter
+import devmob.semanasacademicas.dataclass.Atividade
+import devmob.semanasacademicas.dataclass.Evento
 
 import kotlinx.android.synthetic.main.activity_atividades.*
-import kotlinx.android.synthetic.main.fragment_atividades.*
 import kotlinx.android.synthetic.main.fragment_atividades.view.*
-import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
-import java.text.SimpleDateFormat
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.okButton
 import java.util.*
-import java.util.stream.Stream
 import kotlin.collections.HashMap
 
 class AtividadesActivity : AppCompatActivity() {
 
-    /**
-     * The [android.support.v4.view.PagerAdapter] that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * [android.support.v4.app.FragmentStatePagerAdapter].
-     */
-
-    lateinit var evento: Evento
     val atividades = HashMap<String, ArrayList<Atividade>>()
 
     private lateinit var listener: ListenerRegistration
 
-    private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
-
-    val db = FirebaseFirestore.getInstance()
-
-    private fun addTab() {
-        val dias = atividades.keys.sorted()
-        dias.let {
-            for(dia in it) if(dia !in mSectionsPagerAdapter!!.tabItems) tabs.addTab(tabs.newTab().setText(dia))
-            mSectionsPagerAdapter!!.tabItems = it
-        }
-    }
+    private lateinit var mSectionsPagerAdapter: SectionsPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
 
         setSupportActionBar(toolbar)
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
-        // Set up the ViewPager with the sections adapter.
         container.adapter = mSectionsPagerAdapter
 
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-        evento = intent?.extras!!.get("EVENTO") as Evento
-        val tipo = intent?.extras!!.get("TIPO") as String //pega quais atividades deve mostrar na pagina
+        val extras = intent?.extras!!
 
-        val referencia = db.collection("semanas").document(evento.id).collection("atividades")
+        val evento = extras[ARG_EVENT] as Evento
+        val tipo = extras[ARG_TYPE] as String
+
+        val referencia = FirebaseFirestore.getInstance().weeks[evento.id].activities
 
         listener = when(tipo) {
-            "workshop", "palestra" -> referencia.whereEqualTo("tipo", tipo)
+            Types.workshop, Types.lecture -> referencia.whereEqualTo("tipo", tipo)
             else -> referencia
         }.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+
             if(firebaseFirestoreException != null){
-                Log.w("aaaaa", "Listen error", firebaseFirestoreException)
+                alert(firebaseFirestoreException.message.toString(), "Opa, algo de errado aconteceu"){
+                    okButton {}
+                }
                 return@addSnapshotListener
             }
+
             for(change in querySnapshot!!.documentChanges){
 
                 val temp = change.document.toObject(Atividade::class.java)
@@ -93,83 +73,65 @@ class AtividadesActivity : AppCompatActivity() {
                 temp.weekId = evento.id
 
                 when(change.type){
-                    DocumentChange.Type.ADDED -> {
-                        Log.w("aaaaa", "add" + change.document.toString())
-
+                    DocumentChange.Type.ADDED ->
                         temp.inicio.formataSemana().also {
                             if(it !in atividades) atividades[it] = ArrayList()
                             atividades[it]!!.add(temp)
                         }
 
-
-                    }
-                    DocumentChange.Type.MODIFIED -> {
-                        Log.w("aaaaa", "mod" + change.document.toString())
-
+                    DocumentChange.Type.MODIFIED ->
                         temp.inicio.formataSemana().also {
                             for(i in 0 until (atividades[it]?.size ?: 0))
                                 if(atividades[it]!![i].id == temp.id)
                                     atividades[it]!![i] = temp
                         }
 
-                    }
-                    DocumentChange.Type.REMOVED -> {
-                        Log.w("aaaaa", "rem" + change.document.toString())
-
+                    DocumentChange.Type.REMOVED ->
                         temp.inicio.formataSemana().also {
                             var idx: Int? = null
-
                             for(i in 0 until (atividades[it]?.size ?: 0))
                                 if(atividades[it]!![i].id == temp.id)
                                     idx = i
-
                             atividades[it]!!.removeAt(idx!!)
                         }
-                    }
                 }
             }
-            addTab()
-            mSectionsPagerAdapter!!.notifyDataSetChanged()
+            attTabs()
         }
 
+    }
+
+    private fun attTabs() {
+        val dias = atividades.keys.sorted()
+        mSectionsPagerAdapter.run{
+            for(dia in dias)
+                if(dia !in tabItems) tabs.addTab(tabs.newTab().setText(dia))
+            tabItems = dias
+            notifyDataSetChanged()
+        }
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_atividades, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-
-        if (id == R.id.action_settings) {
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
+    override fun onOptionsItemSelected(item: MenuItem) =
+        if (item.itemId == R.id.action_settings) true
+        else super.onOptionsItemSelected(item)
 
     override fun onDestroy() {
         super.onDestroy()
         listener.remove()
     }
 
-
-    /**
-     * A [FragmentPagerAdapter] that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         var tabItems = emptyList<String>()
 
         override fun getItem(position: Int)
-                = PlaceholderFragment.newInstance(position, atividades[tabItems[position]]!!, evento.id)
+                = PlaceholderFragment.newInstance(position, atividades[tabItems[position]]!!)
 
         override fun getCount() = tabItems.size
 
@@ -177,23 +139,16 @@ class AtividadesActivity : AppCompatActivity() {
 
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-
     class PlaceholderFragment : Fragment() {
 
-        override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
             val rootView = inflater.inflate(R.layout.fragment_atividades, container, false)
 
             val atividades = arguments!!.getParcelableArrayList<Atividade>(ARG_LISTA_ATIVIDADES)
-            val weekId = arguments!!. getString(ARG_WEEK_ID)
             val atividadesOrdenadas = atividades!!.sortedWith(compareBy { it.inicio })
 
-            val viewAdapter = AtividadesListAdapter(atividadesOrdenadas, weekId)
+            val viewAdapter = AtividadesListAdapter(atividadesOrdenadas)
             val viewManager = LinearLayoutManager(this.context)
 
             rootView.listaAtividades.apply {
@@ -202,29 +157,15 @@ class AtividadesActivity : AppCompatActivity() {
                 adapter= viewAdapter
             }
 
-
-
             return rootView
         }
 
         companion object {
-            /**
-             * The fragment argument representing the section number for this
-             * fragment.
-             */
-            private const val ARG_SECTION_NUMBER = "section_number"
-            private const val ARG_LISTA_ATIVIDADES ="lista_de_atividades"
-
-            /**
-             * Returns a new instance of this fragment for the given section
-             * number.
-             */
-            fun newInstance(sectionNumber: Int, atividadesDoDia: ArrayList<Atividade>, weekId: String): PlaceholderFragment {
+            fun newInstance(sectionNumber: Int, atividadesDoDia: ArrayList<Atividade>): PlaceholderFragment {
                 val fragment = PlaceholderFragment()
                 val args = Bundle()
                 args.putInt(ARG_SECTION_NUMBER, sectionNumber)
                 args.putParcelableArrayList(ARG_LISTA_ATIVIDADES, atividadesDoDia)
-                args.putString(ARG_WEEK_ID,   weekId)
                 fragment.arguments = args
                 return fragment
             }

@@ -4,18 +4,16 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.graphics.Color
-import android.media.RingtoneManager
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import devmob.semanasacademicas.activities.DetalhesAtividade
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.notificationManager
-import org.jetbrains.anko.startActivity
 import java.util.*
 
 const val CHANNEL_ID = "42"

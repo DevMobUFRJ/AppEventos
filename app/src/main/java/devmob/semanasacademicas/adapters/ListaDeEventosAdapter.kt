@@ -1,18 +1,16 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.adapters
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.card_semana.view.*
-import java.util.*
-import android.support.design.widget.Snackbar
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import devmob.semanasacademicas.R
+import devmob.semanasacademicas.dataclass.Evento
+import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
 
 
 class ListaDeEventosAdapter(private val eventos: MutableList<Evento>): RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
@@ -45,7 +43,13 @@ class ListaDeEventosAdapter(private val eventos: MutableList<Evento>): RecyclerV
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int) =
-        ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.card_semana, p0, false))
+        ViewHolder(
+            LayoutInflater.from(p0.context).inflate(
+                R.layout.card_semana,
+                p0,
+                false
+            )
+        )
 
     override fun getItemCount() = eventos.size
 

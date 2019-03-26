@@ -1,6 +1,9 @@
 package devmob.semanasacademicas
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessagingService
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,5 +25,38 @@ fun String.formataTipo() = when (this){
     else -> ""
 }
 
+class Types{
+    companion object {
+        const val others = "outros"
+        const val workshop = "workshop"
+        const val mesaRedonda = "mesaRedonda"
+        const val lecture = "palestra"
+
+    }
+}
+
 const val ARG_WEEK_ID = "week_id"
 const val ARG_ATIVIDADE_ID = "atividade_id"
+const val ARG_EVENT = "EVENTO"
+const val ARG_TYPE = "TIPO"
+const val ARG_LISTA_ATIVIDADES ="lista_de_atividades"
+const val ARG_SECTION_NUMBER = "section_number"
+const val ACTIVITY_ID = "id"
+const val WEEK_ID = "weekId"
+
+val FirebaseFirestore.weeks: CollectionReference
+    get() = this.collection("semanas")
+
+val DocumentReference.activities: CollectionReference
+    get() = this.collection("atividades")
+
+val DocumentReference.shop: CollectionReference
+    get() = this.collection("loja")
+
+val FirebaseFirestore.users: CollectionReference
+    get() = this.collection("users")
+
+val DocumentReference.favorites: CollectionReference
+    get() = this.collection("favorites")
+
+operator fun CollectionReference.get(id: String) = this.document(id)

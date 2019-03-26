@@ -1,4 +1,4 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,11 +13,12 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
+import devmob.semanasacademicas.R
+import devmob.semanasacademicas.activities.TelaPrincipal
 
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.startActivity
 
 /**

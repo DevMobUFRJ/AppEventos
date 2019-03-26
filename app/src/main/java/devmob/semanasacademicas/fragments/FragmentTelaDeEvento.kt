@@ -1,4 +1,4 @@
-package devmob.semanasacademicas
+package devmob.semanasacademicas.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import devmob.semanasacademicas.activities.Loja
+import devmob.semanasacademicas.R
+import devmob.semanasacademicas.activities.AtividadesActivity
+import devmob.semanasacademicas.dataclass.Evento
 import kotlinx.android.synthetic.main.content_tela_de_evento.*
-import java.time.LocalDate
-import java.util.*
 
 class FragmentTelaDeEvento : Fragment() {
 

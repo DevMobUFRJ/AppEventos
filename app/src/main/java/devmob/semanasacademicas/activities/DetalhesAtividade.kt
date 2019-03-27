@@ -53,7 +53,7 @@ class DetalhesAtividade : AppCompatActivity() {
             }.addOnFailureListener {
                 alert(it.message.toString(), "Opa, algo de errado aconteceu"){
                     okButton {}
-                }
+                }.show()
             }
 
         newFavorite = db.users[mAuth.currentUser!!.uid].favorites
@@ -92,7 +92,7 @@ class DetalhesAtividade : AppCompatActivity() {
             }.addOnFailureListener {
                 alert(it.message.toString(), "Opa, algo de errado aconteceu"){
                     okButton {}
-                }
+                }.show()
             }
     }
 

@@ -62,7 +62,7 @@ class AtividadesActivity : AppCompatActivity() {
             if(firebaseFirestoreException != null){
                 alert(firebaseFirestoreException.message.toString(), "Opa, algo de errado aconteceu"){
                     okButton {}
-                }
+                }.show()
                 return@addSnapshotListener
             }
 

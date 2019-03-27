@@ -23,5 +23,19 @@
 
     <string name="money">R$ %1$s</string>
 
+    <string name="empty_name">Nome vazio</string>
+
+    <string name="empty_email">Email nao pode ser vazio</string>
+    <string name="not_email">Isso nao e um email</string>
+    <string name="email_no_exists">Esse email nao existe</string>
+
+    <string name="empty_password">Senha nao pode ser vazia</string>
+    <string name="short_password">Senha muito curta</string>
+    <string name="incorrect_password">Senha incorreta</string>
+
+    <string name="no_internet">Sem conexao com a internet</string>
+    <string name="email_exists">Esse email esta em uso</string>
+    <string name="malformated_email">Esse email esta incorreto</string>
+
 
 </resources>

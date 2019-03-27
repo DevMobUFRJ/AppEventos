@@ -3,8 +3,6 @@ package devmob.semanasacademicas.activities
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.adapters.ListaLojaAdapter
@@ -44,7 +42,7 @@ class Loja : AppCompatActivity() {
             }.addOnFailureListener {
                 alert(it.message.toString(), "Opa, algo de errado aconteceu"){
                     okButton {}
-                }
+                }.show()
             }
 
 

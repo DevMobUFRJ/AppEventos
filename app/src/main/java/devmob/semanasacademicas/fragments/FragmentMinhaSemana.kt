@@ -9,9 +9,8 @@ import devmob.semanasacademicas.R
 
 class FragmentMinhaSemana : Fragment() {
     //essa parte aqui eh padrao pra todos fragment
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_minha_semana, null) //R.layout.[layout_do_fragment]
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+            = inflater.inflate(R.layout.fragment_minha_semana, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

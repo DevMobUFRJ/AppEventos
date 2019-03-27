@@ -8,6 +8,9 @@ import android.graphics.Color
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import devmob.semanasacademicas.activities.DetalhesAtividade
@@ -18,7 +21,18 @@ import java.util.*
 
 const val CHANNEL_ID = "42"
 
-public class FirebaseNotification: FirebaseMessagingService() {
+class FirebaseNotification: FirebaseMessagingService() {
+
+    override fun onNewToken(token: String?) {
+        super.onNewToken(token)
+
+        FirebaseAuth.getInstance().uid?.also {
+            val campos = HashMap<String, String?>()
+            campos["token"] = token
+            FirebaseFirestore.getInstance().users[it].set(campos, SetOptions.merge())
+        }
+
+    }
 
     override fun onMessageReceived(message: RemoteMessage?) {
         super.onMessageReceived(message)

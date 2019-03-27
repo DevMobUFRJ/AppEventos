@@ -32,6 +32,7 @@ class Types{
         const val mesaRedonda = "mesaRedonda"
         const val lecture = "palestra"
         const val pause = "intervalo"
+        const val all = "todos"
 
     }
 }

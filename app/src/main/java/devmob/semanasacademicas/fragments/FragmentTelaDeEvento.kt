@@ -6,63 +6,54 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import devmob.semanasacademicas.ARG_EVENT
+import devmob.semanasacademicas.ARG_TYPE
 import devmob.semanasacademicas.activities.Loja
 import devmob.semanasacademicas.R
+import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.activities.AtividadesActivity
 import devmob.semanasacademicas.dataclass.Evento
 import kotlinx.android.synthetic.main.content_tela_de_evento.*
 
 class FragmentTelaDeEvento : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.content_tela_de_evento, null)
-    }
+    private lateinit var evento: Evento
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+            = inflater.inflate(R.layout.content_tela_de_evento, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //pega o evento
         val bundle = arguments
-        val evento = bundle!!.getParcelable<Evento>("EVENTO")
+        evento = bundle!!.getParcelable(ARG_EVENT)!!
 
-//        val meses = arrayOf("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
-//        var diaInicio = evento.inicio.toDate().date
-//        var mesInicio = evento.inicio.toDate().month
-//        var diaFim = evento.fim.toDate().date
-//        var mesFim = evento.fim.toDate().month
-//
-//        periodoEvento.text = if (mesFim == mesInicio) "$diaInicio a $diaFim de ${meses[mesInicio]}" else "$diaInicio de ${meses[mesInicio]} a $diaFim de ${meses[mesFim]}"
-//        nomeEvento.text = evento.nome
-//        descricaoEvento.text = evento.descricao
-
-        evento?.run{
+        evento.run{
             periodoEvento.text = periodo()
             nomeEvento.text = nome
             descricaoEvento.text = descricao
         }
 
         btnProgramacao.setOnClickListener {
-            val intent = Intent(this.context, AtividadesActivity::class.java)
-            intent.putExtra("EVENTO",evento)
-            intent.putExtra("TIPO", "todos")
-            this.context!!.startActivity(intent)
+            createIntent(Types.all)
         }
         btnWorkshops.setOnClickListener {
-            val intent = Intent(this.context, AtividadesActivity::class.java)
-            intent.putExtra("EVENTO",evento)
-            intent.putExtra("TIPO", "workshop")
-            this.context!!.startActivity(intent)
+            createIntent(Types.workshop)
         }
         btnPalestras.setOnClickListener {
-            val intent = Intent(this.context, AtividadesActivity::class.java)
-            intent.putExtra("EVENTO",evento)
-            intent.putExtra("TIPO", "palestra")
-            this.context!!.startActivity(intent)
+            createIntent(Types.lecture)
         }
 
         btnLoja.setOnClickListener {
             val intent = Intent(this.context, Loja::class.java)
-            intent.putExtra("EVENTO",evento)
+            intent.putExtra(ARG_EVENT, evento)
             this.context!!.startActivity(intent)
         }
+    }
+
+    private fun createIntent(type: String){
+        val intent = Intent(this.context, AtividadesActivity::class.java)
+        intent.putExtra(ARG_EVENT, evento)
+        intent.putExtra(ARG_TYPE, type)
+        this.context!!.startActivity(intent)
     }
 }

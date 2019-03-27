@@ -9,26 +9,16 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
-import com.google.firebase.iid.FirebaseInstanceId
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.activities.TelaPrincipal
 import kotlinx.android.synthetic.main.activity_login_or_register.*
-
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.startActivity
-import java.util.HashMap
 
-/**
- * A login screen that offers login via email/password.
- */
 class LoginFragment : Fragment() {
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
+
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
@@ -62,14 +52,14 @@ class LoginFragment : Fragment() {
         var validPassword = false
 
         when {
-            emailStr.isBlank() -> email.error = "Email nao pode ser vazio"
-            !emailStr.contains('@') -> email.error = "Isso nao e um email"
+            emailStr.isBlank() -> email.error = getString(R.string.empty_email)
+            !emailStr.contains('@') -> email.error = getString(R.string.not_email)
             else -> validEmail = true
         }
 
         when {
-            passwordStr.isBlank() -> password.error = "Senha nao pode ser vazia"
-            passwordStr.length < 6 -> password.error = "Senha muito curta"
+            passwordStr.isBlank() -> password.error = getString(R.string.empty_password)
+            passwordStr.length < 6 -> password.error = getString(R.string.short_password)
             else -> validPassword = true
         }
 
@@ -77,31 +67,24 @@ class LoginFragment : Fragment() {
             mAuth.signInWithEmailAndPassword(emailStr, passwordStr)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        val campos = HashMap<String, Any>()
-                        campos["token"] = FirebaseInstanceId.getInstance().token!!
-
-                        FirebaseFirestore.getInstance()
-                            .collection("users").document(mAuth.uid!!).set(campos, SetOptions.merge())
-
                         startActivity<TelaPrincipal>()
                         activity?.finish()
-
                     }
                     else {
                         try {
                             throw it.exception!!
                         } catch (e: FirebaseNetworkException) {
                             //Sem internet
-                            alert("Sem conexao com a internet") {
+                            alert(getString(R.string.no_internet)) {
                                 okButton {}
-                            }
+                            }.show()
                         } catch (e: FirebaseAuthInvalidCredentialsException) {
                             //Senha incorreta
-                            password.error = "Senha incorreta"
+                            password.error = getString(R.string.incorrect_password)
                             focusView = password
                         } catch (e: FirebaseAuthInvalidUserException) {
                             //Email nao existe ou desabilitado
-                            email.error = "Email nao cadastrado"
+                            email.error = getString(R.string.email_no_exists)
                             focusView = email
                         }
                         focusView?.requestFocus()

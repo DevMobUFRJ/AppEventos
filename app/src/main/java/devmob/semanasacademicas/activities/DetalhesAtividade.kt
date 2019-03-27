@@ -102,7 +102,7 @@ class DetalhesAtividade : AppCompatActivity() {
         diaAtividade.text = atividade.inicio.formataDia()
         apresentadorAtividade.text = atividade.apresentador
         empresaAtividade.text = atividade.grupo
-        horasalaAtividade.text = getString(R.string.activity_period, atividade.inicio.formataHora(), atividade.fim.formataHora(), atividade.local)
+        horasalaAtividade.text = getString(R.string.activity_period_and_date, atividade.inicio.formataHora(), atividade.fim.formataHora(), atividade.local)
 
         if (atividade.tipo == Types.others || atividade.tipo == Types.mesaRedonda)
             cardView.visibility = View.INVISIBLE

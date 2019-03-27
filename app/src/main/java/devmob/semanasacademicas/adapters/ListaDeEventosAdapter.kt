@@ -7,7 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.card_semana.view.*
 import android.support.v7.app.AppCompatActivity
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
+import devmob.semanasacademicas.ARG_EVENT
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
@@ -15,51 +19,38 @@ import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
 
 class ListaDeEventosAdapter(private val eventos: MutableList<Evento>): RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
 
-    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-
-        Glide.with(p0.view).load(eventos[p1].link).thumbnail(0.1f).into(p0.imageView)
-        //DownloadImage(p0.imageView).execute(eventos[p1].link)
-
-        p0.nome.text = eventos[p1].nome
-        p0.descricao.text = eventos[p1].descricao
-        p0.periodo.text = eventos[p1].periodo()
-
-        p0.botao.setOnClickListener {
-            //val intent = Intent(it.context, TelaDeEvento::class.java)
-            //intent.putExtra("EVENTO",eventos[p1])
-            //it.context.startActivity(intent)
-
-            val activity = it.context as AppCompatActivity
-            val fragment = FragmentTelaDeEvento()
-            val bundle = Bundle()
-            bundle.putParcelable("EVENTO", eventos[p1])
-            fragment.arguments = bundle
-            activity.supportFragmentManager.beginTransaction().replace(R.id.contentHome, fragment)
-                .addToBackStack(null).commit()
-
-
-
-        }
-    }
-
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int) =
-        ViewHolder(
-            LayoutInflater.from(p0.context).inflate(
-                R.layout.card_semana,
-                p0,
-                false
-            )
-        )
+        ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.card_semana, p0, false))
 
     override fun getItemCount() = eventos.size
 
+    override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItems(eventos[p1])
+
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
-        val nome = itemView.nomePagPrincipal!!
-        val descricao = itemView.descPagPrincipal!!
-        val periodo = itemView.dataPagPrincipal!!
-        val botao = itemView.botaoAbrirEvento!!
-        val imageView = itemView.imageView2!!
-        val view = itemView
+        private val nome = itemView.nomePagPrincipal as TextView
+        private val descricao = itemView.descPagPrincipal as TextView
+        private val periodo = itemView.dataPagPrincipal as TextView
+        private val botao = itemView.botaoAbrirEvento as Button
+        private val imageView = itemView.imageView2 as ImageView
+
+        fun bindItems(event: Evento){
+            Glide.with(itemView).load(event.link).thumbnail(0.1f).into(imageView)
+
+            nome.text = event.nome
+            descricao.text = event.descricao
+            periodo.text = event.periodo()
+
+            botao.setOnClickListener {
+                val activity = it.context as AppCompatActivity
+                val fragment = FragmentTelaDeEvento()
+                val bundle = Bundle()
+                bundle.putParcelable(ARG_EVENT, event)
+                fragment.arguments = bundle
+                activity.supportFragmentManager.beginTransaction().replace(R.id.contentHome, fragment)
+                    .addToBackStack(null).commit()
+            }
+
+        }
     }
 
 }

@@ -31,6 +31,7 @@ class Types{
         const val workshop = "workshop"
         const val mesaRedonda = "mesaRedonda"
         const val lecture = "palestra"
+        const val pause = "intervalo"
 
     }
 }

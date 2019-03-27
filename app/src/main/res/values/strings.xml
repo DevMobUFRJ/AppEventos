@@ -18,5 +18,10 @@
     <string name="favorite_this">Favorite essa atividadde</string>
     <string name="unfavorite_this">Desfavorite essa atividadde</string>
 
-    <string name="activity_period">%1$s - %2$s | %3$s</string>
+    <string name="activity_period_and_date">%1$s - %2$s | %3$s</string>
+    <string name="activity_period">%1$s - %2$s</string>
+
+    <string name="money">R$ %1$s</string>
+
+
 </resources>

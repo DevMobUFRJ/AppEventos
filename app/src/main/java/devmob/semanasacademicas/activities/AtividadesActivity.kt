@@ -87,12 +87,10 @@ class AtividadesActivity : AppCompatActivity() {
                         }
 
                     DocumentChange.Type.REMOVED ->
-                        temp.inicio.formataSemana().also {
-                            var idx: Int? = null
-                            for(i in 0 until (atividades[it]?.size ?: 0))
-                                if(atividades[it]!![i].id == temp.id)
-                                    idx = i
-                            atividades[it]!!.removeAt(idx!!)
+                        for(entry in atividades){
+                            val lista = entry.component2()
+                            val busca = lista.find { it.id == temp.id }
+                            if( busca != null) lista.remove(busca)
                         }
                 }
             }

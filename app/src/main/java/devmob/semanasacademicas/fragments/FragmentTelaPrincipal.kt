@@ -55,14 +55,8 @@ class FragmentTelaPrincipal : Fragment() {
                         DocumentChange.Type.MODIFIED ->
                             for(i in 0 until eventos.size) if(eventos[i].id == temp.id) eventos[i] = temp
 
-                        DocumentChange.Type.REMOVED -> {
-                            var idx: Int? = null
-                            for(i in 0 until eventos.size)
-                                if(eventos[i].id == temp.id) idx = i
-                            idx?.let {
-                                eventos.removeAt(it)
-                            }
-                        }
+                        DocumentChange.Type.REMOVED ->
+                            eventos.remove( eventos.find { it.id == temp.id } )
                     }
                 }
                 viewAdapter.notifyDataSetChanged()

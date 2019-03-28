@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.dataclass.Atividade
-import kotlinx.android.synthetic.main.fragment_minha_semana.*
+import devmob.semanasacademicas.formataMes
 import kotlinx.android.synthetic.main.minha_semana_dia.view.*
 
 class ListaDeFavoritosAdapter(private val eventosFavoritados: HashMap<String, ArrayList<Atividade>>) : RecyclerView.Adapter<ListaDeFavoritosAdapter.ViewHolder>() {
@@ -18,20 +18,23 @@ class ListaDeFavoritosAdapter(private val eventosFavoritados: HashMap<String, Ar
     override fun getItemCount() = eventosFavoritados.size
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int){
-        val keys = eventosFavoritados.keys.toList()
+        val keys = eventosFavoritados.keys.toList().sorted()
         val listActivities = eventosFavoritados[keys[p1]]!!
-        p0.bindItems(listActivities, keys[p1])
+        p0.bindItems(listActivities)
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val dia = itemView.dia_numero as TextView
-        val diaSemana = itemView.dia_semana as TextView
+        val diaSemana = itemView.mes as TextView
         val list = itemView.listFavorite_Items as RecyclerView
 
 
-        fun bindItems(listActivities: ArrayList<Atividade>, index: String){
-            dia.text = index.subSequence(0, 2)
-            diaSemana.text = index.subSequence(3, 6)
+        fun bindItems(listActivities: ArrayList<Atividade>){
+            val temp = listActivities[0].inicio.formataMes()
+            dia.text = temp.subSequence(0, 2)
+            diaSemana.text = temp.subSequence(3, 6)
+
+            listActivities.sortBy { it.inicio }
 
             list.apply {
                 adapter = ItemsFavoritedListAdapter(listActivities)

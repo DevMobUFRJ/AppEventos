@@ -42,7 +42,11 @@ class FragmentMinhaSemana : Fragment() {
 
                     db.weeks[weekId].activities[activityId].get().addOnSuccessListener {
                         val temp = it.toObject(Atividade::class.java)!!
-                        temp.inicio.formataSemana().also {
+                        
+                        temp.id = activityId
+                        temp.weekId = weekId
+
+                        temp.inicio.formataBarra().also {
                             if(it !in eventosFavoritados) eventosFavoritados[it] = ArrayList()
                             eventosFavoritados[it]!!.add(temp)
                         }

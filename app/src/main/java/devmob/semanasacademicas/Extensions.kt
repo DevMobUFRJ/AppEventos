@@ -12,6 +12,10 @@ fun Timestamp.formata() = SimpleDateFormat("dd 'de' MMMM", Locale("pt", "BR")).f
 
 fun Timestamp.formataDia() = SimpleDateFormat("dd MMMM',' EE ", Locale("pt", "BR")).format(this.toDate()).toUpperCase()
 
+fun Timestamp.formataMes() = SimpleDateFormat("dd MMM", Locale("pt", "BR")).format(this.toDate()).toUpperCase()
+
+fun Timestamp.formataBarra() = SimpleDateFormat("dd/MM", Locale("pt", "BR")).format(this.toDate()).toUpperCase()
+
 fun Timestamp.formataHora() = SimpleDateFormat("HH:mm", Locale("pt", "BR")).format(this.toDate())
 
 fun Timestamp.formataSemana() = SimpleDateFormat("dd EE", Locale("pt", "BR")).format(this.toDate()).toUpperCase()

@@ -30,6 +30,8 @@ class ListaDeFavoritosAdapter(private val eventosFavoritados: HashMap<String, Ar
 
 
         fun bindItems(listActivities: ArrayList<Atividade>){
+            if(listActivities.size == 0) return
+
             val temp = listActivities[0].inicio.formataMes()
             dia.text = temp.subSequence(0, 2)
             diaSemana.text = temp.subSequence(3, 6)

@@ -23,16 +23,16 @@ const val CHANNEL_ID = "42"
 
 class FirebaseNotification: FirebaseMessagingService() {
 
-    override fun onNewToken(token: String?) {
-        super.onNewToken(token)
-
-        FirebaseAuth.getInstance().uid?.also {
-            val campos = HashMap<String, String?>()
-            campos["token"] = token
-            FirebaseFirestore.getInstance().users[it].set(campos, SetOptions.merge())
-        }
-
-    }
+//    override fun onNewToken(token: String?) {
+//        super.onNewToken(token)
+//
+//        FirebaseAuth.getInstance().uid?.also {
+//            val campos = HashMap<String, String?>()
+//            campos["token"] = token
+//            FirebaseFirestore.getInstance().users[it].set(campos, SetOptions.merge())
+//        }
+//
+//    }
 
     override fun onMessageReceived(message: RemoteMessage?) {
         super.onMessageReceived(message)

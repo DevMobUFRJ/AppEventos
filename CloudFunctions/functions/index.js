@@ -17,17 +17,18 @@ exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{sema
     }
 
     const weekDetails = admin.firestore().collection("semanas").doc(splitedPath[1]).get().then(semanaModificada => {
-        notificationContent.data.title = semanaModificada.data().nome
+        notificationContent.data.title = semanaModificada.data().nome;
     });
 
-    const listUsers =  admin.firestore().collection("users").get()
+    const usersRef = admin.firestore().collection("users");
+    const listUsers =  usersRef.get();
 
     return Promise.all([listUsers, weekDetails]).then(result =>{
         const users = result[0]
         users.forEach(user => {
-            const favorites = admin.firestore().collection("users").doc(user.data().uid).collection("favorites");
-            favorites.where("id", "=", splitedPath[3]).get().then(favoritouEvento => {
+            usersRef.doc(user.data().uid).collection("favorites").where("id", "=", splitedPath[3]).get().then(favoritouEvento => {
                 if(!favoritouEvento.empty) admin.messaging().sendToDevice(user.data().token, notificationContent);
+                console.log(user.data().token)
             });
         });
     });

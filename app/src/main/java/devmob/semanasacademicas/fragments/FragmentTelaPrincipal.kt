@@ -3,10 +3,12 @@ package devmob.semanasacademicas.fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.*
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.iid.FirebaseInstanceId
 import devmob.semanasacademicas.adapters.ListaDeEventosAdapter
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.dataclass.Evento

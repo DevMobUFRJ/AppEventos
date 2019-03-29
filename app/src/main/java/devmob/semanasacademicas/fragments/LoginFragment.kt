@@ -9,8 +9,13 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.iid.FirebaseInstanceId
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.activities.TelaPrincipal
+import devmob.semanasacademicas.get
+import devmob.semanasacademicas.users
 import kotlinx.android.synthetic.main.activity_login_or_register.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.*
@@ -30,6 +35,12 @@ class LoginFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance()
 
         if(mAuth.currentUser != null){
+            FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+                val campos = HashMap<String, Any>()
+                campos["token"] = it.token
+                FirebaseFirestore.getInstance().users[mAuth.currentUser!!.uid].set(campos, SetOptions.merge())
+            }
+
             startActivity<TelaPrincipal>()
             activity?.finish()
         }
@@ -65,14 +76,19 @@ class LoginFragment : Fragment() {
 
         if (validEmail && validPassword) {
             mAuth.signInWithEmailAndPassword(emailStr, passwordStr)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
+                .addOnCompleteListener {task ->
+                    if (task.isSuccessful) {
+                        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+                            val campos = HashMap<String, Any>()
+                            campos["token"] = it.token
+                            FirebaseFirestore.getInstance().users[task.result!!.user.uid].set(campos, SetOptions.merge())
+                        }
                         startActivity<TelaPrincipal>()
                         activity?.finish()
                     }
                     else {
                         try {
-                            throw it.exception!!
+                            throw task.exception!!
                         } catch (e: FirebaseNetworkException) {
                             //Sem internet
                             alert(getString(R.string.no_internet)) {

@@ -12,6 +12,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.iid.FirebaseInstanceId
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.get
@@ -85,14 +87,17 @@ class RegisterFragment : Fragment() {
                                 .setDisplayName(name).build()
 
                             user.updateProfile(changeBuilder).addOnCompleteListener {
-                                val campos = HashMap<String, Any>()
-                                campos["uid"] = user.uid
-                                campos["email"] = user.email!!
 
-                                db.users[user.uid].set(campos).addOnCompleteListener {
-                                    startActivity<TelaPrincipal>()
-                                    activity?.finish()
+                                FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+                                    val campos = HashMap<String, Any>()
+                                    campos["uid"] = user.uid
+                                    campos["email"] = user.email!!
+                                    campos["token"] = it.token
+                                    db.users[user.uid].set(campos)
                                 }
+
+                                startActivity<TelaPrincipal>()
+                                activity?.finish()
                             }
 
 

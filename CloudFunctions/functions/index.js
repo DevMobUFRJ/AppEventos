@@ -7,11 +7,19 @@ admin.initializeApp();
 
 exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{semana}/atividades/{atividade}").onUpdate(event =>{
     const splitedPath = event.after.ref.path.split("/");
-
+    const data = event.after.data()
+    console.log(data.fim._seconds)
     const notificationContent = {
         data: {
-            body: event.after.data().nome + " sofreu uma alteração, venha ver!",
-            activityId: splitedPath[3],
+            body: data.nome + " sofreu uma alteração, venha ver!",
+            id: splitedPath[3],
+            nome: data.nome,
+            grupo: data.grupo,
+            tipo: data.tipo,
+            inicio: data.inicio._seconds.toString(),
+            fim: data.fim._seconds.toString(),
+            apresentador: data.apresentador,
+            local: data.local,
             weekId: splitedPath[1]
         }
     }
@@ -28,7 +36,6 @@ exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{sema
         users.forEach(user => {
             usersRef.doc(user.data().uid).collection("favorites").where("id", "=", splitedPath[3]).get().then(favoritouEvento => {
                 if(!favoritouEvento.empty) admin.messaging().sendToDevice(user.data().token, notificationContent);
-                console.log(user.data().token)
             });
         });
     });

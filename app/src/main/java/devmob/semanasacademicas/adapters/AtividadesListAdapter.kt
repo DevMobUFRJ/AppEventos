@@ -37,8 +37,7 @@ class AtividadesListAdapter(private val items: List<Atividade>): RecyclerView.Ad
             itemView.setOnClickListener {
                 if(atividade.tipo != Types.pause)
                     it.context.startActivity<DetalhesAtividade>(
-                        ARG_ATIVIDADE_ID to atividade.id,
-                        ARG_WEEK_ID to atividade.weekId
+                        ARG_ATIVIDADE to atividade
                     )
             }
         }

@@ -29,8 +29,7 @@ class ItemsFavoritedListAdapter(private val listActivities: ArrayList<Atividade>
             itemView.setOnClickListener {
                 if(item.tipo != Types.pause)
                     it.context.startActivity<DetalhesAtividade>(
-                        ARG_ATIVIDADE_ID to item.id,
-                        ARG_WEEK_ID to item.weekId
+                        ARG_ATIVIDADE to item
                     )
             }
         }

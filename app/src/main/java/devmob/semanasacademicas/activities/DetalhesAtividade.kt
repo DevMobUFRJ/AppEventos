@@ -22,9 +22,6 @@ class DetalhesAtividade : AppCompatActivity() {
 
     private lateinit var atividade: Atividade
 
-    private lateinit var weekId: String
-    private lateinit var atividadeId: String
-
     private lateinit var db: FirebaseFirestore
     private lateinit var mAuth: FirebaseAuth
 
@@ -40,22 +37,8 @@ class DetalhesAtividade : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         mAuth = FirebaseAuth.getInstance()
 
-        atividadeId = intent?.extras!!.getString(ARG_ATIVIDADE_ID)!!
-        weekId = intent?.extras!!.getString(ARG_WEEK_ID)!!
-
-        db.weeks[weekId].activities[atividadeId].get()
-            .addOnSuccessListener {
-                atividade = it.toObject(Atividade::class.java)!!
-                atividade.id = atividadeId
-                atividade.weekId = weekId
-
-                setViews()
-
-            }.addOnFailureListener {
-                alert(it.message.toString(), "Opa, algo de errado aconteceu"){
-                    okButton {}
-                }.show()
-            }
+        atividade = intent?.extras!!.getParcelable(ARG_ATIVIDADE)!!
+        setViews()
 
         newFavorite = db.users[mAuth.currentUser!!.uid].favorites
         favoriteOrUnfavorite()
@@ -63,8 +46,8 @@ class DetalhesAtividade : AppCompatActivity() {
             if (favorite) {
                 val data = HashMap<String, Any>()
 
-                data[ACTIVITY_ID] = atividadeId
-                data[WEEK_ID] = weekId
+                data[ACTIVITY_ID] = atividade.id
+                data[WEEK_ID] = atividade.weekId
 
                 newFavorite.add(data).addOnSuccessListener {
                     toast("Favorito adicionado!")
@@ -79,7 +62,7 @@ class DetalhesAtividade : AppCompatActivity() {
     }
 
     private fun favoriteOrUnfavorite() {
-        newFavorite.whereEqualTo("id", atividadeId).get()
+        newFavorite.whereEqualTo("id", atividade.id).get()
             .addOnSuccessListener {
                 if (it.isEmpty) {
                     favorite = true

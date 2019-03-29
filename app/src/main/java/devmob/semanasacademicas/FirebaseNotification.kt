@@ -8,12 +8,14 @@ import android.graphics.Color
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.util.Log
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import devmob.semanasacademicas.activities.DetalhesAtividade
+import devmob.semanasacademicas.dataclass.Atividade
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.notificationManager
@@ -37,11 +39,21 @@ class FirebaseNotification: FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage?) {
         super.onMessageReceived(message)
 
-        val data = message?.data
+        val data = message?.data!!
+        val atividade = Atividade()
+
+        atividade.id = data["id"]!!
+        atividade.nome = data["nome"]!!
+        atividade.grupo = data["grupo"]!!
+        atividade.tipo = data["tipo"]!!
+        atividade.inicio = Timestamp(data["inicio"]!!.toLong(), 0)
+        atividade.fim = Timestamp(data["fim"]!!.toLong(), 0)
+        atividade.apresentador = data["apresentador"]!!
+        atividade.local = data["local"]!!
+        atividade.weekId = data["weekId"]!!
 
         val intent = intentFor<DetalhesAtividade>(
-            ARG_WEEK_ID to data?.get("weekId"),
-            ARG_ATIVIDADE_ID to data?.get("activityId")
+            ARG_ATIVIDADE to atividade
         ).clearTop()
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
 
@@ -52,14 +64,12 @@ class FirebaseNotification: FirebaseMessagingService() {
 
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(data?.get("title"))
-            .setContentText(data?.get("body"))
+            .setContentTitle(data.get("title"))
+            .setContentText(data.get("body"))
             .setAutoCancel(true)
             .setDefaults(Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
-
-        Log.e("aaaaaa", data.toString())
 
         notificationManager.notify(notificationId, notificationBuilder.build())
     }

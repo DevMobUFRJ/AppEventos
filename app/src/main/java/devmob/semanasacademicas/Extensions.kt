@@ -47,6 +47,7 @@ const val ARG_EVENT = "EVENTO"
 const val ARG_TYPE = "TIPO"
 const val ARG_LISTA_ATIVIDADES ="lista_de_atividades"
 const val ARG_SECTION_NUMBER = "section_number"
+const val ARG_ATIVIDADE = "atividade"
 const val ACTIVITY_ID = "id"
 const val WEEK_ID = "weekId"
 

@@ -63,6 +63,7 @@
                     android:layout_height="160dp"
                     android:layout_margin="4dp"
                     android:id="@+id/btnProgramacao"
+                    android:foreground="?attr/selectableItemBackground"
                     android:elevation="10dp"
                     android:layout_weight="1">
                 <LinearLayout 
@@ -94,6 +95,7 @@
                     android:id="@+id/btnWorkshops"
                     android:layout_height="160dp"
                     android:layout_margin="4dp"
+                    android:foreground="?attr/selectableItemBackground"
                     android:elevation="10dp"
                     android:layout_weight="1">
                 <LinearLayout
@@ -131,6 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_margin="4dp"
+                    android:foreground="?attr/selectableItemBackground"
                     android:elevation="10dp"
                     android:id="@+id/btnPalestras"
                     android:layout_weight="1">
@@ -162,6 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_margin="4dp"
+                    android:foreground="?attr/selectableItemBackground"
                     android:elevation="10dp"
                     android:id="@+id/btnLoja"
                     android:layout_weight="1">

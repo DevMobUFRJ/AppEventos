@@ -1,5 +1,6 @@
 package devmob.semanasacademicas.fragments
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -46,12 +47,18 @@ class LoginFragment : Fragment() {
         }
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
-        email_register_button.setOnClickListener { activity?.mPager!!.currentItem = 1 }
+        email_register_button.setOnClickListener {
+            activity!!.supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.contentLogin, RegisterFragment())
+                .commit()
+        }
     }
 
 
     private fun attemptLogin() {
         var focusView: View? = null
+        val progressDialog = ProgressDialog.show(this.context, "Aguarde", "Processando...", true)
 
         email.error = null
         password.error = null
@@ -63,14 +70,30 @@ class LoginFragment : Fragment() {
         var validPassword = false
 
         when {
-            emailStr.isBlank() -> email.error = getString(R.string.empty_email)
-            !emailStr.contains('@') -> email.error = getString(R.string.not_email)
+            emailStr.isBlank() -> {
+                email.error = getString(R.string.empty_email)
+                email.requestFocus()
+                progressDialog.dismiss()
+            }
+            !emailStr.contains('@') -> {
+                email.error = getString(R.string.not_email)
+                email.requestFocus()
+                progressDialog.dismiss()
+            }
             else -> validEmail = true
         }
 
         when {
-            passwordStr.isBlank() -> password.error = getString(R.string.empty_password)
-            passwordStr.length < 6 -> password.error = getString(R.string.short_password)
+            passwordStr.isBlank() -> {
+                password.error = getString(R.string.empty_password)
+                password.requestFocus()
+                progressDialog.dismiss()
+            }
+            passwordStr.length < 6 -> {
+                password.error = getString(R.string.short_password)
+                password.requestFocus()
+                progressDialog.dismiss()
+            }
             else -> validPassword = true
         }
 
@@ -83,10 +106,12 @@ class LoginFragment : Fragment() {
                             campos["token"] = it.token
                             FirebaseFirestore.getInstance().users[task.result!!.user.uid].set(campos, SetOptions.merge())
                         }
-                        startActivity<TelaPrincipal>()
+                        progressDialog.dismiss()
                         activity?.finish()
+                        startActivity<TelaPrincipal>()
                     }
                     else {
+                        progressDialog.dismiss()
                         try {
                             throw task.exception!!
                         } catch (e: FirebaseNetworkException) {
@@ -94,22 +119,22 @@ class LoginFragment : Fragment() {
                             alert(getString(R.string.no_internet)) {
                                 okButton {}
                             }.show()
-                        } catch (e: FirebaseAuthInvalidCredentialsException) {
-                            //Senha incorreta
-                            password.error = getString(R.string.incorrect_password)
-                            focusView = password
                         } catch (e: FirebaseAuthInvalidUserException) {
                             //Email nao existe ou desabilitado
                             email.error = getString(R.string.email_no_exists)
                             focusView = email
+                        } catch (e: FirebaseAuthInvalidCredentialsException) {
+                            //Senha incorreta
+                            password.error = getString(R.string.incorrect_password)
+                            focusView = password
                         }
                         focusView?.requestFocus()
                     }
                 }
-        } else {
+        } /*else {
             focusView = if (validEmail) password else email
             focusView?.requestFocus()
-        }
+        }*/
     }
 
 }

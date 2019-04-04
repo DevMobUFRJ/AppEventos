@@ -3,6 +3,7 @@ package devmob.semanasacademicas.fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,10 +38,12 @@ class FragmentMinhaSemana : Fragment() {
             layoutManager = viewManager
         }
 
+        progressBar.show()
         val mAuth = FirebaseAuth.getInstance().uid!!
         listener = db.users[mAuth].favorites
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if(firebaseFirestoreException != null){
+                    progressBar.dismiss()
                     alert(firebaseFirestoreException.message.toString(), "Opa, algo de errado aconteceu"){
                         okButton {}
                     }
@@ -63,6 +66,7 @@ class FragmentMinhaSemana : Fragment() {
                                         eventosFavoritados[it]!!.add(temp)
                                     }
                                     viewAdapter.notifyDataSetChanged()
+                                    progressBar.dismiss()
                                 }
                             }
                             DocumentChange.Type.REMOVED -> {
@@ -75,6 +79,7 @@ class FragmentMinhaSemana : Fragment() {
                                     }
                                 }
                                 viewAdapter.notifyDataSetChanged()
+                                progressBar.dismiss()
                             }
                         }
 

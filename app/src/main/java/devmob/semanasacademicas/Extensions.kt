@@ -1,10 +1,13 @@
 package devmob.semanasacademicas
 
+import android.view.View
+import android.widget.ProgressBar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessagingService
+import devmob.semanasacademicas.dataclass.Evento
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -67,3 +70,21 @@ val DocumentReference.favorites: CollectionReference
     get() = this.collection("favorites")
 
 operator fun CollectionReference.get(id: String) = this.document(id)
+
+fun ProgressBar.show() {
+    this.visibility = View.VISIBLE
+}
+
+fun ProgressBar.dismiss() {
+    this.visibility = View.GONE
+}
+
+
+//usado para debug
+fun MutableList<Evento>.names(): String{
+    var st = ""
+    for (week in this){
+        st += week.nome + ", "
+    }
+    return st
+}

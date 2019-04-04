@@ -5,6 +5,14 @@
 
     <group android:checkableBehavior="single">
         <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/drawer_login_icon"
+                android:title="Login"/>
+        <item
+                android:id="@+id/nav_minha_conta"
+                android:icon="@drawable/drawer_my_account_icon"
+                android:title="Minha Conta"/>
+        <item
                 android:id="@+id/nav_eventos"
                 android:icon="@drawable/drawer_eventos_icon"
                 android:title="Eventos"/>
@@ -28,6 +36,10 @@
                 android:id="@+id/nav_ajuda"
                 android:icon="@drawable/drawer_ajuda_icon"
                 android:title="Ajuda"/>
+        <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/drawer_logout_icon"
+                android:title="Sair"/>
     </group>
 
 </menu>

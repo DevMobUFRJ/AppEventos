@@ -7,8 +7,10 @@ admin.initializeApp();
 
 exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{semana}/atividades/{atividade}").onUpdate(event =>{
     const splitedPath = event.after.ref.path.split("/");
-    const data = event.after.data()
-    console.log(data.fim._seconds)
+    const data = event.after.data();
+    if(data.favs != event.before.data().favs) return 0;
+
+    console.log(data.fim._seconds);
     const notificationContent = {
         data: {
             body: data.nome + " sofreu uma alteração, venha ver!",
@@ -20,9 +22,12 @@ exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{sema
             fim: data.fim._seconds.toString(),
             apresentador: data.apresentador,
             local: data.local,
-            weekId: splitedPath[1]
+            weekId: splitedPath[1],
+//            favs: 0
         }
     }
+
+//    if(data.favs != undefined) notificationContent.data.favs = data.favs;
 
     const weekDetails = admin.firestore().collection("semanas").doc(splitedPath[1]).get().then(semanaModificada => {
         notificationContent.data.title = semanaModificada.data().nome;
@@ -38,5 +43,31 @@ exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{sema
                 if(!favoritouEvento.empty) admin.messaging().sendToDevice(user.data().token, notificationContent);
             });
         });
+    });
+});
+
+exports.onCreateFavorite = functions.firestore.document("/users/{user}/favorites/{favorito}").onCreate(event =>{
+    const doc = event.data();
+    const weekRef = admin.firestore().collection("semanas").doc(doc.weekId).collection("atividades").doc(doc.id);
+    
+    return weekRef.get().then(activity => {
+        var newFavs = 1;
+        const oldFavs = activity.data().favs;
+
+        if(oldFavs != undefined) newFavs += oldFavs;
+        weekRef.set({favs: newFavs}, { merge: true });
+    });
+});
+
+exports.onDeleteFavorite = functions.firestore.document("/users/{user}/favorites/{favorito}").onDelete(event =>{
+    const doc = event.data();
+    const weekRef = admin.firestore().collection("semanas").doc(doc.weekId).collection("atividades").doc(doc.id);
+    
+    return weekRef.get().then(activity => {
+        var newFavs = 0;
+        const oldFavs = activity.data().favs;
+
+        if(oldFavs != undefined && oldFavs >= 1) newFavs = oldFavs-1;
+        weekRef.set({favs: newFavs}, { merge: true });
     });
 });

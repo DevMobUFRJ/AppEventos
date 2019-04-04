@@ -7,16 +7,14 @@ import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.dataclass.Atividade
 import kotlinx.android.synthetic.main.activity_detalhes_atividade.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.okButton
-import org.jetbrains.anko.textResource
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 
 class DetalhesAtividade : AppCompatActivity() {
 
@@ -40,25 +38,42 @@ class DetalhesAtividade : AppCompatActivity() {
         atividade = intent?.extras!!.getParcelable(ARG_ATIVIDADE)!!
         setViews()
 
-        newFavorite = db.users[mAuth.currentUser!!.uid].favorites
-        favoriteOrUnfavorite()
-        favoriteThis.setOnClickListener {
-            if (favorite) {
-                val data = HashMap<String, Any>()
-
-                data[ACTIVITY_ID] = atividade.id
-                data[WEEK_ID] = atividade.weekId
-
-                newFavorite.add(data).addOnSuccessListener {
-                    toast("Favorito adicionado!")
+        mAuth.addAuthStateListener {
+            Log.d("mydebug", "Listener de mudança de estado do usuário (dentro da atividade)")
+            if (mAuth.currentUser == null){
+                favBtn.setOnClickListener{
+                    alert("Você precisa estar logado para acesso a essa função") {
+                        negativeButton("Cancelar"){}
+                        positiveButton("Entrar"){startActivity<LoginOrRegisterActivity>()}
+                    }.show()
+                    Log.d("mydebug", "Usuária não logado tentou favoritar atividade")
                 }
             }
-            else
-                newFavorite[favoriteId].delete().addOnSuccessListener {
-                    toast("Favorito removido")
+            else {
+                newFavorite = db.users[mAuth.currentUser!!.uid].favorites
+                favoriteOrUnfavorite()
+                favBtn.setOnClickListener {
+                    if (favorite) {
+                        val data = HashMap<String, Any>()
+
+                        data[ACTIVITY_ID] = atividade.id
+                        data[WEEK_ID] = atividade.weekId
+
+                        newFavorite.add(data).addOnSuccessListener {
+                            toast("Favorito adicionado!")
+                        }
+                    }
+                    else
+                        newFavorite[favoriteId].delete().addOnSuccessListener {
+                            toast("Favorito removido")
+                        }
+                    favoriteOrUnfavorite()
                 }
-            favoriteOrUnfavorite()
+
+            }
+
         }
+
     }
 
     private fun favoriteOrUnfavorite() {
@@ -66,10 +81,10 @@ class DetalhesAtividade : AppCompatActivity() {
             .addOnSuccessListener {
                 if (it.isEmpty) {
                     favorite = true
-                    favoriteThis.textResource = R.string.favorite_this
+                    favBtn.isFavorited(false)
                 } else {
                     favorite = false
-                    favoriteThis.textResource = R.string.unfavorite_this
+                    favBtn.isFavorited(true)
                     favoriteId = it.documents[0].id
                 }
 
@@ -102,4 +117,5 @@ class DetalhesAtividade : AppCompatActivity() {
             customTabsIntent.launchUrl(view.context, Uri.parse(atividade.link))
         }
     }
+
 }

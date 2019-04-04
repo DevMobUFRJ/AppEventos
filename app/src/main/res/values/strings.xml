@@ -37,5 +37,8 @@
     <string name="email_exists">Esse email esta em uso</string>
     <string name="malformated_email">Esse email esta incorreto</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

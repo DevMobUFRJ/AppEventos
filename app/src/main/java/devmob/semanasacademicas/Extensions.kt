@@ -1,6 +1,8 @@
 package devmob.semanasacademicas
 
 import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
@@ -78,6 +80,20 @@ fun ProgressBar.show() {
 fun ProgressBar.dismiss() {
     this.visibility = View.GONE
 }
+
+fun ImageButton.isFavorited(bool: Boolean){
+    if (bool){
+        //this.isActivated = true
+        this.isSelected = true
+        this.setImageResource(R.drawable.check_icon)
+    }
+    else {
+        //this.isActivated = false
+        this.isSelected = false
+        this.setImageResource(R.drawable.add_favorite)
+    }
+}
+
 
 
 //usado para debug

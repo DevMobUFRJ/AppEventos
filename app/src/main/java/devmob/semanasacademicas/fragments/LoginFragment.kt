@@ -42,7 +42,7 @@ class LoginFragment : Fragment() {
                 FirebaseFirestore.getInstance().users[mAuth.currentUser!!.uid].set(campos, SetOptions.merge())
             }
 
-            startActivity<TelaPrincipal>()
+            //startActivity<TelaPrincipal>()
             activity?.finish()
         }
 
@@ -108,7 +108,7 @@ class LoginFragment : Fragment() {
                         }
                         progressDialog.dismiss()
                         activity?.finish()
-                        startActivity<TelaPrincipal>()
+                        //startActivity<TelaPrincipal>() //não é necessário chamar a activity TelaPrincipal pois já está iniciada
                     }
                     else {
                         progressDialog.dismiss()

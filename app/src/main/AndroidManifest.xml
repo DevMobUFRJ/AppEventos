@@ -34,8 +34,7 @@
                 android:label="@string/title_activity_atividades"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activities.DetalhesAtividade">
-        </activity>
+        <activity android:name=".activities.DetalhesAtividade"/>
         <activity android:name=".activities.Loja">
         </activity>
 

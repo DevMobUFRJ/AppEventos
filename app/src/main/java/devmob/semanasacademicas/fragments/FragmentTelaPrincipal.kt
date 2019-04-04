@@ -36,7 +36,7 @@ class FragmentTelaPrincipal : Fragment() {
             eventos = this.arguments?.getParcelableArrayList<Evento>("WEEKS") as MutableList<Evento>
         } catch (e: Exception){}
 
-        Log.d("mydebug", "Eventos recuperados na tela principal ${eventos.names()}")
+        Log.d("mydebug", "Eventos recuperados no fragment de tela principal ${eventos.names()}")
 
         viewAdapter = ListaDeEventosAdapter(eventos)
         val viewManager = LinearLayoutManager(this.context)
@@ -96,7 +96,7 @@ class FragmentTelaPrincipal : Fragment() {
                     aux!!.id = document.id
                     eventos.add(aux!!)
                 }
-                progressBar.dismiss()
+                if (FragmentTelaPrincipal().isVisible) progressBar.dismiss()
                 viewAdapter.notifyDataSetChanged()
             }
                 .addOnFailureListener {

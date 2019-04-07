@@ -10,7 +10,6 @@ exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{sema
     const data = event.after.data();
     if(data.favs != event.before.data().favs) return 0;
 
-    console.log(data.fim._seconds);
     const notificationContent = {
         data: {
             body: data.nome + " sofreu uma alteração, venha ver!",

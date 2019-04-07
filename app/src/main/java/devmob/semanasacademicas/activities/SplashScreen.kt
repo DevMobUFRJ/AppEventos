@@ -16,16 +16,13 @@ import org.jetbrains.anko.support.v4.alert
 
 class SplashScreen : AppCompatActivity() {
 
-    lateinit var db: FirebaseFirestore
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        db = FirebaseFirestore.getInstance()
         val weeks = mutableListOf<Evento>()
 
-        db.weeks.get().addOnCompleteListener {task->
+        FirebaseFirestore.getInstance().weeks.get().addOnCompleteListener {task->
             if (task.isSuccessful){
                 for (document in task.result!!.documents){
                     val aux = document.toObject(Evento::class.java)
@@ -40,8 +37,7 @@ class SplashScreen : AppCompatActivity() {
                 Log.d("mydebug", "Erro ao acessar semanas durante a splash screen")
                 startActivity<TelaPrincipal>()
             }
-
-
+            this.finish()
         }
 
     }

@@ -14,6 +14,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import devmob.semanasacademicas.ARG_EVENT
 import devmob.semanasacademicas.R
+import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
 import org.jetbrains.anko.activityManager
@@ -61,15 +62,12 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
             periodo.text = event.periodo()
 
             botao.setOnClickListener {
-                val activity = it.context as AppCompatActivity
-                val fragment = FragmentTelaDeEvento()
-                fragment.retainInstance = true
+                val activity = it.context as TelaPrincipal
 
-                val bundle = Bundle()
-                bundle.putParcelable(ARG_EVENT, event)
-                fragment.arguments = bundle
-                activity.supportFragmentManager.beginTransaction().replace(R.id.contentHome, fragment)
-                    .addToBackStack(null).commit()
+                activity.model.item = event
+                activity.model.screen = 20
+
+                activity.displayScreen(20)
             }
 
         }

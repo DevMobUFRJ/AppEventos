@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -17,6 +18,7 @@ import devmob.semanasacademicas.R.id.nav_login
 import devmob.semanasacademicas.R.id.nav_logout
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.fragments.FragmentMinhaSemana
+import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
 import devmob.semanasacademicas.fragments.FragmentTelaPrincipal
 import devmob.semanasacademicas.fragments.SettingsFragment
 import devmob.semanasacademicas.viewModels.WeeksList
@@ -80,21 +82,24 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
     }
 
-    private fun displayScreen(id: Int) {
-        val fragment = when (id) {
-            R.id.nav_eventos -> FragmentTelaPrincipal()
-            R.id.nav_agenda -> FragmentMinhaSemana()
-            R.id.nav_config -> SettingsFragment()
-            else -> FragmentTelaPrincipal()
+    fun displayScreen(id: Int) {
+        val transaction = supportFragmentManager.beginTransaction()
+
+        when (id) {
+            R.id.nav_eventos -> replace(FragmentTelaPrincipal(), transaction)
+            R.id.nav_agenda -> replace(FragmentMinhaSemana(), transaction)
+            R.id.nav_config -> replace(SettingsFragment(), transaction)
+            20 -> replace(FragmentTelaDeEvento(), transaction)
+            else -> replace(FragmentTelaPrincipal(), transaction)
         }
 
+        transaction.commit()
         model.screen = id
-        fragment.retainInstance = true
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.contentHome, fragment)
-            .addToBackStack(null)
-            .commitAllowingStateLoss()
+    }
+
+    private fun replace(frag: Fragment, transaction: FragmentTransaction){
+        transaction.replace(R.id.contentHome, frag, frag.javaClass.name)
+        if(supportFragmentManager.findFragmentByTag(FragmentTelaPrincipal().javaClass.name) == null) transaction.addToBackStack(frag.javaClass.name)
     }
 
     override fun onBackPressed() {
@@ -102,6 +107,14 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawer(GravityCompat.START)
             supportFragmentManager.backStackEntryCount > 0 -> supportFragmentManager.popBackStackImmediate()
             else -> super.onBackPressed()
+        }
+
+        when(model.screen){
+            R.id.nav_agenda -> {
+                model.screen = R.id.nav_eventos
+                nav_view.setCheckedItem(model.screen!!)
+            }
+            20 -> model.screen = R.id.nav_eventos
         }
     }
 

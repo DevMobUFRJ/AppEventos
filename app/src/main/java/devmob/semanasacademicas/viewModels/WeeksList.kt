@@ -11,6 +11,7 @@ class WeeksList: ViewModel() {
 
     private var hasValue = false
     var screen: Int? = null
+    var item = Evento()
 
     var weeks = MutableLiveData<MutableList<Evento>>()
         get() {

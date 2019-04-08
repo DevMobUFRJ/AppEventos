@@ -38,12 +38,11 @@ class FragmentMinhaSemana : Fragment() {
             layoutManager = viewManager
         }
 
-        progressBar.show()
+        progressBar?.show()
         val mAuth = FirebaseAuth.getInstance().uid!!
         listener = db.users[mAuth].favorites
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if(firebaseFirestoreException != null){
-                    progressBar.dismiss()
                     alert(firebaseFirestoreException.message.toString(), "Opa, algo de errado aconteceu"){
                         okButton {}
                     }
@@ -66,7 +65,6 @@ class FragmentMinhaSemana : Fragment() {
                                         eventosFavoritados[it]!!.add(temp)
                                     }
                                     viewAdapter.notifyDataSetChanged()
-                                    progressBar.dismiss()
                                 }
                             }
                             DocumentChange.Type.REMOVED -> {
@@ -79,18 +77,16 @@ class FragmentMinhaSemana : Fragment() {
                                     }
                                 }
                                 viewAdapter.notifyDataSetChanged()
-                                progressBar.dismiss()
                             }
                         }
-
                     }
                 }
+                progressBar?.dismiss()
             }
-
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         listener.remove()
     }
 }

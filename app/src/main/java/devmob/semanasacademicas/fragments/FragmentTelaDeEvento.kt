@@ -1,5 +1,6 @@
 package devmob.semanasacademicas.fragments
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,6 +14,7 @@ import devmob.semanasacademicas.R
 import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.activities.AtividadesActivity
 import devmob.semanasacademicas.dataclass.Evento
+import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.content_tela_de_evento.*
 
 class FragmentTelaDeEvento : Fragment() {
@@ -24,9 +26,9 @@ class FragmentTelaDeEvento : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bundle = arguments
-        evento = bundle!!.getParcelable(ARG_EVENT)!!
+        val model = ViewModelProviders.of(this.activity!!).get(WeeksList::class.java)
 
+        evento = model.item
         evento.run{
             periodoEvento.text = periodo()
             nomeEvento.text = nome

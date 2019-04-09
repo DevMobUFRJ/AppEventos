@@ -88,5 +88,6 @@ class FragmentMinhaSemana : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         listener.remove()
+        eventosFavoritados.clear()
     }
 }

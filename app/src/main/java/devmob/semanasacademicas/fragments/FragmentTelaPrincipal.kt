@@ -31,6 +31,13 @@ class FragmentTelaPrincipal : Fragment() {
         val viewManager = LinearLayoutManager(this.context)
         viewAdapter = ListaDeEventosAdapter()
 
+        swiperefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
+
+        swiperefresh.setOnRefreshListener {
+            swiperefresh.isRefreshing = true
+            model.loadWeeks()
+        }
+
         lista.apply {
             layoutManager = viewManager
             adapter= viewAdapter
@@ -38,6 +45,7 @@ class FragmentTelaPrincipal : Fragment() {
 
         model.weeks.observe(this, Observer<MutableList<Evento>>{ weekList ->
             viewAdapter.eventos = weekList!!
+            swiperefresh.isRefreshing = false
         })
     }
 }

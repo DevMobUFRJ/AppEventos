@@ -83,39 +83,51 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     fun displayScreen(id: Int) {
-        val transaction = supportFragmentManager.beginTransaction()
 
         when (id) {
-            R.id.nav_eventos -> replace(FragmentTelaPrincipal(), transaction)
-            R.id.nav_agenda -> replace(FragmentMinhaSemana(), transaction)
-            R.id.nav_config -> replace(SettingsFragment(), transaction)
-            20 -> replace(FragmentTelaDeEvento(), transaction)
-            else -> replace(FragmentTelaPrincipal(), transaction)
+            R.id.nav_eventos -> replace(FragmentTelaPrincipal())
+            R.id.nav_agenda -> replace(FragmentMinhaSemana())
+            R.id.nav_config -> replace(SettingsFragment())
+            20 -> replace(FragmentTelaDeEvento())
+            else -> replace(FragmentTelaPrincipal())
         }
 
-        transaction.commit()
+        nav_view.setCheckedItem(id)
         model.screen = id
     }
 
-    private fun replace(frag: Fragment, transaction: FragmentTransaction){
-        transaction.replace(R.id.contentHome, frag, frag.javaClass.name)
-        if(supportFragmentManager.findFragmentByTag(FragmentTelaPrincipal().javaClass.name) == null) transaction.addToBackStack(frag.javaClass.name)
+    private fun replace(frag: Fragment){
+        val transaction = supportFragmentManager.beginTransaction()
+        val oldFrag = supportFragmentManager.findFragmentByTag(frag.javaClass.name)
+
+        if(oldFrag != null) transaction.replace(R.id.contentHome, oldFrag, oldFrag.javaClass.name)
+        else transaction.replace(R.id.contentHome, frag, frag.javaClass.name).addToBackStack(frag.javaClass.name)
+
+        transaction.commit()
     }
 
     override fun onBackPressed() {
         when {
             drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawer(GravityCompat.START)
-            supportFragmentManager.backStackEntryCount > 0 -> supportFragmentManager.popBackStackImmediate()
+/*            supportFragmentManager.backStackEntryCount > 1 -> {
+
+                supportFragmentManager.popBackStackImmediate()
+                when(model.screen){
+                    R.id.nav_agenda -> {
+                        model.screen = R.id.nav_eventos
+                        nav_view.setCheckedItem(model.screen!!)
+                    }
+                    20 -> model.screen = R.id.nav_eventos
+                }
+
+            }
+            supportFragmentManager.backStackEntryCount == 1 -> finish()*/
+            model.screen == R.id.nav_eventos -> finish()
+            model.screen == R.id.nav_agenda -> displayScreen(R.id.nav_eventos)
+            model.screen == 20 -> displayScreen(R.id.nav_eventos)
             else -> super.onBackPressed()
         }
 
-        when(model.screen){
-            R.id.nav_agenda -> {
-                model.screen = R.id.nav_eventos
-                nav_view.setCheckedItem(model.screen!!)
-            }
-            20 -> model.screen = R.id.nav_eventos
-        }
     }
 
 

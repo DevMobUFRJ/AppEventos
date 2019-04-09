@@ -24,7 +24,7 @@ class WeeksList: ViewModel() {
         hasValue = true
     }
 
-    private fun loadWeeks() = FirebaseFirestore.getInstance().weeks.get().addOnSuccessListener {
+    fun loadWeeks() = FirebaseFirestore.getInstance().weeks.get().addOnSuccessListener {
         val temp = mutableListOf<Evento>()
         for (document in it.documents) {
             val aux = document.toObject(Evento::class.java)

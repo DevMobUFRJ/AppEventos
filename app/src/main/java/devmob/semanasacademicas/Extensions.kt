@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
@@ -81,6 +82,10 @@ fun ProgressBar.show() {
 fun ProgressBar.dismiss() {
     this.visibility = View.GONE
 }
+
+val Task<Any>.endListener: Boolean
+    get() = false
+
 
 fun ImageButton.isFavorited(bool: Boolean){
     if (bool){

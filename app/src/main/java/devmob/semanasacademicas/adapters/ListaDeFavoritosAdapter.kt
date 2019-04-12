@@ -1,7 +1,9 @@
 package devmob.semanasacademicas.adapters
 
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +12,42 @@ import devmob.semanasacademicas.R
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.formataMes
 import kotlinx.android.synthetic.main.minha_semana_dia.view.*
+import kotlin.properties.Delegates
 
-class ListaDeFavoritosAdapter(private val eventosFavoritados: HashMap<String, ArrayList<Atividade>>) : RecyclerView.Adapter<ListaDeFavoritosAdapter.ViewHolder>() {
+class ListaDeFavoritosAdapter : RecyclerView.Adapter<ListaDeFavoritosAdapter.ViewHolder>() {
+    var eventosFavoritados by Delegates.observable(hashMapOf<String, ArrayList<Atividade>>()) { _, oldValue, newValue ->
+        notifyChanges(oldValue, newValue)
+    }
+
+    private fun notifyChanges(oldValue: HashMap<String, ArrayList<Atividade>>, newValue: HashMap<String, ArrayList<Atividade>>) {
+
+        val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback(){
+            override fun areItemsTheSame(p0: Int, p1: Int): Boolean  {
+                val keys1 = oldValue.keys.toList().sorted()
+                val keys2 = newValue.keys.toList().sorted()
+
+                return keys1[p0] == keys2[p1]
+            }
+
+            override fun areContentsTheSame(p0: Int, p1: Int): Boolean  {
+                val keys1 = oldValue.keys.toList().sorted()
+                val keys2 = newValue.keys.toList().sorted()
+
+                return oldValue[keys1[p0]]?.equals(newValue[keys2[p1]]) == true
+            }
+
+            override fun getOldListSize() = oldValue.size
+
+            override fun getNewListSize() = newValue.size
+
+        })
+        diff.dispatchUpdatesTo(this)
+
+        Log.e("aaaa", "old: $oldValue")
+        Log.e("aaaa", "new: $newValue\n")
+    }
+
+
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int)
             = ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.minha_semana_dia, p0, false))
 
@@ -24,9 +60,9 @@ class ListaDeFavoritosAdapter(private val eventosFavoritados: HashMap<String, Ar
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val dia = itemView.dia_numero as TextView
-        val diaSemana = itemView.mes as TextView
-        val list = itemView.listFavorite_Items as RecyclerView
+        private val dia = itemView.dia_numero as TextView
+        private val diaSemana = itemView.mes as TextView
+        private val list = itemView.listFavorite_Items as RecyclerView
 
 
         fun bindItems(listActivities: ArrayList<Atividade>){
@@ -42,8 +78,6 @@ class ListaDeFavoritosAdapter(private val eventosFavoritados: HashMap<String, Ar
                 adapter = ItemsFavoritedListAdapter(listActivities)
                 layoutManager = LinearLayoutManager(this.context)
             }
-
-
 
         }
 

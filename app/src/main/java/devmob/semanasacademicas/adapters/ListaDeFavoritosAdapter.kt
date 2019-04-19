@@ -15,26 +15,19 @@ import kotlinx.android.synthetic.main.minha_semana_dia.view.*
 import kotlin.properties.Delegates
 
 class ListaDeFavoritosAdapter : RecyclerView.Adapter<ListaDeFavoritosAdapter.ViewHolder>() {
-    var eventosFavoritados by Delegates.observable(hashMapOf<String, ArrayList<Atividade>>()) { _, oldValue, newValue ->
+    var eventosFavoritados by Delegates.observable(hashMapOf<String, MutableList<Atividade>>()) { _, oldValue, newValue ->
         notifyChanges(oldValue, newValue)
     }
 
-    private fun notifyChanges(oldValue: HashMap<String, ArrayList<Atividade>>, newValue: HashMap<String, ArrayList<Atividade>>) {
+    private fun notifyChanges(oldValue: HashMap<String, MutableList<Atividade>>, newValue: HashMap<String, MutableList<Atividade>>) {
 
         val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback(){
-            override fun areItemsTheSame(p0: Int, p1: Int): Boolean  {
-                val keys1 = oldValue.keys.toList().sorted()
-                val keys2 = newValue.keys.toList().sorted()
+            val keys1 = oldValue.keys.toList().sorted()
+            val keys2 = newValue.keys.toList().sorted()
 
-                return keys1[p0] == keys2[p1]
-            }
+            override fun areItemsTheSame(p0: Int, p1: Int) = keys1[p0] == keys2[p1]
 
-            override fun areContentsTheSame(p0: Int, p1: Int): Boolean  {
-                val keys1 = oldValue.keys.toList().sorted()
-                val keys2 = newValue.keys.toList().sorted()
-
-                return oldValue[keys1[p0]]?.equals(newValue[keys2[p1]]) == true
-            }
+            override fun areContentsTheSame(p0: Int, p1: Int) = oldValue[keys1[p0]]?.equals(newValue[keys2[p1]]) == true
 
             override fun getOldListSize() = oldValue.size
 
@@ -42,9 +35,6 @@ class ListaDeFavoritosAdapter : RecyclerView.Adapter<ListaDeFavoritosAdapter.Vie
 
         })
         diff.dispatchUpdatesTo(this)
-
-        Log.e("aaaa", "old: $oldValue")
-        Log.e("aaaa", "new: $newValue\n")
     }
 
 
@@ -64,8 +54,14 @@ class ListaDeFavoritosAdapter : RecyclerView.Adapter<ListaDeFavoritosAdapter.Vie
         private val diaSemana = itemView.mes as TextView
         private val list = itemView.listFavorite_Items as RecyclerView
 
+        init {
+            list.apply {
+                adapter = ItemsFavoritedListAdapter()
+                layoutManager = LinearLayoutManager(this.context)
+            }
+        }
 
-        fun bindItems(listActivities: ArrayList<Atividade>){
+        fun bindItems(listActivities: MutableList<Atividade>){
             if(listActivities.size == 0) return
 
             val temp = listActivities[0].inicio.formataMes()
@@ -74,11 +70,8 @@ class ListaDeFavoritosAdapter : RecyclerView.Adapter<ListaDeFavoritosAdapter.Vie
 
             listActivities.sortBy { it.inicio }
 
-            list.apply {
-                adapter = ItemsFavoritedListAdapter(listActivities)
-                layoutManager = LinearLayoutManager(this.context)
-            }
-
+            val adp = list.adapter as ItemsFavoritedListAdapter
+            adp.listActivities = listActivities
         }
 
     }

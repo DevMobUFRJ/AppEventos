@@ -36,7 +36,7 @@ class FragmentMinhaSemana : Fragment() {
         model = ViewModelProviders.of(this).get(MinhaSemana::class.java)
         model.mAuth = FirebaseAuth.getInstance().uid!!
 
-        model.atividades.observe(this, Observer<HashMap<String, ArrayList<Atividade>>>{ atividades ->
+        model.atividades.observe(this, Observer<HashMap<String, MutableList<Atividade>>>{ atividades ->
             Log.e("teste", atividades!!.toString())
             viewAdapter.eventosFavoritados = atividades
             progressBar.dismiss()

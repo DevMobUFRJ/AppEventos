@@ -4,7 +4,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.transition.Scene
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
@@ -12,10 +14,10 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import devmob.semanasacademicas.R
-import devmob.semanasacademicas.R.id.nav_login
-import devmob.semanasacademicas.R.id.nav_logout
+import devmob.semanasacademicas.R.id.*
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.fragments.FragmentMinhaSemana
 import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
@@ -83,48 +85,41 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     fun displayScreen(id: Int) {
+        nav_view.setCheckedItem(id)
+        model.screen = id
 
         when (id) {
-            R.id.nav_eventos -> replace(FragmentTelaPrincipal())
-            R.id.nav_agenda -> replace(FragmentMinhaSemana())
-            R.id.nav_config -> replace(SettingsFragment())
+            nav_eventos -> replace(FragmentTelaPrincipal())
+            nav_agenda -> replace(FragmentMinhaSemana())
+            nav_config -> replace(SettingsFragment())
+            //TODO: Criar um id pra tela de evento
             20 -> replace(FragmentTelaDeEvento())
             else -> replace(FragmentTelaPrincipal())
         }
-
-        nav_view.setCheckedItem(id)
-        model.screen = id
     }
 
     private fun replace(frag: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         val oldFrag = supportFragmentManager.findFragmentByTag(frag.javaClass.name)
 
-        if(oldFrag != null) transaction.replace(R.id.contentHome, oldFrag, oldFrag.javaClass.name)
-        else transaction.replace(R.id.contentHome, frag, frag.javaClass.name).addToBackStack(frag.javaClass.name)
+        if(oldFrag != null) supportFragmentManager.popBackStack(oldFrag.javaClass.name, POP_BACK_STACK_INCLUSIVE)
 
+        transaction.replace(R.id.contentHome, frag, frag.javaClass.name).addToBackStack(frag.javaClass.name)
         transaction.commit()
     }
 
     override fun onBackPressed() {
         when {
             drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawer(GravityCompat.START)
-/*            supportFragmentManager.backStackEntryCount > 1 -> {
-
-                supportFragmentManager.popBackStackImmediate()
-                when(model.screen){
-                    R.id.nav_agenda -> {
-                        model.screen = R.id.nav_eventos
-                        nav_view.setCheckedItem(model.screen!!)
-                    }
-                    20 -> model.screen = R.id.nav_eventos
-                }
-
+            supportFragmentManager.backStackEntryCount > 1 -> {
+                supportFragmentManager.popBackStack()
+                model.screen = nav_eventos
+                nav_view.setCheckedItem(model.screen!!)
             }
-            supportFragmentManager.backStackEntryCount == 1 -> finish()*/
-            model.screen == R.id.nav_eventos -> finish()
-            model.screen == R.id.nav_agenda -> displayScreen(R.id.nav_eventos)
-            model.screen == 20 -> displayScreen(R.id.nav_eventos)
+            supportFragmentManager.backStackEntryCount == 1 -> finish()
+//            model.screen == R.id.nav_eventos -> finish()
+//            model.screen == R.id.nav_agenda -> displayScreen(R.id.nav_eventos)
+//            model.screen == 20 -> displayScreen(R.id.nav_eventos)
             else -> super.onBackPressed()
         }
 

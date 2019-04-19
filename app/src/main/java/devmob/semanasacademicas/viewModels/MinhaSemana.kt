@@ -10,7 +10,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.*
-import java.util.ArrayList
 
 class MinhaSemana: ViewModel() {
 
@@ -18,7 +17,7 @@ class MinhaSemana: ViewModel() {
     var mAuth = ""
     private lateinit var listener: ListenerRegistration
 
-    var atividades = MutableLiveData<HashMap<String, ArrayList<Atividade>>>()
+    var atividades = MutableLiveData<HashMap<String, MutableList<Atividade>>>()
         get() {
             if(!hasValue) {
                 hasValue = true
@@ -27,7 +26,7 @@ class MinhaSemana: ViewModel() {
             return field
         }
 
-    private var tempHM = hashMapOf<String, ArrayList<Atividade>>()
+    private var tempHM = hashMapOf<String, MutableList<Atividade>>()
 
 //    fun loadFavorites() = FirebaseFirestore.getInstance().users[mAuth].favorites.get().addOnSuccessListener {
 //        val tempHM = hashMapOf<String, ArrayList<Atividade>>()
@@ -63,7 +62,7 @@ class MinhaSemana: ViewModel() {
                             temp.weekId = weekId
 
                             temp.inicio.formataBarra().also {
-                                if(it !in tempHM) tempHM[it] = ArrayList()
+                                if(it !in tempHM) tempHM[it] = mutableListOf()
                                 tempHM[it]!!.add(temp)
                             }
                             postClone()
@@ -88,8 +87,8 @@ class MinhaSemana: ViewModel() {
         }
 
     private fun postClone() {
-        val temp = hashMapOf<String, ArrayList<Atividade>>()
-        for(entry in tempHM) temp[entry.key] = entry.value.clone() as ArrayList<Atividade>
+        val temp = hashMapOf<String, MutableList<Atividade>>()
+        for(entry in tempHM) temp[entry.key] = entry.value.toMutableList()
         atividades.postValue(temp)
     }
 

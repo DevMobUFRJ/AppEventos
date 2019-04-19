@@ -33,6 +33,10 @@ class FragmentTelaDeEvento : Fragment() {
             periodoEvento.text = periodo()
             nomeEvento.text = nome
             descricaoEvento.text = descricao
+
+            nomeEvento.transitionName = resources.getString(R.string.nomeTransition)
+            periodoEvento.transitionName = resources.getString(R.string.dateTransition)
+            descricaoEvento.transitionName = resources.getString(R.string.descriptionTransition)
         }
 
         btnProgramacao.setOnClickListener {

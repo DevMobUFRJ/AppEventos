@@ -1,6 +1,7 @@
 package devmob.semanasacademicas.adapters
 
 import android.os.Bundle
+import android.support.transition.*
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,9 @@ import devmob.semanasacademicas.R
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
+import kotlinx.android.synthetic.main.content_tela_de_evento.*
 import org.jetbrains.anko.activityManager
+import org.jetbrains.anko.ctx
 import kotlin.properties.Delegates
 
 
@@ -67,7 +70,61 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
                 activity.model.item = event
                 activity.model.screen = 20
 
-                activity.displayScreen(20)
+                val befo = activity.supportFragmentManager.findFragmentById(R.id.contentHome)
+                val next = FragmentTelaDeEvento()
+
+                nome.transitionName = activity.resources.getString(R.string.nomeTransition)
+                periodo.transitionName = activity.resources.getString(R.string.dateTransition)
+                descricao.transitionName = activity.resources.getString(R.string.descriptionTransition)
+                
+                //exit
+                befo?.exitTransition = Fade().apply {
+                    duration = 150
+                }
+
+                //enter
+                next.enterTransition = Fade().apply {
+                    duration = 150
+                    startDelay = 150
+                }
+
+                next.returnTransition = Fade().apply {
+                    duration = 150
+                }
+
+                befo?.reenterTransition = Fade().apply {
+                    startDelay = 50
+                    duration = 150
+                }
+                //common
+                next.sharedElementEnterTransition = TransitionSet().apply {
+                    addTransition(TransitionInflater.from(activity).inflateTransition(android.R.transition.move).apply {
+                        startDelay = 100
+                        duration = 100
+                        addTarget(activity.resources.getString(R.string.dateTransition))
+                    })
+                    addTransition(TransitionInflater.from(activity).inflateTransition(android.R.transition.move).apply {
+                        startDelay = 100
+                        duration = 130
+                        addTarget(activity.resources.getString(R.string.nomeTransition))
+                    })
+                    addTransition(TransitionInflater.from(activity).inflateTransition(android.R.transition.move).apply {
+                        startDelay = 100
+                        duration = 190
+                        addTarget(activity.resources.getString(R.string.descriptionTransition))
+                    })
+                }
+
+                activity.supportFragmentManager.beginTransaction().apply {
+                    addSharedElement(nome, nome.transitionName)
+                    addSharedElement(periodo, periodo.transitionName)
+                    addSharedElement(descricao, descricao.transitionName)
+                    replace(R.id.contentHome, next)
+                    addToBackStack(next.javaClass.name)
+                    commit()
+                }
+
+                //activity.displayScreen(20)
             }
 
         }

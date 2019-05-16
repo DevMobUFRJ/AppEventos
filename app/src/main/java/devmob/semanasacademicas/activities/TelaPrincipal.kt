@@ -53,7 +53,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             model.setWeeks(it)
         }
 
-        model.screen = model.screen ?: R.id.nav_eventos
+        model.screen = model.screen ?: nav_eventos
 
         nav_view.setCheckedItem(model.screen!!)
         displayScreen(model.screen!!)
@@ -69,17 +69,19 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             var userIsNull = true
             user?.also {
                 userIsNull = false
-                nav_view.menu.findItem(R.id.nav_logout).icon
+                nav_view.menu.findItem(nav_logout).icon
                     .setColorFilter(ContextCompat.getColor(this, R.color.Red), PorterDuff.Mode.SRC_ATOP)
             }
 
             nav_view.menu.run {
-                findItem(R.id.nav_login).isVisible = userIsNull
-                findItem(R.id.nav_minha_conta).isVisible = !userIsNull
-                findItem(R.id.nav_agenda).isVisible = !userIsNull
-                findItem(R.id.nav_historico).isVisible = !userIsNull
-                findItem(R.id.nav_sorteio).isVisible = !userIsNull
-                findItem(R.id.nav_logout).isVisible = !userIsNull
+                findItem(nav_login).isVisible = userIsNull
+                findItem(nav_minha_conta).isVisible = !userIsNull
+                findItem(nav_agenda).isVisible = !userIsNull
+//                findItem(nav_historico).isVisible = !userIsNull
+                findItem(nav_historico).isVisible = false
+//                findItem(nav_sorteio).isVisible = !userIsNull
+                findItem(nav_sorteio).isVisible = false
+                findItem(nav_logout).isVisible = !userIsNull
             }
         }
     }

@@ -28,25 +28,6 @@ class MinhaSemana: ViewModel() {
 
     private var tempHM = hashMapOf<String, MutableList<Atividade>>()
 
-//    fun loadFavorites() = FirebaseFirestore.getInstance().users[mAuth].favorites.get().addOnSuccessListener {
-//        val tempHM = hashMapOf<String, ArrayList<Atividade>>()
-//        for(doc in it.documents){
-//            val weekIdDoc = doc["weekId"] as String
-//            val activityIdDoc = doc["id"] as String
-//            FirebaseFirestore.getInstance().weeks[weekIdDoc].activities[activityIdDoc].get().addOnSuccessListener { docSnapshot ->
-//                val temp = docSnapshot.toObject(Atividade::class.java)!!
-//                with(temp) {
-//                    id = activityIdDoc
-//                    weekId = weekIdDoc
-//                    inicio.formataBarra().also {
-//                        if (it !in tempHM) tempHM[it] = ArrayList()
-//                        tempHM[it]!!.add(this)
-//                    }
-//                }
-//                atividades.postValue(tempHM)
-//            }
-//        }
-//    }
     private fun loadFavorites() = FirebaseFirestore.getInstance().users[mAuth].favorites
         .addSnapshotListener { snapshot, _ ->
             if(snapshot != null) {

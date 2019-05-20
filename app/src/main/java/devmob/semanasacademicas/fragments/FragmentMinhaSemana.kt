@@ -13,13 +13,13 @@ import com.google.firebase.auth.FirebaseAuth
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.adapters.ListaDeFavoritosAdapter
 import devmob.semanasacademicas.dataclass.Atividade
-import devmob.semanasacademicas.viewModels.MinhaSemana
+import devmob.semanasacademicas.viewModels.User
 import kotlinx.android.synthetic.main.fragment_minha_semana.*
 import java.util.ArrayList
 
 class FragmentMinhaSemana : Fragment() {
 
-    lateinit var model: MinhaSemana
+    lateinit var user: User
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
             = inflater.inflate(R.layout.fragment_minha_semana, container, false)
 
@@ -33,12 +33,10 @@ class FragmentMinhaSemana : Fragment() {
             layoutManager = viewManager
         }
 
-        model = ViewModelProviders.of(this).get(MinhaSemana::class.java)
-        model.mAuth = FirebaseAuth.getInstance().uid!!
+        user = ViewModelProviders.of(this.requireActivity()).get(User::class.java)
 
-        model.atividades.observe(this, Observer<HashMap<String, MutableList<Atividade>>>{ atividades ->
-            Log.e("teste", atividades!!.toString())
-            viewAdapter.eventosFavoritados = atividades
+        user.atividades.observe(this, Observer<HashMap<String, MutableList<Atividade>>>{ atividades ->
+            viewAdapter.eventosFavoritados = atividades!!
             progressBar.dismiss()
         })
     }

@@ -8,7 +8,7 @@ admin.initializeApp();
 exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{semana}/atividades/{atividade}").onUpdate(event =>{
     const splitedPath = event.after.ref.path.split("/");
     const data = event.after.data();
-    if(data.favs != event.before.data().favs) return 0;
+    if(data.favs !== event.before.data().favs) return 0;
 
     const notificationContent = {
         data: {
@@ -22,11 +22,11 @@ exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{sema
             apresentador: data.apresentador,
             local: data.local,
             weekId: splitedPath[1],
-//            favs: 0
+            //favs: 0
         }
-    }
+    };
 
-//    if(data.favs != undefined) notificationContent.data.favs = data.favs;
+    if(data.favs !== undefined) notificationContent.data.favs = data.favs.toString();
 
     const weekDetails = admin.firestore().collection("semanas").doc(splitedPath[1]).get().then(semanaModificada => {
         notificationContent.data.title = semanaModificada.data().nome;
@@ -36,7 +36,7 @@ exports.sendFavoriteNotifications = functions.firestore.document("/semanas/{sema
     const listUsers =  usersRef.get();
 
     return Promise.all([listUsers, weekDetails]).then(result =>{
-        const users = result[0]
+        const users = result[0];
         users.forEach(user => {
             usersRef.doc(user.data().uid).collection("favorites").where("id", "=", splitedPath[3]).get().then(favoritouEvento => {
                 if(!favoritouEvento.empty) admin.messaging().sendToDevice(user.data().token, notificationContent);
@@ -53,7 +53,7 @@ exports.onCreateFavorite = functions.firestore.document("/users/{user}/favorites
         var newFavs = 1;
         const oldFavs = activity.data().favs;
 
-        if(oldFavs != undefined) newFavs += oldFavs;
+        if(oldFavs !== undefined) newFavs += oldFavs;
         weekRef.set({favs: newFavs}, { merge: true });
     });
 });
@@ -66,7 +66,7 @@ exports.onDeleteFavorite = functions.firestore.document("/users/{user}/favorites
         var newFavs = 0;
         const oldFavs = activity.data().favs;
 
-        if(oldFavs != undefined && oldFavs >= 1) newFavs = oldFavs-1;
+        if(oldFavs !== undefined && oldFavs >= 1) newFavs = oldFavs-1;
         weekRef.set({favs: newFavs}, { merge: true });
     });
 });

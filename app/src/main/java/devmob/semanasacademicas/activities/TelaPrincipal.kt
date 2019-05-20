@@ -23,6 +23,7 @@ import devmob.semanasacademicas.fragments.FragmentMinhaSemana
 import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
 import devmob.semanasacademicas.fragments.FragmentTelaPrincipal
 import devmob.semanasacademicas.fragments.SettingsFragment
+import devmob.semanasacademicas.viewModels.User
 import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.activity_tela_principal.*
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
@@ -48,6 +49,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         nav_view.setNavigationItemSelectedListener(this)
 
         model = ViewModelProviders.of(this).get(WeeksList::class.java)
+        ViewModelProviders.of(this).get(User::class.java)
 
         intent.extras?.getParcelableArrayList<Evento>("WEEKS")?.also {
             model.setWeeks(it)

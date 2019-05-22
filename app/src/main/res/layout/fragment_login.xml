@@ -73,6 +73,13 @@
                     android:text="Registrar-se"
                     android:textStyle="bold"/>
 
+            <Button
+                    android:id="@+id/testLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="200dp"
+                    android:text="Test Login"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

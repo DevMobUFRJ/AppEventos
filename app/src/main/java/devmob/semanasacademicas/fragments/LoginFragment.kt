@@ -14,6 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.iid.FirebaseInstanceId
 import devmob.semanasacademicas.R
+import devmob.semanasacademicas.activities.LoginActivity
+import devmob.semanasacademicas.activities.RegisterActivity
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.get
 import devmob.semanasacademicas.users
@@ -52,6 +54,9 @@ class LoginFragment : Fragment() {
                 .beginTransaction()
                 .replace(R.id.contentLogin, RegisterFragment())
                 .commit()
+        }
+        testLogin.setOnClickListener {
+            startActivity<LoginActivity>()
         }
     }
 

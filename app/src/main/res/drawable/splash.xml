@@ -3,9 +3,19 @@
     <!-- The background color, preferably the same as your normal theme -->
     <item android:drawable="@android:color/white"/>
     <!-- Your product logo - 144dp color version of your app icon -->
-    <item>
-        <bitmap
-                android:src="@drawable/devmob_logo"
-                android:gravity="center"/>
+    <item
+            android:width="250dp"
+            android:height="250dp"
+            android:gravity="center"
+            android:drawable="@drawable/devmob_logo"
+    >
+        <!--<bitmap-->
+                <!--android:src="@drawable/devmob_logo"-->
+                <!--android:width="50dp"-->
+                <!--android:height="50dp"-->
+                <!--android:gravity="center"-->
+            <!--<shape>-->
+            <!--</shape>-->
+        <!--/>-->
     </item>
 </layer-list>

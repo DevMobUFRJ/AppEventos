@@ -109,7 +109,7 @@ class User: ViewModel() {
     }
 
     override fun onCleared() {
-        listener.remove()
+        if(::listener.isInitialized) listener.remove()
         super.onCleared()
     }
 

@@ -3,6 +3,7 @@ package devmob.semanasacademicas
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import com.google.android.gms.tasks.Task
@@ -83,6 +84,10 @@ fun ProgressBar.dismiss() {
     this.visibility = View.GONE
 }
 
+fun EditText.setErrorAndFocus(string: String){
+    this.error = string
+    this.requestFocus()
+}
 val Task<Any>.endListener: Boolean
     get() = false
 

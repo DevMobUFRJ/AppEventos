@@ -143,7 +143,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             nav_login -> {
-                startActivity<LoginOrRegisterActivity>()
+                startActivity<LoginActivity>()
                 return false
             }
             nav_logout -> {

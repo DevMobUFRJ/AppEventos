@@ -28,6 +28,7 @@ import org.jetbrains.anko.support.v4.startActivity
 class LoginFragment : Fragment() {
 
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
             = inflater.inflate(R.layout.fragment_login, container, false)
@@ -36,6 +37,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mAuth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         if(mAuth.currentUser != null){
             FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
@@ -109,7 +111,7 @@ class LoginFragment : Fragment() {
                         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
                             val campos = HashMap<String, Any>()
                             campos["token"] = it.token
-                            FirebaseFirestore.getInstance().users[task.result!!.user.uid].set(campos, SetOptions.merge())
+                            db.users[task.result!!.user.uid].set(campos, SetOptions.merge())
                         }
                         progressDialog.dismiss()
                         activity?.finish()

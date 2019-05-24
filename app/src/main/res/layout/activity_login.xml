@@ -6,134 +6,144 @@
         android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".activities.LoginActivity"
         android:background="@color/black">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <ImageView
+                    android:id="@+id/imgLogo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="100dp"
+                    android:layout_height="140dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_black"/>
+
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layoutEmail"
+                    android:textColorHint="@color/gray_lighter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imgLogo"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp">
+
+                <AutoCompleteTextView
+                        android:id="@+id/txtEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_email"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:drawableStart="@drawable/ic_person_white_24dp"
+                        android:textColor="@color/white"
+                        android:drawablePadding="20dp"
+                        android:singleLine="true"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/ubuntu_light"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layoutPassword"
+                    android:textColorHint="@color/gray_lighter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layoutEmail"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp">
+
+                <EditText
+                        android:id="@+id/txtPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Senha"
+                        android:inputType="textPassword"
+                        android:drawableStart="@drawable/ic_lock_outline_white_24dp"
+                        android:textColor="@color/white"
+                        android:drawablePadding="20dp"
+                        android:fontFamily="@font/ubuntu_light"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:singleLine="true"/>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/login_button"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:text="Entrar"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="@color/white"
+                    android:layout_below="@id/layoutPassword"/>
+
+            <TextView
+                    android:id="@+id/txtForgetPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="10dp"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:textColor="@color/gray_lighter"
+                    android:textSize="14sp"
+                    android:layout_below="@id/btnLogin"
+                    android:text="Esqueci minha senha"/>
+
+            <View
+                    android:id="@+id/separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/txtForgetPassword"
+                    android:background="@color/gray_lighter"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp"/>
+
+            <LinearLayout
+                    android:id="@+id/txtRegister"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/separator"
+                    android:layout_marginTop="35dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="10dp"
+                    android:layout_centerHorizontal="true">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_light"
+                        android:textColor="@color/gray_lighter"
+                        android:textSize="14sp"
+                        android:text="Não tem uma conta?"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="5dp"
+                        android:textSize="14sp"
+                        android:text="Cadastre-se"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
     
-    <ImageView
-            android:id="@+id/imgLogo"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:layout_width="100dp"
-            android:layout_height="140dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/logo_black"/>
-
-    <android.support.design.widget.TextInputLayout
-            android:id="@+id/layoutEmail"
-            android:textColorHint="@color/gray_lighter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imgLogo"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp">
-
-        <AutoCompleteTextView
-                android:id="@+id/txtEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:drawableStart="@drawable/ic_person_white_24dp"
-                android:textColor="@color/white"
-                android:drawablePadding="20dp"
-                android:singleLine="true"
-                android:textSize="14sp"
-                android:fontFamily="@font/ubuntu_light"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-            android:id="@+id/layoutPassword"
-            android:textColorHint="@color/gray_lighter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/layoutEmail"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp">
-
-        <EditText
-                android:id="@+id/txtPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_password"
-                android:inputType="textPassword"
-                android:drawableStart="@drawable/ic_lock_outline_white_24dp"
-                android:textColor="@color/white"
-                android:drawablePadding="20dp"
-                android:fontFamily="@font/ubuntu_light"
-                android:textSize="14sp"
-                android:maxLines="1"
-                android:singleLine="true"/>
-
-
-    </android.support.design.widget.TextInputLayout>
-    
-    <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/login_button"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:text="Entrar"
-            android:fontFamily="@font/roboto"
-            android:textColor="@color/white"
-            android:layout_below="@id/layoutPassword"/>
-
-    <TextView
-            android:id="@+id/txtForgetPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_centerHorizontal="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:padding="10dp"
-            android:fontFamily="@font/ubuntu_light"
-            android:textColor="@color/gray_lighter"
-            android:textSize="14sp"
-            android:layout_below="@id/btnLogin"
-            android:text="Esqueci minha senha"/>
-    
-    <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/txtForgetPassword"
-            android:background="@color/gray_lighter"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginStart="25dp"/>
-
-    <LinearLayout
-            android:id="@+id/txtRegister"
-            android:orientation="horizontal"
-            android:layout_below="@id/separator"
-            android:layout_marginTop="35dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:foreground="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:padding="10dp"
-            android:layout_centerHorizontal="true">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ubuntu_light"
-                android:textColor="@color/gray_lighter"
-                android:textSize="14sp"
-                android:text="Não tem uma conta?"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/white"
-                android:layout_marginStart="5dp"
-                android:textSize="14sp"
-                android:text="Cadastre-se"/>
-    </LinearLayout>
 
 
 

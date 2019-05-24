@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.nav_header_tela_principal.view.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -144,13 +145,33 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         when (item.itemId){
             nav_login -> {
                 startActivity<LoginActivity>()
+                drawer_layout.closeDrawer(GravityCompat.START)
                 return false
             }
             nav_logout -> {
                 alert("Deseja sair?") {
                     negativeButton("Não") {  }
-                    positiveButton("Sim") { FirebaseAuth.getInstance().signOut() }
+                    positiveButton("Sim") {
+                        FirebaseAuth.getInstance().signOut()
+                        drawer_layout.closeDrawer(GravityCompat.START)
+                    }
                 }.show()
+                return false
+            }
+            nav_ajuda -> {
+                toast("Ainda não implementado")
+                return false
+            }
+            nav_config -> {
+                toast("Ainda não implementado")
+                return false
+            }
+            nav_historico -> {
+                toast("Ainda não implementado")
+                return false
+            }
+            nav_minha_conta -> {
+                toast("Ainda não implementado")
                 return false
             }
             else -> displayScreen(item.itemId)

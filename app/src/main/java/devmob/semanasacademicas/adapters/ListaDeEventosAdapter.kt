@@ -58,7 +58,11 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
         private val imageView = itemView.imageView2 as ImageView
 
         fun bindItems(event: Evento){
-            Glide.with(itemView).load(event.link).thumbnail(0.1f).into(imageView)
+            Glide.with(itemView).load(event.link)
+                .placeholder(R.drawable.thumb_placeholder)
+                .error(R.drawable.thumb_error)
+                .thumbnail(0.1f)
+                .into(imageView)
 
             nome.text = event.nome
             descricao.text = event.descricao

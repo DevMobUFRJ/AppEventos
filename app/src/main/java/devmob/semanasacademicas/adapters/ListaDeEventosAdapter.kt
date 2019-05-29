@@ -119,6 +119,7 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
                     })
                 }
 
+
                 activity.supportFragmentManager.beginTransaction().apply {
                     addSharedElement(nome, nome.transitionName)
                     addSharedElement(periodo, periodo.transitionName)
@@ -127,7 +128,8 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
                     addToBackStack(next.javaClass.name)
                     commit()
                 }
-
+                activity.showSearchButton = false
+                activity.invalidateOptionsMenu()
                 //activity.displayScreen(20)
             }
 

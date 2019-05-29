@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v7.widget.SearchView
 import android.support.transition.Scene
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
@@ -31,10 +32,15 @@ import kotlinx.android.synthetic.main.nav_header_tela_principal.view.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import android.support.v4.view.MenuItemCompat.collapseActionView
+import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
+import android.util.Log
+
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var model: WeeksList
+    var showSearchButton = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,12 +100,32 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         model.screen = id
 
         when (id) {
-            nav_eventos -> replace(FragmentTelaPrincipal())
-            nav_agenda -> replace(FragmentMinhaSemana())
-            nav_config -> replace(SettingsFragment())
+            nav_eventos -> {
+                showSearchButton = true
+                invalidateOptionsMenu()
+                replace(FragmentTelaPrincipal())
+            }
+            nav_agenda -> {
+                showSearchButton = false
+                invalidateOptionsMenu()
+                replace(FragmentMinhaSemana())
+            }
+            nav_config -> {
+                showSearchButton = false
+                invalidateOptionsMenu()
+                replace(SettingsFragment())
+            }
             //TODO: Criar um id pra tela de evento
-            20 -> replace(FragmentTelaDeEvento())
-            else -> replace(FragmentTelaPrincipal())
+            20 -> {
+                showSearchButton = false
+                invalidateOptionsMenu()
+                replace(FragmentTelaDeEvento())
+            }
+            else -> {
+                showSearchButton = false
+                invalidateOptionsMenu()
+                replace(FragmentTelaPrincipal())
+            }
         }
     }
 
@@ -119,7 +145,8 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             supportFragmentManager.backStackEntryCount > 1 -> {
                 supportFragmentManager.popBackStack()
                 model.screen = nav_eventos
-                nav_view.setCheckedItem(model.screen!!)
+                displayScreen(model.screen!!)
+                //nav_view.setCheckedItem(model.screen!!)
             }
             supportFragmentManager.backStackEntryCount == 1 -> finish()
 //            model.screen == R.id.nav_eventos -> finish()
@@ -131,9 +158,33 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.tela_principal, menu)
-        return true
+
+
+        val actionSearch = menu!!.findItem(R.id.action_search)
+        actionSearch.isVisible = showSearchButton
+        val searchView = actionSearch.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                Log.d("mydebug", "SearchOnQueryTextSubmit: $query")
+                //if (!searchView.isIconified) {
+                //    searchView.isIconified = true
+                //}
+                //searchView.isIconified
+                model.setWeeks(model.copy.filter { it.nome.contains(query, ignoreCase = true) } as MutableList<Evento>)
+                //actionSearch.collapseActionView()
+                return false
+            }
+
+            override fun onQueryTextChange(s: String): Boolean {
+                Log.d("mydebug", "SearchOnQueryTextChanged: " + s);
+                return false
+            }
+        })
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item!!.itemId){

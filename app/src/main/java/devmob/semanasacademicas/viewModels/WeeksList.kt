@@ -12,6 +12,7 @@ class WeeksList: ViewModel() {
     private var hasValue = false
     var screen: Int? = null
     var item = Evento()
+    var copy = mutableListOf<Evento>()
 
     var weeks = MutableLiveData<MutableList<Evento>>()
         get() {
@@ -32,5 +33,6 @@ class WeeksList: ViewModel() {
             temp.add(aux)
         }
         setWeeks(temp)
+        copy = temp
     }
 }

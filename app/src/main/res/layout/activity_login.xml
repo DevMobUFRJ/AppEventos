@@ -14,7 +14,7 @@
             android:layout_width="100dp"
             android:layout_height="140dp"
             android:scaleType="centerInside"
-            android:src="@drawable/logo_black"/>
+            android:src="@drawable/logo_white_title"/>
 
     <android.support.design.widget.TextInputLayout
             android:id="@+id/layoutEmail"

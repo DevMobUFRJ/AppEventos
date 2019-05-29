@@ -27,7 +27,7 @@
                     android:layout_marginTop="22dp"
                     android:layout_width="70dp"
                     android:layout_height="95dp"
-                    android:src="@drawable/logo_white"
+                    android:src="@drawable/logo_black_title"
                     android:layout_centerHorizontal="true"/>
 
             <android.support.design.widget.TextInputLayout

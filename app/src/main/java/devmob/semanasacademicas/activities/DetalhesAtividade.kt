@@ -49,7 +49,7 @@ class DetalhesAtividade : AppCompatActivity() {
                 favBtn.setOnClickListener{
                     alert("Você precisa estar logado para acesso a essa função") {
                         negativeButton("Cancelar"){}
-                        positiveButton("Entrar"){startActivity<LoginOrRegisterActivity>()}
+                        positiveButton("Entrar"){startActivity<LoginActivity>()}
                     }.show()
                 }
             }

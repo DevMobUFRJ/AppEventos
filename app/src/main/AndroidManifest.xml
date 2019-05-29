@@ -48,8 +48,6 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.LoginOrRegisterActivity">
-        </activity>
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
     </application>
 

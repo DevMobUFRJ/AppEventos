@@ -165,27 +165,41 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         val actionSearch = menu!!.findItem(R.id.action_search)
         actionSearch.isVisible = showSearchButton
-        val searchView = actionSearch.actionView as SearchView
+        val searchView = actionSearch.actionView as SearchView //pega o botao de pesquisar
+
+        //listener de texto alterado
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 Log.d("mydebug", "SearchOnQueryTextSubmit: $query")
-                //if (!searchView.isIconified) {
-                //    searchView.isIconified = true
-                //}
-                //searchView.isIconified
-                model.setWeeks(model.copy.filter { it.nome.contains(query, ignoreCase = true) } as MutableList<Evento>)
-                //actionSearch.collapseActionView()
                 return false
             }
 
-            override fun onQueryTextChange(s: String): Boolean {
-                Log.d("mydebug", "SearchOnQueryTextChanged: " + s);
+            override fun onQueryTextChange(string: String): Boolean {
+                Log.d("mydebug", "SearchOnQueryTextChanged: " + string)
+                model.setWeeks(model.copy.filter { it.nome.contains(string, ignoreCase = true) } as MutableList<Evento>)
                 return false
             }
         })
 
+        //listener de fechar busca
+        actionSearch.setOnActionExpandListener(object: MenuItem.OnActionExpandListener{
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                Log.d("mydebug", "Collapse")
+                return true
+            }
+
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                Log.d("mydebug", "Expand")
+                return true
+            }
+        })
+
+
         return super.onCreateOptionsMenu(menu)
     }
+
+
+
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item!!.itemId){
         R.id.action_settings -> true

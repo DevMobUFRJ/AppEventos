@@ -66,6 +66,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         nav_view.setCheckedItem(model.screen!!)
         displayScreen(model.screen!!)
+        toolbar.title = "Eventos"
 
         FirebaseAuth.getInstance().addAuthStateListener {
             val user = it.currentUser
@@ -101,28 +102,31 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         when (id) {
             nav_eventos -> {
-                showSearchButton = true
-                invalidateOptionsMenu()
+                //showSearchButton = true
+                //invalidateOptionsMenu()
+                //toolbar.title = "Eventos"
                 replace(FragmentTelaPrincipal())
             }
             nav_agenda -> {
-                showSearchButton = false
-                invalidateOptionsMenu()
+                //showSearchButton = false
+                //invalidateOptionsMenu()
+                //toolbar.title = "Minha semana"
                 replace(FragmentMinhaSemana())
             }
             nav_config -> {
-                showSearchButton = false
-                invalidateOptionsMenu()
+                //showSearchButton = false
+                //invalidateOptionsMenu()
+                //toolbar.title = "Configurações"
                 replace(SettingsFragment())
             }
             //TODO: Criar um id pra tela de evento
             20 -> {
-                showSearchButton = false
-                invalidateOptionsMenu()
+                //showSearchButton = false
+                //invalidateOptionsMenu()
                 replace(FragmentTelaDeEvento())
             }
             else -> {
-                showSearchButton = false
+                showSearchButton = true
                 invalidateOptionsMenu()
                 replace(FragmentTelaPrincipal())
             }

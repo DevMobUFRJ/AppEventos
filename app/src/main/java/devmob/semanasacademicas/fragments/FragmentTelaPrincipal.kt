@@ -5,12 +5,14 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.*
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.adapters.ListaDeEventosAdapter
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.viewModels.WeeksList
+import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.content_tela_principal.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -27,6 +29,11 @@ class FragmentTelaPrincipal : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         
         val model = ViewModelProviders.of(this.activity!!).get(WeeksList::class.java)
+
+        val parentActivity = activity!! as TelaPrincipal
+        parentActivity.showSearchButton = true //habilita o botao de pesquisa
+        parentActivity.invalidateOptionsMenu()
+        parentActivity.toolbar.title = "Eventos" //seta o titulo da toolbar, mas por algum motivo nao roda quando abre o aplicativo c:
 
         val viewManager = LinearLayoutManager(this.context)
         viewAdapter = ListaDeEventosAdapter()

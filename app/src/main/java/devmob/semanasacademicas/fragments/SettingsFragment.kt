@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import devmob.semanasacademicas.R
+import devmob.semanasacademicas.activities.TelaPrincipal
+import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 
 class SettingsFragment : Fragment() {
 
@@ -19,6 +21,12 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val parentActivity = activity!! as TelaPrincipal
+        parentActivity.showSearchButton = false //desabilita o botao de pesquisa
+        parentActivity.invalidateOptionsMenu()
+        parentActivity.toolbar.title = "Configurações" //seta o titulo da toolbar
+
 
 
     }

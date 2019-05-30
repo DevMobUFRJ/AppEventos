@@ -11,9 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import devmob.semanasacademicas.*
+import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.adapters.ListaDeFavoritosAdapter
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.viewModels.User
+import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.fragment_minha_semana.*
 import java.util.ArrayList
 
@@ -27,6 +29,12 @@ class FragmentMinhaSemana : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val viewAdapter = ListaDeFavoritosAdapter()
         val viewManager = LinearLayoutManager(this.context)
+
+        val parentActivity = activity!! as TelaPrincipal
+        parentActivity.showSearchButton = false //desabilita o botao de pesquisa
+        parentActivity.invalidateOptionsMenu()
+        parentActivity.toolbar.title = "Minha Semana" //seta o titulo da toolbar
+
 
         listFavorite_Days.apply {
             adapter = viewAdapter

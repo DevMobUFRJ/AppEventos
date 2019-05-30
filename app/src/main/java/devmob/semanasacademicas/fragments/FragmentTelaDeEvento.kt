@@ -13,8 +13,10 @@ import devmob.semanasacademicas.activities.Loja
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.activities.AtividadesActivity
+import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.viewModels.WeeksList
+import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.content_tela_de_evento.*
 
 class FragmentTelaDeEvento : Fragment() {
@@ -29,6 +31,13 @@ class FragmentTelaDeEvento : Fragment() {
         val model = ViewModelProviders.of(this.activity!!).get(WeeksList::class.java)
 
         evento = model.item
+
+        val parentActivity = activity!! as TelaPrincipal
+        parentActivity.showSearchButton = false //desabilita o botao de pesquisa
+        parentActivity.invalidateOptionsMenu()
+        parentActivity.toolbar.title = evento.nome //seta o titulo da toolbar
+
+
         evento.run{
             periodoEvento.text = periodo()
             nomeEvento.text = nome

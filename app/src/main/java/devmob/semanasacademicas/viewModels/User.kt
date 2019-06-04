@@ -30,14 +30,22 @@ class User: ViewModel() {
     }
 
     private fun createListener() = FirebaseAuth.getInstance().addAuthStateListener {
+        clearAll()
+
         user = it.currentUser
         logged.value = user != null
-        if(logged.value == true) {
-            if(::listener.isInitialized) listener.remove()
-            favorites.clear()
 
+        if(logged.value == true)
             listener = createFavoriteListener()
-        }
+    }
+
+    private fun clearAll(){
+        if(::listener.isInitialized) listener.remove()
+
+        favorites.clear()
+        tempHM.clear()
+
+        postClone()
     }
 
     private fun createFavoriteListener() = FirebaseFirestore.getInstance().users[user!!.uid].favorites.addSnapshotListener { snapshot, _ ->

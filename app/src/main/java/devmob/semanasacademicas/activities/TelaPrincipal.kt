@@ -1,29 +1,22 @@
 package devmob.semanasacademicas.activities
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v7.widget.SearchView
-import android.support.transition.Scene
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import android.support.v4.app.FragmentTransaction
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.R.id.*
 import devmob.semanasacademicas.dataclass.Evento
-import devmob.semanasacademicas.fragments.FragmentMinhaSemana
-import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
-import devmob.semanasacademicas.fragments.FragmentTelaPrincipal
-import devmob.semanasacademicas.fragments.SettingsFragment
 import devmob.semanasacademicas.viewModels.User
 import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.activity_tela_principal.*
@@ -32,14 +25,15 @@ import kotlinx.android.synthetic.main.nav_header_tela_principal.view.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
-import android.support.v4.view.MenuItemCompat.collapseActionView
-import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
 import android.util.Log
+import devmob.semanasacademicas.fragments.*
+import devmob.semanasacademicas.viewModels.SelectedWeek
 
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var model: WeeksList
+    lateinit var weeksList: WeeksList
+    lateinit var activitiesList: SelectedWeek
     var showSearchButton = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,17 +49,19 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        model = ViewModelProviders.of(this).get(WeeksList::class.java)
+        weeksList = ViewModelProviders.of(this).get(WeeksList::class.java)
+        activitiesList = ViewModelProviders.of(this).get(SelectedWeek::class.java)
+
         ViewModelProviders.of(this).get(User::class.java)
 
         intent.extras?.getParcelableArrayList<Evento>("WEEKS")?.also {
-            model.setWeeks(it)
+            weeksList.setWeeks(it)
         }
 
-        model.screen = model.screen ?: nav_eventos
+        weeksList.screen = weeksList.screen ?: nav_eventos
 
-        nav_view.setCheckedItem(model.screen!!)
-        displayScreen(model.screen!!)
+        nav_view.setCheckedItem(weeksList.screen!!)
+        displayScreen(weeksList.screen!!)
         toolbar.title = "Eventos"
 
         FirebaseAuth.getInstance().addAuthStateListener {
@@ -98,7 +94,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     fun displayScreen(id: Int) {
         nav_view.setCheckedItem(id)
-        model.screen = id
+        weeksList.screen = id
 
         when (id) {
             nav_eventos -> {
@@ -125,6 +121,12 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 //invalidateOptionsMenu()
                 replace(FragmentTelaDeEvento())
             }
+            30 -> {
+                replace(FragmentAtividades())
+            }
+            40 -> {
+                replace(FragmentDetalhesAtividade())
+            }
             else -> {
                 showSearchButton = true
                 invalidateOptionsMenu()
@@ -133,7 +135,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
     }
 
-    private fun replace(frag: Fragment){
+    private fun replace(frag: androidx.fragment.app.Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         val oldFrag = supportFragmentManager.findFragmentByTag(frag.javaClass.name)
 
@@ -148,14 +150,18 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawer(GravityCompat.START)
             supportFragmentManager.backStackEntryCount > 1 -> {
                 supportFragmentManager.popBackStack()
-                model.screen = nav_eventos
-                displayScreen(model.screen!!)
-                //nav_view.setCheckedItem(model.screen!!)
+                weeksList.screen = when(weeksList.screen) {
+                    30 -> 20
+                    40 -> nav_agenda
+                    else -> nav_eventos
+                }
+                displayScreen(weeksList.screen!!)
+                //nav_view.setCheckedItem(weeksList.screen!!)
             }
             supportFragmentManager.backStackEntryCount == 1 -> finish()
-//            model.screen == R.id.nav_eventos -> finish()
-//            model.screen == R.id.nav_agenda -> displayScreen(R.id.nav_eventos)
-//            model.screen == 20 -> displayScreen(R.id.nav_eventos)
+//            weeksList.screen == R.id.nav_eventos -> finish()
+//            weeksList.screen == R.id.nav_agenda -> displayScreen(R.id.nav_eventos)
+//            weeksList.screen == 20 -> displayScreen(R.id.nav_eventos)
             else -> super.onBackPressed()
         }
 
@@ -170,7 +176,6 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val actionSearch = menu!!.findItem(R.id.action_search)
         actionSearch.isVisible = showSearchButton
         val searchView = actionSearch.actionView as SearchView //pega o botao de pesquisar
-
         //listener de texto alterado
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -180,23 +185,25 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
             override fun onQueryTextChange(string: String): Boolean {
                 Log.d("mydebug", "SearchOnQueryTextChanged: " + string)
-                model.setWeeks(model.copy.filter { it.nome.contains(string, ignoreCase = true) } as MutableList<Evento>)
+                weeksList.query = string
+                weeksList.makeQuery()
+//                weeksList.setWeeks(weeksList.copy.filter { it.nome.contains(string, ignoreCase = true) } as MutableList<Evento>)
                 return false
             }
         })
 
-        //listener de fechar busca
-        actionSearch.setOnActionExpandListener(object: MenuItem.OnActionExpandListener{
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                Log.d("mydebug", "Collapse")
-                return true
-            }
-
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                Log.d("mydebug", "Expand")
-                return true
-            }
-        })
+//        //listener de fechar busca
+//        actionSearch.setOnActionExpandListener(object: MenuItem.OnActionExpandListener{
+//            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+//                Log.d("mydebug", "Collapse")
+//                return true
+//            }
+//
+//            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+//                Log.d("mydebug", "Expand")
+//                return true
+//            }
+//        })
 
 
         return super.onCreateOptionsMenu(menu)

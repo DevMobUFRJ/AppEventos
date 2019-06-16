@@ -1,10 +1,10 @@
 package devmob.semanasacademicas.fragments
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.*
 import devmob.semanasacademicas.*
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.content_tela_principal.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class FragmentTelaPrincipal : Fragment() {
+class FragmentTelaPrincipal : androidx.fragment.app.Fragment() {
 
     lateinit var viewAdapter: ListaDeEventosAdapter
 
@@ -35,7 +35,7 @@ class FragmentTelaPrincipal : Fragment() {
         parentActivity.invalidateOptionsMenu()
         parentActivity.toolbar.title = "Eventos" //seta o titulo da toolbar, mas por algum motivo nao roda quando abre o aplicativo c:
 
-        val viewManager = LinearLayoutManager(this.context)
+        val viewManager = androidx.recyclerview.widget.LinearLayoutManager(this.context)
         viewAdapter = ListaDeEventosAdapter()
 
         swiperefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
@@ -53,6 +53,7 @@ class FragmentTelaPrincipal : Fragment() {
         model.weeks.observe(this, Observer<MutableList<Evento>>{ weekList ->
             viewAdapter.eventos = weekList!!
             swiperefresh.isRefreshing = false
+            model.makeQuery()
         })
     }
 }

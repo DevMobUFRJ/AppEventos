@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:layout_height="170dp"
                 android:orientation="horizontal">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_margin="4dp"
@@ -88,8 +88,8 @@
                             android:textSize="10sp"/>
                     
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:id="@+id/btnWorkshops"
                     android:layout_height="160dp"
@@ -120,7 +120,7 @@
                             android:textSize="10sp"/>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
@@ -128,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:orientation="horizontal">
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_margin="4dp"
@@ -159,8 +159,8 @@
                             android:textSize="10sp"/>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_margin="4dp"
@@ -191,10 +191,10 @@
                             android:textSize="10sp"/>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
 
         </LinearLayout>
 
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

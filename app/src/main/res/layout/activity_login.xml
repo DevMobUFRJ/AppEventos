@@ -20,7 +20,7 @@
                     android:layout_height="140dp"
                     android:src="@drawable/logo_white_title"/>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutEmail"
                     android:textColorHint="@color/gray_lighter"
                     android:layout_width="match_parent"
@@ -44,9 +44,9 @@
                         android:textSize="14sp"
                         android:fontFamily="@font/ubuntu_light"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutPassword"
                     android:textColorHint="@color/gray_lighter"
                     android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                         android:singleLine="true"/>
 
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                     android:id="@+id/btnLogin"

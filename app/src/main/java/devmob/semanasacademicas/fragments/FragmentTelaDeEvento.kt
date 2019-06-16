@@ -1,25 +1,23 @@
 package devmob.semanasacademicas.fragments
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import devmob.semanasacademicas.ARG_EVENT
-import devmob.semanasacademicas.ARG_TYPE
 import devmob.semanasacademicas.activities.Loja
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.Types
-import devmob.semanasacademicas.activities.AtividadesActivity
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.dataclass.Evento
-import devmob.semanasacademicas.viewModels.WeeksList
+import devmob.semanasacademicas.viewModels.SelectedWeek
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.content_tela_de_evento.*
 
-class FragmentTelaDeEvento : Fragment() {
+class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 
     private lateinit var evento: Evento
 
@@ -28,9 +26,9 @@ class FragmentTelaDeEvento : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val model = ViewModelProviders.of(this.activity!!).get(WeeksList::class.java)
 
-        evento = model.item
+        val model = ViewModelProviders.of(this.activity!!).get(SelectedWeek::class.java)
+        evento = model.selectedWeek
 
         val parentActivity = activity!! as TelaPrincipal
         parentActivity.showSearchButton = false //desabilita o botao de pesquisa
@@ -49,13 +47,19 @@ class FragmentTelaDeEvento : Fragment() {
         }
 
         btnProgramacao.setOnClickListener {
-            createIntent(Types.all)
+            model.tipo = Types.all
+            (this.activity as TelaPrincipal).displayScreen(30)
+            //createIntent(Types.all)
         }
         btnWorkshops.setOnClickListener {
-            createIntent(Types.workshop)
+            model.tipo = Types.workshop
+            (this.activity as TelaPrincipal).displayScreen(30)
+            //createIntent(Types.workshop)
         }
         btnPalestras.setOnClickListener {
-            createIntent(Types.lecture)
+            model.tipo = Types.lecture
+            (this.activity as TelaPrincipal).displayScreen(30)
+            //createIntent(Types.lecture)
         }
 
         btnLoja.setOnClickListener {
@@ -63,12 +67,5 @@ class FragmentTelaDeEvento : Fragment() {
             intent.putExtra(ARG_EVENT, evento)
             this.context!!.startActivity(intent)
         }
-    }
-
-    private fun createIntent(type: String){
-        val intent = Intent(this.context, AtividadesActivity::class.java)
-        intent.putExtra(ARG_EVENT, evento)
-        intent.putExtra(ARG_TYPE, type)
-        this.context!!.startActivity(intent)
     }
 }

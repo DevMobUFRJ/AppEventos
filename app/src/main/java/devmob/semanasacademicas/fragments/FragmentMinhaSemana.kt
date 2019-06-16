@@ -1,10 +1,10 @@
 package devmob.semanasacademicas.fragments
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.fragment_minha_semana.*
 import java.util.ArrayList
 
-class FragmentMinhaSemana : Fragment() {
+class FragmentMinhaSemana : androidx.fragment.app.Fragment() {
 
     lateinit var user: User
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -28,7 +28,7 @@ class FragmentMinhaSemana : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewAdapter = ListaDeFavoritosAdapter()
-        val viewManager = LinearLayoutManager(this.context)
+        val viewManager = androidx.recyclerview.widget.LinearLayoutManager(this.context)
 
         val parentActivity = activity!! as TelaPrincipal
         parentActivity.showSearchButton = false //desabilita o botao de pesquisa

@@ -1,6 +1,6 @@
 package devmob.semanasacademicas.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import devmob.semanasacademicas.dataclass.ItemLoja
 import devmob.semanasacademicas.format
 import kotlinx.android.synthetic.main.item_loja.view.*
 
-class ListaLojaAdapter(private val items: MutableList<ItemLoja>): RecyclerView.Adapter<ListaLojaAdapter.ViewHolder>() {
+class ListaLojaAdapter(private val items: MutableList<ItemLoja>): androidx.recyclerview.widget.RecyclerView.Adapter<ListaLojaAdapter.ViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int) =
         ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.item_loja, p0, false))
 
@@ -20,7 +20,7 @@ class ListaLojaAdapter(private val items: MutableList<ItemLoja>): RecyclerView.A
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItems(items[p1])
 
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         private val nome = itemView.nomeItemLoja as TextView
         private val preco = itemView.precoItemLoja as TextView
         private val desc = itemView.descItemLoja as TextView

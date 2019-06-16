@@ -1,8 +1,8 @@
 package devmob.semanasacademicas.viewModels
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.weeks
@@ -11,7 +11,7 @@ class WeeksList: ViewModel() {
 
     private var hasValue = false
     var screen: Int? = null
-    var item = Evento()
+    var query = ""
     var copy = mutableListOf<Evento>()
 
     var weeks = MutableLiveData<MutableList<Evento>>()
@@ -19,6 +19,9 @@ class WeeksList: ViewModel() {
             if(!hasValue) loadWeeks()
             return field
         }
+
+    fun makeQuery()
+            = setWeeks(copy.filter { it.nome.contains(query, ignoreCase = true) } as MutableList<Evento>)
 
     fun setWeeks(weeksList: MutableList<Evento>){
         weeks.postValue(weeksList)

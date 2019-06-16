@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".activities.RegisterActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -30,7 +30,7 @@
                     android:src="@drawable/logo_black_title"
                     android:layout_centerHorizontal="true"/>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutName"
                     android:textColorHint="@color/gray_light"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -57,10 +57,10 @@
                         android:textSize="14sp"
                         android:fontFamily="@font/ubuntu_light"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutEmail"
                     android:textColorHint="@color/gray_light"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -87,9 +87,9 @@
                         android:textSize="14sp"
                         android:fontFamily="@font/ubuntu_light"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutPassword"
                     android:textColorHint="@color/gray_light"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -117,9 +117,9 @@
                         android:singleLine="true"/>
 
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutConfirmPassword"
                     android:textColorHint="@color/gray_light"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -147,7 +147,7 @@
                         android:singleLine="true"/>
 
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <RadioGroup
                     android:id="@+id/radioGroup"

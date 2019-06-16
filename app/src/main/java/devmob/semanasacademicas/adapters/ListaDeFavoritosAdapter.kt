@@ -1,8 +1,8 @@
 package devmob.semanasacademicas.adapters
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +14,7 @@ import devmob.semanasacademicas.formataMes
 import kotlinx.android.synthetic.main.minha_semana_dia.view.*
 import kotlin.properties.Delegates
 
-class ListaDeFavoritosAdapter : RecyclerView.Adapter<ListaDeFavoritosAdapter.ViewHolder>() {
+class ListaDeFavoritosAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ListaDeFavoritosAdapter.ViewHolder>() {
     var eventosFavoritados by Delegates.observable(hashMapOf<String, MutableList<Atividade>>()) { _, oldValue, newValue ->
         notifyChanges(oldValue, newValue)
     }
@@ -49,15 +49,15 @@ class ListaDeFavoritosAdapter : RecyclerView.Adapter<ListaDeFavoritosAdapter.Vie
         p0.bindItems(listActivities)
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView){
         private val dia = itemView.dia_numero as TextView
         private val diaSemana = itemView.mes as TextView
-        private val list = itemView.listFavorite_Items as RecyclerView
+        private val list = itemView.listFavorite_Items as androidx.recyclerview.widget.RecyclerView
 
         init {
             list.apply {
                 adapter = ItemsFavoritedListAdapter()
-                layoutManager = LinearLayoutManager(this.context)
+                layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.context)
             }
         }
 

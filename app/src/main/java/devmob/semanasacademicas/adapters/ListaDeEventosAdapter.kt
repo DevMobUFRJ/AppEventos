@@ -1,30 +1,24 @@
 package devmob.semanasacademicas.adapters
 
-import android.os.Bundle
-import android.support.transition.*
-import android.support.v7.widget.RecyclerView
+import androidx.transition.*
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.card_semana.view.*
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import devmob.semanasacademicas.ARG_EVENT
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
-import kotlinx.android.synthetic.main.content_tela_de_evento.*
-import org.jetbrains.anko.activityManager
-import org.jetbrains.anko.ctx
 import kotlin.properties.Delegates
 
 
-class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
+class ListaDeEventosAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
 
     var eventos by Delegates.observable(mutableListOf<Evento>()) { _, oldValue, newValue ->
         notifyChanges(oldValue, newValue)
@@ -50,7 +44,7 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItems(eventos[p1])
 
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView){
         private val nome = itemView.nomePagPrincipal as TextView
         private val descricao = itemView.descPagPrincipal as TextView
         private val periodo = itemView.dataPagPrincipal as TextView
@@ -71,8 +65,8 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
             botao.setOnClickListener {
                 val activity = it.context as TelaPrincipal
 
-                activity.model.item = event
-                activity.model.screen = 20
+                activity.activitiesList.selectedWeek = event
+                activity.weeksList.screen = 20
 
                 val befo = activity.supportFragmentManager.findFragmentById(R.id.contentHome)
                 val next = FragmentTelaDeEvento()

@@ -26,6 +26,7 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import android.util.Log
+import devmob.semanasacademicas.dialogs.LoginDialog
 import devmob.semanasacademicas.fragments.*
 import devmob.semanasacademicas.viewModels.SelectedWeek
 
@@ -220,7 +221,8 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             nav_login -> {
-                startActivity<LoginActivity>()
+                LoginDialog().show(supportFragmentManager.beginTransaction(), "LoginDialog")
+//                startActivity<LoginActivity>()
                 drawer_layout.closeDrawer(GravityCompat.START)
                 return false
             }

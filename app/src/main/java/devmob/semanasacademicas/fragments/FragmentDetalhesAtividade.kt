@@ -11,18 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import devmob.semanasacademicas.*
-import devmob.semanasacademicas.activities.LoginActivity
 import devmob.semanasacademicas.dataclass.Atividade
+import devmob.semanasacademicas.dialogs.LoginDialog
 import devmob.semanasacademicas.viewModels.SelectedWeek
 import devmob.semanasacademicas.viewModels.User
 import kotlinx.android.synthetic.main.fragment_detalhes_atividade.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.act
 import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 
 class FragmentDetalhesAtividade : Fragment() {
 
@@ -64,7 +60,9 @@ class FragmentDetalhesAtividade : Fragment() {
                 favBtn.setOnClickListener{
                     alert("Você precisa estar logado para acesso a essa função") {
                         negativeButton("Cancelar"){}
-                        positiveButton("Entrar"){startActivity<LoginActivity>()}
+                        positiveButton("Entrar"){
+                            LoginDialog().show(activity?.supportFragmentManager!!.beginTransaction(), "LoginDialog")
+                        }
                     }.show()
                 }
             }

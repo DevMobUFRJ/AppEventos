@@ -1,11 +1,12 @@
-package devmob.semanasacademicas.activities
+package devmob.semanasacademicas.dialogs
 
 import android.app.ProgressDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -18,36 +19,47 @@ import devmob.semanasacademicas.get
 import devmob.semanasacademicas.setErrorAndFocus
 import devmob.semanasacademicas.users
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.okButton
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.alert
 
-class LoginActivity : AppCompatActivity() {
+class LoginDialog : DialogFragment() {
 
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setStyle(STYLE_NORMAL, R.style.LoginDialog)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
+            = inflater.inflate(R.layout.activity_login, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         mAuth = FirebaseAuth.getInstance()
         mAuth.useAppLanguage()
 
         txtRegister.setOnClickListener {
-            finish()
-            startActivity<RegisterActivity>()
-            overridePendingTransition(R.anim.enter_from_left, R.anim.fade_out)
+            RegisterDialog().show(activity?.supportFragmentManager!!.beginTransaction(), "RegisterDialog")
+//            dismiss()
+//            startActivity<RegisterActivity>()
         }
 
         btnLogin.setOnClickListener {
             attemptLogin()
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.run {
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
     }
 
     fun attemptLogin(){
-
-        val progressDialog = ProgressDialog.show(this, "Aguarde", "Conectando...", true)
+        val progressDialog = ProgressDialog.show(this.context, "Aguarde", "Conectando...", true)
 
         val email = txtEmail.text.toString().trim()
         val pwd = txtPassword.text.toString().trim()
@@ -74,7 +86,8 @@ class LoginActivity : AppCompatActivity() {
                             FirebaseFirestore.getInstance().users[result!!.user.uid].set(newToken, SetOptions.merge())
                         }
                         progressDialog.dismiss()
-                        finish() //fecha a tela de login e vai para a tela principal
+                        dismiss()
+//                        finish() //fecha a tela de login e vai para a tela principal
                     }
                     .addOnFailureListener {
                         progressDialog.dismiss()

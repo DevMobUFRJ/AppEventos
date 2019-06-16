@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import android.view.View
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.dataclass.Atividade
+import devmob.semanasacademicas.dialogs.LoginDialog
 import devmob.semanasacademicas.viewModels.User
 import kotlinx.android.synthetic.main.activity_detalhes_atividade.*
 import org.jetbrains.anko.*
@@ -49,7 +50,9 @@ class DetalhesAtividade : AppCompatActivity() {
                 favBtn.setOnClickListener{
                     alert("Você precisa estar logado para acesso a essa função") {
                         negativeButton("Cancelar"){}
-                        positiveButton("Entrar"){startActivity<LoginActivity>()}
+                        positiveButton("Entrar"){
+                            LoginDialog().show(supportFragmentManager!!.beginTransaction(), "LoginDialog")
+                        }
                     }.show()
                 }
             }

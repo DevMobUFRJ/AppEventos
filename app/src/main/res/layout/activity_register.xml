@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.RegisterActivity">
+        tools:context=".dialogs.RegisterDialog">
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -166,6 +166,7 @@
                         android:textSize="16sp"
                         android:paddingStart="10dp"
                         android:text="Aluno da UFRJ"
+                        android:buttonTint="@color/gray_dark"
                         android:textColor="@color/gray_dark"/>
                 <RadioButton
                         android:id="@+id/btnUFRJTeacher"
@@ -176,6 +177,7 @@
                         android:paddingStart="10dp"
                         android:layout_marginTop="5dp"
                         android:text="Professor da UFRJ"
+                        android:buttonTint="@color/gray_dark"
                         android:textColor="@color/gray_dark"/>
                 <RadioButton
                         android:id="@+id/btnOtherStudent"
@@ -186,6 +188,7 @@
                         android:paddingStart="10dp"
                         android:layout_marginTop="5dp"
                         android:text="Aluno de outra instituição"
+                        android:buttonTint="@color/gray_dark"
                         android:textColor="@color/gray_dark"/>
                 <RadioButton
                         android:id="@+id/btnOtherTeacher"
@@ -196,6 +199,7 @@
                         android:paddingStart="10dp"
                         android:layout_marginTop="5dp"
                         android:text="Professor de outra instituição"
+                        android:buttonTint="@color/gray_dark"
                         android:textColor="@color/gray_dark"/>
                 <RadioButton
                         android:id="@+id/btnOther"
@@ -206,6 +210,7 @@
                         android:paddingStart="10dp"
                         android:layout_marginTop="5dp"
                         android:text="Outros"
+                        android:buttonTint="@color/gray_dark"
                         android:textColor="@color/gray_dark"/>
             </RadioGroup>
 

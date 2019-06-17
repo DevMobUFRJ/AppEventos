@@ -25,9 +25,5 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
         val parentActivity = activity!! as TelaPrincipal
         parentActivity.showSearchButton = false //desabilita o botao de pesquisa
         parentActivity.invalidateOptionsMenu()
-        parentActivity.toolbar.title = "Configurações" //seta o titulo da toolbar
-
-
-
     }
 }

@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.DiffUtil
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.activities.TelaPrincipal
+import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
 import kotlin.properties.Delegates
@@ -65,66 +67,17 @@ class ListaDeEventosAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<L
             botao.setOnClickListener {
                 val activity = it.context as TelaPrincipal
 
-                activity.activitiesList.selectedWeek = event
+                activity.activitiesList.run {
+                    if(event is Atividade) {
+                        atividade = event
+                        it.findNavController().navigate(R.id.evento_to_detailsAtividade)
+                    } else {
+                        selectedWeek = event
+                        it.findNavController().navigate(R.id.eventos_to_details)
+                    }
+                }
                 activity.weeksList.screen = 20
 
-                val befo = activity.supportFragmentManager.findFragmentById(R.id.contentHome)
-                val next = FragmentTelaDeEvento()
-
-                nome.transitionName = activity.resources.getString(R.string.nomeTransition)
-                periodo.transitionName = activity.resources.getString(R.string.dateTransition)
-                descricao.transitionName = activity.resources.getString(R.string.descriptionTransition)
-                
-                //exit
-                befo?.exitTransition = Fade().apply {
-                    duration = 150
-                }
-
-                //enter
-                next.enterTransition = Fade().apply {
-                    duration = 150
-                    startDelay = 150
-                }
-
-                next.returnTransition = Fade().apply {
-                    duration = 150
-                }
-
-                befo?.reenterTransition = Fade().apply {
-                    startDelay = 50
-                    duration = 150
-                }
-                //common
-                next.sharedElementEnterTransition = TransitionSet().apply {
-                    addTransition(TransitionInflater.from(activity).inflateTransition(android.R.transition.move).apply {
-                        startDelay = 100
-                        duration = 100
-                        addTarget(activity.resources.getString(R.string.dateTransition))
-                    })
-                    addTransition(TransitionInflater.from(activity).inflateTransition(android.R.transition.move).apply {
-                        startDelay = 100
-                        duration = 130
-                        addTarget(activity.resources.getString(R.string.nomeTransition))
-                    })
-                    addTransition(TransitionInflater.from(activity).inflateTransition(android.R.transition.move).apply {
-                        startDelay = 100
-                        duration = 190
-                        addTarget(activity.resources.getString(R.string.descriptionTransition))
-                    })
-                }
-
-
-                activity.supportFragmentManager.beginTransaction().apply {
-                    addSharedElement(nome, nome.transitionName)
-                    addSharedElement(periodo, periodo.transitionName)
-                    addSharedElement(descricao, descricao.transitionName)
-                    replace(R.id.contentHome, next)
-                    addToBackStack(next.javaClass.name)
-                    commit()
-                }
-                activity.showSearchButton = false
-                activity.invalidateOptionsMenu()
-                //activity.displayScreen(20)
             }
 
         }

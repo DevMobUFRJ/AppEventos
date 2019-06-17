@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import devmob.semanasacademicas.ARG_EVENT
 import devmob.semanasacademicas.activities.Loja
 import devmob.semanasacademicas.R
@@ -33,8 +34,6 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
         val parentActivity = activity!! as TelaPrincipal
         parentActivity.showSearchButton = false //desabilita o botao de pesquisa
         parentActivity.invalidateOptionsMenu()
-        parentActivity.toolbar.title = evento.nome //seta o titulo da toolbar
-
 
         evento.run{
             periodoEvento.text = periodo()
@@ -48,17 +47,20 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 
         btnProgramacao.setOnClickListener {
             model.tipo = Types.all
-            (this.activity as TelaPrincipal).displayScreen(30)
+            it.findNavController().navigate(R.id.details_to_atividades)
+//            (this.activity as TelaPrincipal).displayScreen(30)
             //createIntent(Types.all)
         }
         btnWorkshops.setOnClickListener {
             model.tipo = Types.workshop
-            (this.activity as TelaPrincipal).displayScreen(30)
+            it.findNavController().navigate(R.id.details_to_atividades)
+//            (this.activity as TelaPrincipal).displayScreen(30)
             //createIntent(Types.workshop)
         }
         btnPalestras.setOnClickListener {
             model.tipo = Types.lecture
-            (this.activity as TelaPrincipal).displayScreen(30)
+            it.findNavController().navigate(R.id.details_to_atividades)
+//            (this.activity as TelaPrincipal).displayScreen(30)
             //createIntent(Types.lecture)
         }
 

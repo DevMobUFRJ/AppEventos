@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.activities.DetalhesAtividade
 import devmob.semanasacademicas.activities.TelaPrincipal
@@ -52,7 +53,8 @@ class ItemsFavoritedListAdapter : RecyclerView.Adapter<ItemsFavoritedListAdapter
             itemView.setOnClickListener {
                 if(item.tipo != Types.pause) (it.context as TelaPrincipal).run {
                     activitiesList.atividade = item
-                    displayScreen(40)
+                    it.findNavController().navigate(R.id.minhaSemana_to_detailsAtividade)
+//                    displayScreen(40)
                 }
             }
         }

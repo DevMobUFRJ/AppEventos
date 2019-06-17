@@ -33,8 +33,6 @@ class FragmentMinhaSemana : androidx.fragment.app.Fragment() {
         val parentActivity = activity!! as TelaPrincipal
         parentActivity.showSearchButton = false //desabilita o botao de pesquisa
         parentActivity.invalidateOptionsMenu()
-        parentActivity.toolbar.title = "Minha Semana" //seta o titulo da toolbar
-
 
         listFavorite_Days.apply {
             adapter = viewAdapter

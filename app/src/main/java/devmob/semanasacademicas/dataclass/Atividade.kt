@@ -6,14 +6,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Atividade (
-    var id: String = "",
-    var nome: String = "",
     var grupo: String = "",
     var tipo: String = "outros",
-    var inicio: Timestamp = Timestamp.now(),
-    var fim: Timestamp = Timestamp.now(),
     var apresentador: String = "Apresentador não informado",
     var local: String = "Local não informado",
-    var link: String = "https://fb.com/SemanaDaComputacaoUFRJ",
     var weekId: String = ""
-): Parcelable
+): Evento(), Parcelable

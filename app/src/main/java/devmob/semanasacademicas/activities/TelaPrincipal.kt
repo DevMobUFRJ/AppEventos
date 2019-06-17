@@ -26,6 +26,9 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import android.util.Log
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.*
 import devmob.semanasacademicas.dialogs.LoginDialog
 import devmob.semanasacademicas.fragments.*
 import devmob.semanasacademicas.viewModels.SelectedWeek
@@ -35,19 +38,23 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     lateinit var weeksList: WeeksList
     lateinit var activitiesList: SelectedWeek
+    lateinit var navController: NavController
+
     var showSearchButton = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_principal)
+
         setSupportActionBar(toolbar)
+        supportActionBar?.run {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
 
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-
+        navController = findNavController(R.id.nav_host_fragment)
+        setupActionBarWithNavController(navController, drawer_layout)
+        nav_view.setupWithNavController(navController)
         nav_view.setNavigationItemSelectedListener(this)
 
         weeksList = ViewModelProviders.of(this).get(WeeksList::class.java)
@@ -60,9 +67,6 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
 
         weeksList.screen = weeksList.screen ?: nav_eventos
-
-        nav_view.setCheckedItem(weeksList.screen!!)
-        displayScreen(weeksList.screen!!)
         toolbar.title = "Eventos"
 
         FirebaseAuth.getInstance().addAuthStateListener {
@@ -93,86 +97,17 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
     }
 
-    fun displayScreen(id: Int) {
-        nav_view.setCheckedItem(id)
-        weeksList.screen = id
-
-        when (id) {
-            nav_eventos -> {
-                //showSearchButton = true
-                //invalidateOptionsMenu()
-                //toolbar.title = "Eventos"
-                replace(FragmentTelaPrincipal())
-            }
-            nav_agenda -> {
-                //showSearchButton = false
-                //invalidateOptionsMenu()
-                //toolbar.title = "Minha semana"
-                replace(FragmentMinhaSemana())
-            }
-            nav_config -> {
-                //showSearchButton = false
-                //invalidateOptionsMenu()
-                //toolbar.title = "Configurações"
-                replace(SettingsFragment())
-            }
-            //TODO: Criar um id pra tela de evento
-            20 -> {
-                //showSearchButton = false
-                //invalidateOptionsMenu()
-                replace(FragmentTelaDeEvento())
-            }
-            30 -> {
-                replace(FragmentAtividades())
-            }
-            40 -> {
-                replace(FragmentDetalhesAtividade())
-            }
-            else -> {
-                showSearchButton = true
-                invalidateOptionsMenu()
-                replace(FragmentTelaPrincipal())
-            }
-        }
-    }
-
-    private fun replace(frag: androidx.fragment.app.Fragment){
-        val transaction = supportFragmentManager.beginTransaction()
-        val oldFrag = supportFragmentManager.findFragmentByTag(frag.javaClass.name)
-
-        if(oldFrag != null) supportFragmentManager.popBackStack(oldFrag.javaClass.name, POP_BACK_STACK_INCLUSIVE)
-
-        transaction.replace(R.id.contentHome, frag, frag.javaClass.name).addToBackStack(frag.javaClass.name)
-        transaction.commit()
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(drawer_layout)
     }
 
     override fun onBackPressed() {
-        when {
-            drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawer(GravityCompat.START)
-            supportFragmentManager.backStackEntryCount > 1 -> {
-                supportFragmentManager.popBackStack()
-                weeksList.screen = when(weeksList.screen) {
-                    30 -> 20
-                    40 -> nav_agenda
-                    else -> nav_eventos
-                }
-                displayScreen(weeksList.screen!!)
-                //nav_view.setCheckedItem(weeksList.screen!!)
-            }
-            supportFragmentManager.backStackEntryCount == 1 -> finish()
-//            weeksList.screen == R.id.nav_eventos -> finish()
-//            weeksList.screen == R.id.nav_agenda -> displayScreen(R.id.nav_eventos)
-//            weeksList.screen == 20 -> displayScreen(R.id.nav_eventos)
-            else -> super.onBackPressed()
-        }
-
+        if(drawer_layout.isDrawerOpen(GravityCompat.START)) drawer_layout.closeDrawer(GravityCompat.START)
+        else super.onBackPressed()
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.tela_principal, menu)
-
 
         val actionSearch = menu!!.findItem(R.id.action_search)
         actionSearch.isVisible = showSearchButton
@@ -210,52 +145,34 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         return super.onCreateOptionsMenu(menu)
     }
 
-
-
-
     override fun onOptionsItemSelected(item: MenuItem?) = when (item!!.itemId){
-        R.id.action_settings -> true
+        action_settings -> true
         else -> super.onOptionsItemSelected(item)
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
-            nav_login -> {
-                LoginDialog().show(supportFragmentManager.beginTransaction(), "LoginDialog")
-//                startActivity<LoginActivity>()
-                drawer_layout.closeDrawer(GravityCompat.START)
-                return false
-            }
+        drawer_layout.closeDrawer(GravityCompat.START)
+        return when (item.itemId){
             nav_logout -> {
                 alert("Deseja sair?") {
-                    negativeButton("Não") {  }
-                    positiveButton("Sim") {
-                        FirebaseAuth.getInstance().signOut()
-                        drawer_layout.closeDrawer(GravityCompat.START)
-                    }
+                    negativeButton("Não") { }
+                    positiveButton("Sim") { FirebaseAuth.getInstance().signOut() }
                 }.show()
-                return false
+                false
             }
             nav_ajuda -> {
                 toast("Ainda não implementado")
-                return false
-            }
-            nav_config -> {
-                toast("Ainda não implementado")
-                return false
+                false
             }
             nav_historico -> {
                 toast("Ainda não implementado")
-                return false
+                false
             }
             nav_minha_conta -> {
                 toast("Ainda não implementado")
-                return false
+                false
             }
-            else -> displayScreen(item.itemId)
+            else -> NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item)
         }
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
     }
 
 }

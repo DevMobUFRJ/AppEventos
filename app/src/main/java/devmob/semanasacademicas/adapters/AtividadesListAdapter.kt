@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.activities.DetalhesAtividade
 import devmob.semanasacademicas.activities.TelaPrincipal
@@ -38,7 +39,7 @@ class AtividadesListAdapter(private val items: List<Atividade>): androidx.recycl
             itemView.setOnClickListener {
                 if(atividade.tipo != Types.pause) (it.context as TelaPrincipal).run {
                     activitiesList.atividade = atividade
-                    displayScreen(40)
+                    it.findNavController().navigate(R.id.atividades_to_detailsAtividade)
                 }
             }
         }

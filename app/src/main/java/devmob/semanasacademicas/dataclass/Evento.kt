@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
-data class Evento (
+open class Evento (
     var nome: String = "",
     var descricao: String = "",
     var link: String = "",

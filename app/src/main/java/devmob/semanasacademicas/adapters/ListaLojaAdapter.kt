@@ -33,6 +33,4 @@ class ListaLojaAdapter(private val items: MutableList<ItemLoja>): RecyclerView.A
             desc.text = produto.descricao
         }
     }
-
-
 }

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.ContextCompat
 import android.view.View
+import com.google.firebase.firestore.FirebaseFirestore
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.viewModels.User

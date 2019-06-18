@@ -4,16 +4,18 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import devmob.semanasacademicas.ARG_EVENT
-import devmob.semanasacademicas.ARG_TYPE
+import com.google.firebase.firestore.FirebaseFirestore
+import devmob.semanasacademicas.*
 import devmob.semanasacademicas.activities.Loja
-import devmob.semanasacademicas.R
-import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.activities.AtividadesActivity
 import devmob.semanasacademicas.activities.TelaPrincipal
+import devmob.semanasacademicas.adapters.ListaTiposAdapter
+import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
@@ -38,6 +40,31 @@ class FragmentTelaDeEvento : Fragment() {
         parentActivity.toolbar.title = evento.nome //seta o titulo da toolbar
 
 
+        val tipos = mutableListOf(Types.all)
+        val viewAdapter = ListaTiposAdapter(tipos, evento)
+        val viewManager = LinearLayoutManager(context)
+
+        listaDeTipos.apply {
+            setHasFixedSize(true)
+            overScrollMode = View.OVER_SCROLL_NEVER
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+
+        FirebaseFirestore.getInstance().weeks[evento.id].activities.get().addOnSuccessListener {
+            val temp = mutableListOf<Atividade>()
+            for (document in it.documents) {
+                val aux = document.toObject(Atividade::class.java)
+                aux?.id = document.id
+                aux?.weekId = evento.id
+                temp.add(aux!!)
+            }
+
+            tipos += temp.groupBy { it.tipo }.keys
+            viewAdapter.notifyDataSetChanged()
+//            Log.d("teste", temp.groupBy { it.tipo }.keys.toString())
+        }
+
         evento.run{
             periodoEvento.text = periodo()
             nomeEvento.text = nome
@@ -48,21 +75,23 @@ class FragmentTelaDeEvento : Fragment() {
             descricaoEvento.transitionName = resources.getString(R.string.descriptionTransition)
         }
 
-        btnProgramacao.setOnClickListener {
-            createIntent(Types.all)
-        }
-        btnWorkshops.setOnClickListener {
-            createIntent(Types.workshop)
-        }
-        btnPalestras.setOnClickListener {
-            createIntent(Types.lecture)
-        }
 
-        btnLoja.setOnClickListener {
-            val intent = Intent(this.context, Loja::class.java)
-            intent.putExtra(ARG_EVENT, evento)
-            this.context!!.startActivity(intent)
-        }
+
+//        btnProgramacao.setOnClickListener {
+//            createIntent(Types.all)
+//        }
+//        btnWorkshops.setOnClickListener {
+//            createIntent(Types.workshop)
+//        }
+//        btnPalestras.setOnClickListener {
+//            createIntent(Types.lecture)
+//        }
+//
+//        btnLoja.setOnClickListener {
+//            val intent = Intent(this.context, Loja::class.java)
+//            intent.putExtra(ARG_EVENT, evento)
+//            this.context!!.startActivity(intent)
+//        }
     }
 
     private fun createIntent(type: String){

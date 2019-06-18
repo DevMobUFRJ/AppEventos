@@ -55,8 +55,8 @@ class AtividadesActivity : AppCompatActivity() {
         val referencia = FirebaseFirestore.getInstance().weeks[evento.id].activities
 
         listener = when(tipo) {
-            Types.workshop, Types.lecture -> referencia.whereEqualTo("tipo", tipo)
-            else -> referencia
+            Types.all -> referencia
+            else -> referencia.whereEqualTo("tipo", tipo)
         }.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
             if(firebaseFirestoreException != null){

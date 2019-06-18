@@ -54,7 +54,7 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
         private val nome = itemView.nomePagPrincipal as TextView
         private val descricao = itemView.descPagPrincipal as TextView
         private val periodo = itemView.dataPagPrincipal as TextView
-        private val botao = itemView.botaoAbrirEvento as Button
+//        private val botao = itemView.botaoAbrirEvento as Button
         private val imageView = itemView.imageView2 as ImageView
 
         fun bindItems(event: Evento){
@@ -68,7 +68,7 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
             descricao.text = event.descricao
             periodo.text = event.periodo()
 
-            botao.setOnClickListener {
+            itemView.setOnClickListener {
                 val activity = it.context as TelaPrincipal
 
                 activity.model.item = event

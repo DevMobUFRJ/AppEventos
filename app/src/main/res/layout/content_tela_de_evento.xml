@@ -6,6 +6,14 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/imageView"/>
     <TextView
             android:text="data"
             android:fontFamily="@font/roboto"
@@ -13,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/periodoEvento"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="28dp"
             android:textColor="@color/gray_dark"

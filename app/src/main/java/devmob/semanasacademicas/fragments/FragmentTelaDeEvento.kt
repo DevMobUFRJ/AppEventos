@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.activities.Loja
@@ -70,9 +71,17 @@ class FragmentTelaDeEvento : Fragment() {
             nomeEvento.text = nome
             descricaoEvento.text = descricao
 
+            Glide.with(context!!).load(link)
+                .placeholder(R.drawable.thumb_placeholder)
+                .error(R.drawable.thumb_error)
+                .thumbnail(0.1f)
+                .centerCrop()
+                .into(imageView)
+
             nomeEvento.transitionName = resources.getString(R.string.nomeTransition)
             periodoEvento.transitionName = resources.getString(R.string.dateTransition)
             descricaoEvento.transitionName = resources.getString(R.string.descriptionTransition)
+            imageView.transitionName = "imagem"
         }
 
 

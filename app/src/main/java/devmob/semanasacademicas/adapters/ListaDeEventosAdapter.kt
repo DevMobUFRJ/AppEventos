@@ -54,7 +54,6 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
         private val nome = itemView.nomePagPrincipal as TextView
         private val descricao = itemView.descPagPrincipal as TextView
         private val periodo = itemView.dataPagPrincipal as TextView
-//        private val botao = itemView.botaoAbrirEvento as Button
         private val imageView = itemView.imageView2 as ImageView
 
         fun bindItems(event: Evento){
@@ -62,6 +61,7 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
                 .placeholder(R.drawable.thumb_placeholder)
                 .error(R.drawable.thumb_error)
                 .thumbnail(0.1f)
+                .fitCenter()
                 .into(imageView)
 
             nome.text = event.nome
@@ -80,25 +80,26 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
                 nome.transitionName = activity.resources.getString(R.string.nomeTransition)
                 periodo.transitionName = activity.resources.getString(R.string.dateTransition)
                 descricao.transitionName = activity.resources.getString(R.string.descriptionTransition)
-                
+                imageView.transitionName = "imagem"
+
                 //exit
                 befo?.exitTransition = Fade().apply {
-                    duration = 150
+                    duration = 200
                 }
 
                 //enter
                 next.enterTransition = Fade().apply {
-                    duration = 150
-                    startDelay = 150
+                    duration = 200
+                    startDelay = 100
                 }
 
                 next.returnTransition = Fade().apply {
-                    duration = 150
+                    duration = 200
                 }
 
                 befo?.reenterTransition = Fade().apply {
-                    startDelay = 50
-                    duration = 150
+                    startDelay = 100
+                    duration = 200
                 }
                 //common
                 next.sharedElementEnterTransition = TransitionSet().apply {

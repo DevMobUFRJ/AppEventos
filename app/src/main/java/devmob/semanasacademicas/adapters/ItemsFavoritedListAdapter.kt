@@ -42,12 +42,17 @@ class ItemsFavoritedListAdapter : RecyclerView.Adapter<ItemsFavoritedListAdapter
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItems(listActivities[p1])
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val teste1 = itemView.textView
-        private val teste2 = itemView.textView2
+        private val inicio = itemView.horaInicio
+        private val fim = itemView.horaFim
+        private val nome = itemView.nomePalestra
+        private val sala = itemView.sala
 
         fun bindItems(item: Atividade) {
-            teste1.text = item.nome
-            teste2.text = item.inicio.formataHora() + "h | " + item.local
+            inicio.text = item.inicio.formataHora()
+            fim.text = item.fim.formataHora()
+            nome.text = item.nome
+            sala.text = item.local
+
             itemView.setOnClickListener {
                 if(item.tipo != Types.pause)
                     it.context.startActivity<DetalhesAtividade>(

@@ -11,6 +11,7 @@ import android.widget.TextView
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.formataMes
+import devmob.semanasacademicas.formataSemanaHeader
 import kotlinx.android.synthetic.main.minha_semana_dia.view.*
 import kotlin.properties.Delegates
 
@@ -50,8 +51,7 @@ class ListaDeFavoritosAdapter : RecyclerView.Adapter<ListaDeFavoritosAdapter.Vie
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        private val dia = itemView.dia_numero as TextView
-        private val diaSemana = itemView.mes as TextView
+        private val dia = itemView.dia as TextView
         private val list = itemView.listFavorite_Items as RecyclerView
 
         init {
@@ -64,9 +64,8 @@ class ListaDeFavoritosAdapter : RecyclerView.Adapter<ListaDeFavoritosAdapter.Vie
         fun bindItems(listActivities: MutableList<Atividade>){
             if(listActivities.size == 0) return
 
-            val temp = listActivities[0].inicio.formataMes()
-            dia.text = temp.subSequence(0, 2)
-            diaSemana.text = temp.subSequence(3, 6)
+            dia.text = listActivities[0].inicio.formataSemanaHeader()
+
 
             listActivities.sortBy { it.inicio }
 

@@ -18,6 +18,8 @@ import java.util.*
 
 fun Timestamp.formata() = SimpleDateFormat("dd 'de' MMMM", Locale("pt", "BR")).format(this.toDate())
 
+fun Timestamp.formataSemanaHeader() = SimpleDateFormat("dd MMM, EE", Locale("pt", "BR")).format(this.toDate())
+
 fun Timestamp.formataDia() = SimpleDateFormat("dd MMMM',' EE ", Locale("pt", "BR")).format(this.toDate()).toUpperCase()
 
 fun Timestamp.formataMes() = SimpleDateFormat("dd MMM", Locale("pt", "BR")).format(this.toDate()).toUpperCase()

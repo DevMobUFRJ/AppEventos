@@ -12,12 +12,10 @@ import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.adapters.ListaDeEventosAdapter
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.viewModels.WeeksList
-import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.content_tela_principal.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import org.jetbrains.anko.support.v4.onRefresh
 
-class FragmentTelaPrincipal : androidx.fragment.app.Fragment() {
+class FragmentTelaPrincipal : Fragment() {
 
     lateinit var viewAdapter: ListaDeEventosAdapter
 
@@ -30,30 +28,24 @@ class FragmentTelaPrincipal : androidx.fragment.app.Fragment() {
         
         val model = ViewModelProviders.of(this.activity!!).get(WeeksList::class.java)
 
-        val parentActivity = activity!! as TelaPrincipal
-        parentActivity.showSearchButton = true //habilita o botao de pesquisa
-        parentActivity.invalidateOptionsMenu()
-        parentActivity.toolbar.title = "Eventos" //seta o titulo da toolbar, mas por algum motivo nao roda quando abre o aplicativo c:
 
-        val viewManager = androidx.recyclerview.widget.LinearLayoutManager(this.context)
+        val viewManager = LinearLayoutManager(this.context)
         viewAdapter = ListaDeEventosAdapter()
-
-        swiperefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
-
-        swiperefresh.setOnRefreshListener {
-            swiperefresh.isRefreshing = true
-            model.loadWeeks()
-        }
 
         lista.apply {
             layoutManager = viewManager
-            adapter= viewAdapter
+            adapter = viewAdapter
+        }
+
+        swiperefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
+        swiperefresh.onRefresh {
+            swiperefresh.setRefreshing(true)
+            model.loadWeeks()
         }
 
         model.weeks.observe(this, Observer<MutableList<Evento>>{ weekList ->
             viewAdapter.eventos = weekList!!
             swiperefresh.isRefreshing = false
-            model.makeQuery()
         })
     }
 }

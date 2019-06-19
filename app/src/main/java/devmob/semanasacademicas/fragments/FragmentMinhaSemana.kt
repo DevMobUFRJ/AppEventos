@@ -30,10 +30,6 @@ class FragmentMinhaSemana : androidx.fragment.app.Fragment() {
         val viewAdapter = ListaDeFavoritosAdapter()
         val viewManager = androidx.recyclerview.widget.LinearLayoutManager(this.context)
 
-        val parentActivity = activity!! as TelaPrincipal
-        parentActivity.showSearchButton = false //desabilita o botao de pesquisa
-        parentActivity.invalidateOptionsMenu()
-
         listFavorite_Days.apply {
             adapter = viewAdapter
             layoutManager = viewManager

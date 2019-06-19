@@ -98,6 +98,6 @@ class SelectedWeek: ViewModel(){
 
     override fun onCleared() {
         super.onCleared()
-        listener.remove()
+        if(::listener.isInitialized) listener.remove()
     }
 }

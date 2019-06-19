@@ -21,9 +21,5 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val parentActivity = activity!! as TelaPrincipal
-        parentActivity.showSearchButton = false //desabilita o botao de pesquisa
-        parentActivity.invalidateOptionsMenu()
     }
 }

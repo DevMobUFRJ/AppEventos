@@ -39,6 +39,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     lateinit var weeksList: WeeksList
     lateinit var activitiesList: SelectedWeek
     lateinit var navController: NavController
+    lateinit var searchButton: MenuItem
 
     var showSearchButton = false
 
@@ -97,6 +98,29 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
     }
 
+    fun addDestinationListener(){
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                nav_eventos -> {
+                    searchButton.isVisible = true
+                }
+                fragmentTelaDeEvento -> {
+                    supportActionBar?.title = activitiesList.selectedWeek.nome
+                    searchButton.isVisible = false
+                }
+                fragmentDetalhesAtividade -> {
+                    supportActionBar?.title = activitiesList.selectedWeek.nome
+                }
+                fragmentAtividades -> {
+                    supportActionBar?.title = activitiesList.selectedWeek.nome
+                }
+                else -> {
+                    searchButton.isVisible = false
+                }
+            }
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(drawer_layout)
     }
@@ -109,9 +133,10 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.tela_principal, menu)
 
-        val actionSearch = menu!!.findItem(R.id.action_search)
-        actionSearch.isVisible = showSearchButton
-        val searchView = actionSearch.actionView as SearchView //pega o botao de pesquisar
+        searchButton = menu!!.findItem(action_search)
+        val searchView = searchButton.actionView as SearchView //pega o botao de pesquisar
+
+        addDestinationListener()
         //listener de texto alterado
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {

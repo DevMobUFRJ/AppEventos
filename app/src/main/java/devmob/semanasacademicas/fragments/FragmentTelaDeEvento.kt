@@ -31,10 +31,6 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
         val model = ViewModelProviders.of(this.activity!!).get(SelectedWeek::class.java)
         evento = model.selectedWeek
 
-        val parentActivity = activity!! as TelaPrincipal
-        parentActivity.showSearchButton = false //desabilita o botao de pesquisa
-        parentActivity.invalidateOptionsMenu()
-
         evento.run{
             periodoEvento.text = periodo()
             nomeEvento.text = nome

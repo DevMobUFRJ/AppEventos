@@ -1,23 +1,17 @@
 package devmob.semanasacademicas.fragments
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.firebase.auth.FirebaseAuth
-import devmob.semanasacademicas.*
-import devmob.semanasacademicas.activities.TelaPrincipal
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import devmob.semanasacademicas.R
 import devmob.semanasacademicas.adapters.ListaDeFavoritosAdapter
 import devmob.semanasacademicas.dataclass.Atividade
+import devmob.semanasacademicas.dismiss
 import devmob.semanasacademicas.viewModels.User
-import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.fragment_minha_semana.*
-import java.util.ArrayList
 
 class FragmentMinhaSemana : androidx.fragment.app.Fragment() {
 

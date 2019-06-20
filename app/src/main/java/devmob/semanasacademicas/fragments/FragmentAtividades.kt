@@ -1,23 +1,21 @@
 package devmob.semanasacademicas.fragments
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import devmob.semanasacademicas.*
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.tabs.TabLayout
+import devmob.semanasacademicas.ARG_LISTA_ATIVIDADES
+import devmob.semanasacademicas.R
 import devmob.semanasacademicas.adapters.AtividadesListAdapter
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.viewModels.SelectedWeek
 import kotlinx.android.synthetic.main.content_atividades.*
 import kotlinx.android.synthetic.main.fragment_atividades.view.*
-import java.util.ArrayList
+import java.util.*
 
 class FragmentAtividades: androidx.fragment.app.Fragment() {
 
@@ -58,7 +56,7 @@ class FragmentAtividades: androidx.fragment.app.Fragment() {
         attTabs()
     }
 
-    inner class SectionsPagerAdapter(fm: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fm) {
+    inner class SectionsPagerAdapter(fm: androidx.fragment.app.FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         var tabItems = emptyList<String>()
 
         override fun getItem(p0: Int) = DayFragment.getInstance(model.filtered[tabItems[p0]]!!)

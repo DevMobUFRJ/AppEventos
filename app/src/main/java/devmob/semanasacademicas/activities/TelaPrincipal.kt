@@ -1,37 +1,33 @@
 package devmob.semanasacademicas.activities
 
-import androidx.lifecycle.ViewModelProviders
 import android.graphics.PorterDuff
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.R.id.*
-import devmob.semanasacademicas.dataclass.Evento
+import devmob.semanasacademicas.viewModels.SelectedWeek
 import devmob.semanasacademicas.viewModels.User
 import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.activity_tela_principal.*
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.nav_header_tela_principal.view.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
-import android.util.Log
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.*
-import devmob.semanasacademicas.dialogs.LoginDialog
-import devmob.semanasacademicas.fragments.*
-import devmob.semanasacademicas.viewModels.SelectedWeek
 
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -41,9 +37,9 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     lateinit var navController: NavController
     lateinit var searchButton: MenuItem
 
-    var showSearchButton = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_principal)
 
@@ -62,10 +58,6 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         activitiesList = ViewModelProviders.of(this).get(SelectedWeek::class.java)
 
         ViewModelProviders.of(this).get(User::class.java)
-
-        intent.extras?.getParcelableArrayList<Evento>("WEEKS")?.also {
-            weeksList.setWeeks(it)
-        }
 
         weeksList.screen = weeksList.screen ?: nav_eventos
         toolbar.title = "Eventos"

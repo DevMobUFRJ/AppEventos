@@ -7,11 +7,7 @@ import android.app.PendingIntent
 import android.graphics.Color
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import android.util.Log
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import devmob.semanasacademicas.activities.DetalhesAtividade

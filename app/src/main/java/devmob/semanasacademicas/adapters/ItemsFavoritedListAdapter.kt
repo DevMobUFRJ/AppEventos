@@ -1,18 +1,17 @@
 package devmob.semanasacademicas.adapters
 
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import devmob.semanasacademicas.*
-import devmob.semanasacademicas.activities.DetalhesAtividade
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import devmob.semanasacademicas.R
+import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.dataclass.Atividade
+import devmob.semanasacademicas.formataHora
 import kotlinx.android.synthetic.main.minha_semana_item.view.*
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import kotlin.properties.Delegates
 
 class ItemsFavoritedListAdapter : RecyclerView.Adapter<ItemsFavoritedListAdapter.ViewHolder>() {

@@ -1,19 +1,20 @@
 package devmob.semanasacademicas.activities
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
-import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.dialogs.LoginDialog
 import devmob.semanasacademicas.viewModels.User
 import kotlinx.android.synthetic.main.activity_detalhes_atividade.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.toast
 
 class DetalhesAtividade : AppCompatActivity() {
 
@@ -51,7 +52,7 @@ class DetalhesAtividade : AppCompatActivity() {
                     alert("Você precisa estar logado para acesso a essa função") {
                         negativeButton("Cancelar"){}
                         positiveButton("Entrar"){
-                            LoginDialog().show(supportFragmentManager!!.beginTransaction(), "LoginDialog")
+                            LoginDialog().show(supportFragmentManager.beginTransaction(), "LoginDialog")
                         }
                     }.show()
                 }

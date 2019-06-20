@@ -1,16 +1,16 @@
 package devmob.semanasacademicas.adapters
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
-import devmob.semanasacademicas.*
-import devmob.semanasacademicas.activities.DetalhesAtividade
+import devmob.semanasacademicas.R
+import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.dataclass.Atividade
-import org.jetbrains.anko.*
+import devmob.semanasacademicas.formataHora
+import devmob.semanasacademicas.formataTipo
 import kotlinx.android.synthetic.main.atividades_lista_items.view.*
 
 class AtividadesListAdapter(private val items: List<Atividade>): androidx.recyclerview.widget.RecyclerView.Adapter<AtividadesListAdapter.ViewHolder>() {

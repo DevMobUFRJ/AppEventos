@@ -12,12 +12,10 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
 import devmob.semanasacademicas.R
-import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.get
 import devmob.semanasacademicas.setErrorAndFocus
 import devmob.semanasacademicas.users
 import kotlinx.android.synthetic.main.activity_register.*
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.okButton
 import org.jetbrains.anko.support.v4.alert
 
@@ -31,7 +29,7 @@ class RegisterDialog: DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.run {
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
     }
 

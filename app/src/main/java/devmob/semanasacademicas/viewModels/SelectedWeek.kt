@@ -1,7 +1,6 @@
 package devmob.semanasacademicas.viewModels
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
@@ -9,11 +8,16 @@ import com.google.firebase.firestore.ListenerRegistration
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.dataclass.Evento
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import org.jetbrains.anko.okButton
-import org.jetbrains.anko.support.v4.alert
 import java.util.ArrayList
+import kotlin.collections.HashMap
+import kotlin.collections.arrayListOf
+import kotlin.collections.component2
+import kotlin.collections.contains
+import kotlin.collections.find
+import kotlin.collections.forEach
+import kotlin.collections.hashMapOf
+import kotlin.collections.iterator
+import kotlin.collections.set
 
 class SelectedWeek: ViewModel(){
 

@@ -1,13 +1,10 @@
 package devmob.semanasacademicas.adapters
 
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.formataMes

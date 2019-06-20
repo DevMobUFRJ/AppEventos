@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -21,8 +19,6 @@ import devmob.semanasacademicas.get
 import devmob.semanasacademicas.setErrorAndFocus
 import devmob.semanasacademicas.users
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_tela_principal.*
-import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import org.jetbrains.anko.okButton
 import org.jetbrains.anko.support.v4.alert
 
@@ -58,7 +54,7 @@ class LoginDialog : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.run {
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
     }
 

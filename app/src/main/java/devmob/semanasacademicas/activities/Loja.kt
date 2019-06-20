@@ -1,8 +1,7 @@
 package devmob.semanasacademicas.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.adapters.ListaLojaAdapter

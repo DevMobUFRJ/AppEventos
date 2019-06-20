@@ -1,8 +1,6 @@
 package devmob.semanasacademicas
 
-import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ProgressBar
@@ -11,7 +9,6 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.messaging.FirebaseMessagingService
 import devmob.semanasacademicas.dataclass.Evento
 import java.text.SimpleDateFormat
 import java.util.*

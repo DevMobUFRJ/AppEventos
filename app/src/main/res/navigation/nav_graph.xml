@@ -14,7 +14,7 @@
     </fragment>
     <fragment android:id="@+id/fragmentTelaDeEvento"
               android:name="devmob.semanasacademicas.fragments.FragmentTelaDeEvento"
-              android:label=" Detalhes do Evento" tools:layout="@layout/content_tela_de_evento">
+              android:label=" Detalhes do Evento" tools:layout="@layout/content_event_details">
         <action android:id="@+id/details_to_atividades"
                 app:destination="@id/fragmentAtividades"/>
     </fragment>

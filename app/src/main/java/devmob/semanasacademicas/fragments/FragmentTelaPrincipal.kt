@@ -1,16 +1,15 @@
 package devmob.semanasacademicas.fragments
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import android.util.Log
-import android.view.*
-import devmob.semanasacademicas.*
-import devmob.semanasacademicas.activities.TelaPrincipal
+import devmob.semanasacademicas.R
 import devmob.semanasacademicas.adapters.ListaDeEventosAdapter
-import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.content_tela_principal.*
 import org.jetbrains.anko.support.v4.onRefresh
@@ -37,13 +36,15 @@ class FragmentTelaPrincipal : Fragment() {
             adapter = viewAdapter
         }
 
+        swiperefresh.isRefreshing = true
+
         swiperefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
         swiperefresh.onRefresh {
-            swiperefresh.setRefreshing(true)
+            swiperefresh.isRefreshing = true
             model.loadWeeks()
         }
 
-        model.weeks.observe(this, Observer<MutableList<Evento>>{ weekList ->
+        model.weeks.observe(this, Observer<MutableList<Any>>{ weekList ->
             viewAdapter.eventos = weekList!!
             swiperefresh.isRefreshing = false
         })

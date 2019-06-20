@@ -1,8 +1,8 @@
 package devmob.semanasacademicas.viewModels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentChange.Type.*
@@ -10,8 +10,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.dataclass.Atividade
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 class User: ViewModel() {
@@ -68,7 +66,7 @@ class User: ViewModel() {
                         REMOVED -> {
                             for(p in this) if (p.first == pair.first) pair = p
                             remove(pair)
-                            removeAct(weekId, activityId)
+                            removeAct(activityId)
                         }
                     }
                 }
@@ -97,7 +95,7 @@ class User: ViewModel() {
         postClone()
     }
 
-    private fun removeAct(weekId: String, activityId: String) {
+    private fun removeAct(activityId: String) {
         for(entry in tempHM){
             val lista = entry.value
             val busca = lista.find { it.id == activityId }

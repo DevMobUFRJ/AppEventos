@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -51,6 +52,8 @@ class AtividadesActivity : AppCompatActivity() {
 
         val evento = extras[ARG_EVENT] as Evento
         val tipo = extras[ARG_TYPE] as String
+
+        Log.d("mydebug", tipo)
 
         val referencia = FirebaseFirestore.getInstance().weeks[evento.id].activities
 

@@ -1,30 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                              app:cardCornerRadius="20dp"
-                                              android:layout_margin="10dp"
-                                              app:strokeColor="@color/colorAccent"
-                                              app:strokeWidth="1dp"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="wrap_content">
+<!--<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+                                              <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                                              <!--app:cardCornerRadius="20dp"-->
+                                              <!--android:layout_margin="10dp"-->
+                                              <!--app:strokeColor="@color/colorAccent"-->
+                                              <!--app:strokeWidth="1dp"-->
+                                              <!--android:layout_width="match_parent"-->
+                                              <!--android:layout_height="wrap_content">-->
 
 
-    <android.support.constraint.ConstraintLayout
+    <!--<android.support.constraint.ConstraintLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+        <!--<TextView-->
+                <!--android:text="TextView"-->
+                <!--android:textColor="@color/colorPrimary"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/tipo"-->
+                <!--android:textSize="20sp"-->
+
+                <!--android:layout_margin="10dp"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent"/>-->
+    <!--</android.support.constraint.ConstraintLayout>-->
+<!--</android.support.design.card.MaterialCardView>-->
+
+<RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+            android:id="@+id/tipo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <TextView
-                android:text="TextView"
-                android:textColor="@color/colorPrimary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tipo"
-                android:textSize="20sp"
-
-                android:layout_margin="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-    </android.support.constraint.ConstraintLayout>
-</android.support.design.card.MaterialCardView>
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_activity_types"
+            android:drawableEnd="@drawable/ic_arrow_right_black_24dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textAlignment="viewStart"
+            android:textSize="14sp"
+            android:textColor="@color/Black"
+            android:fontFamily="@font/montserrat_bold" android:layout_marginTop="10dp" android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" android:layout_marginBottom="10dp"/>
+</RelativeLayout>

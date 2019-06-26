@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.card_semana.view.*
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.util.DiffUtil
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -70,6 +71,7 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
 
             itemView.setOnClickListener {
                 val activity = it.context as TelaPrincipal
+                Log.d("mydebug", event.listaTipos.toString())
 
                 activity.model.item = event
                 activity.model.screen = 20

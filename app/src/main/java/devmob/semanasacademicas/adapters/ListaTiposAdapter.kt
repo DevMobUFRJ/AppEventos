@@ -13,7 +13,7 @@ import devmob.semanasacademicas.activities.AtividadesActivity
 import devmob.semanasacademicas.dataclass.Evento
 import kotlinx.android.synthetic.main.card_tipo_atividade.view.*
 
-class ListaTiposAdapter(private val items: MutableList<String>, private val evento: Evento): RecyclerView.Adapter<ListaTiposAdapter.ViewHolder>() {
+class ListaTiposAdapter(private val items: List<String>, private val evento: Evento): RecyclerView.Adapter<ListaTiposAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int) =
         ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.card_tipo_atividade, p0, false))
@@ -26,8 +26,8 @@ class ListaTiposAdapter(private val items: MutableList<String>, private val even
 
         private val tipo = itemView.tipo as TextView
         fun bindItems(tipo: String, evento: Evento) {
-            this.tipo.text = tipo.capitalize()
-            itemView.setOnClickListener {
+            this.tipo.text = tipo.toUpperCase()
+            itemView.tipo.setOnClickListener {
                 val intent = Intent(it.context, AtividadesActivity::class.java)
                 intent.putExtra(ARG_EVENT, evento)
                 intent.putExtra(ARG_TYPE, tipo)

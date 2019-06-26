@@ -41,7 +41,7 @@ class FragmentTelaDeEvento : Fragment() {
         parentActivity.toolbar.title = evento.nome //seta o titulo da toolbar
 
 
-        val tipos = mutableListOf(Types.all)
+        val tipos = listOf(Types.all).plus(evento.listaTipos)
         val viewAdapter = ListaTiposAdapter(tipos, evento)
         val viewManager = LinearLayoutManager(context)
 
@@ -61,8 +61,8 @@ class FragmentTelaDeEvento : Fragment() {
                 temp.add(aux!!)
             }
 
-            tipos += temp.groupBy { it.tipo }.keys
-            viewAdapter.notifyDataSetChanged()
+            //tipos += temp.groupBy { it.tipo }.keys
+            //viewAdapter.notifyDataSetChanged()
 //            Log.d("teste", temp.groupBy { it.tipo }.keys.toString())
         }
 

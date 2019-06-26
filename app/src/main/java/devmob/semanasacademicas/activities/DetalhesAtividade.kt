@@ -87,10 +87,10 @@ class DetalhesAtividade : AppCompatActivity() {
         empresaAtividade.text = atividade.grupo
         horasalaAtividade.text = getString(R.string.activity_period_and_date, atividade.inicio.formataHora(), atividade.fim.formataHora(), atividade.local)
 
-        if (atividade.tipo == Types.others || atividade.tipo == Types.mesaRedonda)
+        if (atividade.apresentador == "" || atividade.grupo == "")
             cardView.visibility = View.INVISIBLE
-        if (atividade.tipo != Types.workshop)
-            btnInscrever.visibility = View.INVISIBLE
+//        if (atividade.tipo != Types.workshop)
+//            btnInscrever.visibility = View.INVISIBLE
 
         btnInscrever.setOnClickListener { view ->
             val builder = CustomTabsIntent.Builder()

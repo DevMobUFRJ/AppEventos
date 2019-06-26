@@ -13,7 +13,8 @@ data class Evento (
     var link: String = "",
     var id: String = "",
     var inicio: Timestamp = Timestamp.now(),
-    var fim: Timestamp = Timestamp.now()
+    var fim: Timestamp = Timestamp.now(),
+    var listaTipos: List<String> = listOf()
 ):Parcelable {
 
     //fun periodo() = inicio.formata() + " ate " + fim.formata()

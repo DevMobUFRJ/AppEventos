@@ -41,12 +41,12 @@ fun String.formataTipo() = when (this){
 
 class Types{
     companion object {
-        const val others = "outros"
-        const val workshop = "workshop"
-        const val mesaRedonda = "mesaRedonda"
-        const val lecture = "palestra"
+//        const val others = "outros"
+//        const val workshop = "workshop"
+//        const val mesaRedonda = "mesaRedonda"
+//        const val lecture = "palestra"
         const val pause = "intervalo"
-        const val all = "todos"
+        const val all = "Programação"
 
     }
 }

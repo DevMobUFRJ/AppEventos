@@ -1,7 +1,7 @@
 package devmob.semanasacademicas.activities
 
 import android.app.ProgressDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Fade
 import android.transition.Slide

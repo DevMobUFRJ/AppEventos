@@ -1,18 +1,18 @@
 package devmob.semanasacademicas.activities
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v7.widget.SearchView
-import android.support.transition.Scene
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import android.support.v4.app.FragmentTransaction
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.widget.SearchView
+import androidx.transition.Scene
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.fragment.app.FragmentTransaction
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -32,8 +32,8 @@ import kotlinx.android.synthetic.main.nav_header_tela_principal.view.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
-import android.support.v4.view.MenuItemCompat.collapseActionView
-import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
+import androidx.core.view.MenuItemCompat.collapseActionView
+import androidx.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
 import android.util.Log
 
 
@@ -133,7 +133,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
     }
 
-    private fun replace(frag: Fragment){
+    private fun replace(frag: androidx.fragment.app.Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         val oldFrag = supportFragmentManager.findFragmentByTag(frag.javaClass.name)
 

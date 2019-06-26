@@ -1,14 +1,14 @@
 package devmob.semanasacademicas.adapters
 
 import android.os.Bundle
-import android.support.transition.*
-import android.support.v7.widget.RecyclerView
+import androidx.transition.*
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.card_semana.view.*
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.util.DiffUtil
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DiffUtil
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
@@ -25,7 +25,7 @@ import org.jetbrains.anko.ctx
 import kotlin.properties.Delegates
 
 
-class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
+class ListaDeEventosAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<ListaDeEventosAdapter.ViewHolder>(){
 
     var eventos by Delegates.observable(mutableListOf<Evento>()) { _, oldValue, newValue ->
         notifyChanges(oldValue, newValue)
@@ -51,7 +51,7 @@ class ListaDeEventosAdapter: RecyclerView.Adapter<ListaDeEventosAdapter.ViewHold
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItems(eventos[p1])
 
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView){
         private val nome = itemView.nomePagPrincipal as TextView
         private val descricao = itemView.descPagPrincipal as TextView
         private val periodo = itemView.dataPagPrincipal as TextView

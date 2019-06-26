@@ -1,7 +1,7 @@
 package devmob.semanasacademicas.adapters
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import kotlin.properties.Delegates
 
-class ItemsFavoritedListAdapter : RecyclerView.Adapter<ItemsFavoritedListAdapter.ViewHolder>() {
+class ItemsFavoritedListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ItemsFavoritedListAdapter.ViewHolder>() {
     var listActivities by Delegates.observable(mutableListOf<Atividade>()) { _, old, new ->
         notifyChanges(old, new)
     }
@@ -41,7 +41,7 @@ class ItemsFavoritedListAdapter : RecyclerView.Adapter<ItemsFavoritedListAdapter
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItems(listActivities[p1])
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         private val inicio = itemView.horaInicio
         private val fim = itemView.horaFim
         private val nome = itemView.nomePalestra

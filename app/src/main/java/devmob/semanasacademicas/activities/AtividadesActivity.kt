@@ -1,13 +1,13 @@
 package devmob.semanasacademicas.activities
 
-import android.support.design.widget.TabLayout
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.tabs.TabLayout
+import androidx.appcompat.app.AppCompatActivity
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -127,7 +127,7 @@ class AtividadesActivity : AppCompatActivity() {
         listener.remove()
     }
 
-    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    inner class SectionsPagerAdapter(fm: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fm) {
 
         var tabItems = emptyList<String>()
 
@@ -140,7 +140,7 @@ class AtividadesActivity : AppCompatActivity() {
 
     }
 
-    class PlaceholderFragment : Fragment() {
+    class PlaceholderFragment : androidx.fragment.app.Fragment() {
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -150,7 +150,7 @@ class AtividadesActivity : AppCompatActivity() {
             val atividadesOrdenadas = atividades!!.sortedWith(compareBy { it.inicio })
 
             val viewAdapter = AtividadesListAdapter(atividadesOrdenadas)
-            val viewManager = LinearLayoutManager(this.context)
+            val viewManager = androidx.recyclerview.widget.LinearLayoutManager(this.context)
 
             rootView.listaAtividades.apply {
                 setHasFixedSize(false)

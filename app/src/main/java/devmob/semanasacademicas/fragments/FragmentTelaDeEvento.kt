@@ -1,10 +1,10 @@
 package devmob.semanasacademicas.fragments
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +22,7 @@ import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.content_tela_de_evento.*
 
-class FragmentTelaDeEvento : Fragment() {
+class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 
     private lateinit var evento: Evento
 
@@ -43,7 +43,7 @@ class FragmentTelaDeEvento : Fragment() {
 
         val tipos = listOf(Types.all).plus(evento.listaTipos)
         val viewAdapter = ListaTiposAdapter(tipos, evento)
-        val viewManager = LinearLayoutManager(context)
+        val viewManager = androidx.recyclerview.widget.LinearLayoutManager(context)
 
         listaDeTipos.apply {
             setHasFixedSize(true)

@@ -1,8 +1,8 @@
 package devmob.semanasacademicas.viewModels
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.weeks

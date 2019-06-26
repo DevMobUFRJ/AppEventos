@@ -1,8 +1,8 @@
 package devmob.semanasacademicas.activities
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import devmob.semanasacademicas.*
 import devmob.semanasacademicas.adapters.ListaLojaAdapter
@@ -22,7 +22,7 @@ class Loja : AppCompatActivity() {
         val evento = intent?.extras!!.get(ARG_EVENT) as Evento
 
         val viewAdapter = ListaLojaAdapter(items)
-        val viewManager = LinearLayoutManager(this)
+        val viewManager = androidx.recyclerview.widget.LinearLayoutManager(this)
 
         listaLoja.apply {
             setHasFixedSize(false)

@@ -1,7 +1,7 @@
 package devmob.semanasacademicas.adapters
 
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import devmob.semanasacademicas.activities.AtividadesActivity
 import devmob.semanasacademicas.dataclass.Evento
 import kotlinx.android.synthetic.main.card_tipo_atividade.view.*
 
-class ListaTiposAdapter(private val items: List<String>, private val evento: Evento): RecyclerView.Adapter<ListaTiposAdapter.ViewHolder>() {
+class ListaTiposAdapter(private val items: List<String>, private val evento: Evento): androidx.recyclerview.widget.RecyclerView.Adapter<ListaTiposAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int) =
         ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.card_tipo_atividade, p0, false))
@@ -22,7 +22,7 @@ class ListaTiposAdapter(private val items: List<String>, private val evento: Eve
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) = p0.bindItems(items[p1], evento)
 
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         private val tipo = itemView.tipo as TextView
         fun bindItems(tipo: String, evento: Evento) {

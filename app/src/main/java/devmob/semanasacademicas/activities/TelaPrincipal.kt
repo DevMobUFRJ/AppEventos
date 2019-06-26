@@ -20,10 +20,6 @@ import com.google.firebase.auth.FirebaseAuth
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.R.id.*
 import devmob.semanasacademicas.dataclass.Evento
-import devmob.semanasacademicas.fragments.FragmentMinhaSemana
-import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
-import devmob.semanasacademicas.fragments.FragmentTelaPrincipal
-import devmob.semanasacademicas.fragments.SettingsFragment
 import devmob.semanasacademicas.viewModels.User
 import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.activity_tela_principal.*
@@ -35,6 +31,7 @@ import org.jetbrains.anko.toast
 import androidx.core.view.MenuItemCompat.collapseActionView
 import androidx.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
 import android.util.Log
+import devmob.semanasacademicas.fragments.*
 
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -105,7 +102,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 //showSearchButton = true
                 //invalidateOptionsMenu()
                 //toolbar.title = "Eventos"
-                replace(FragmentTelaPrincipal())
+                replace(TabsFragment())
             }
             nav_agenda -> {
                 //showSearchButton = false

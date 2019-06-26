@@ -15,7 +15,8 @@ import kotlinx.coroutines.launch
 
 
 class User: ViewModel() {
-    var favorites = hashMapOf<String, MutableList<Pair<String, String> > >()
+    var favoriteActivities = hashMapOf<String, MutableList<Pair<String, String> > >()
+    var favoriteEvents = hashMapOf<String, String>()
     var changed = MutableLiveData<Boolean>()
 
     var user: FirebaseUser? = null
@@ -42,23 +43,24 @@ class User: ViewModel() {
     private fun clearAll(){
         if(::listener.isInitialized) listener.remove()
 
-        favorites.clear()
+        favoriteActivities.clear()
+        favoriteEvents.clear()
         tempHM.clear()
 
         postClone()
     }
 
     private fun createFavoriteListener() = FirebaseFirestore.getInstance().users[user!!.uid].favorites.addSnapshotListener { snapshot, _ ->
-        Log.e("seila", favorites.toString())
+        Log.e("seila", favoriteActivities.toString())
         if(snapshot != null) {
             for(docChange in snapshot.documentChanges) {
                 val weekId = docChange.document["weekId"] as String
                 val activityId = docChange.document["id"] as String
 
                 var pair = Pair(activityId, docChange.document.id)
-                if(!favorites.containsKey(weekId)) favorites[weekId] = mutableListOf()
+                if(!favoriteActivities.containsKey(weekId)) favoriteActivities[weekId] = mutableListOf()
 
-                favorites[weekId]?.apply {
+                favoriteActivities[weekId]?.apply {
                     when(docChange.type) {
                         ADDED -> {
                             loadNewAct(weekId, activityId)

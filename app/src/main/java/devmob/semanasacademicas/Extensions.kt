@@ -51,6 +51,13 @@ class Types{
     }
 }
 
+class EventList {
+    companion object {
+        const val all = "all"
+        const val saved = "saved"
+    }
+}
+
 const val ARG_WEEK_ID = "week_id"
 const val ARG_ATIVIDADE_ID = "atividade_id"
 const val ARG_EVENT = "EVENTO"

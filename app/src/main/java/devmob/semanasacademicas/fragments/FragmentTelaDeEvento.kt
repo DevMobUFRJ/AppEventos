@@ -47,7 +47,8 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 
         listaDeTipos.apply {
             setHasFixedSize(true)
-            overScrollMode = View.OVER_SCROLL_NEVER
+            //overScrollMode = View.OVER_SCROLL_NEVER
+            isNestedScrollingEnabled = false
             layoutManager = viewManager
             adapter = viewAdapter
         }

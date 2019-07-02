@@ -3,6 +3,7 @@ package devmob.semanasacademicas.fragments
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import com.google.firebase.auth.FirebaseAuth
@@ -10,6 +11,7 @@ import devmob.semanasacademicas.*
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.adapters.ListaDeEventosAdapter
 import devmob.semanasacademicas.dataclass.Evento
+import devmob.semanasacademicas.viewModels.User
 import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.fragment_event_list.*
@@ -26,6 +28,8 @@ class FragmentTelaPrincipal : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
         
         val model = ViewModelProviders.of(this.activity!!).get(WeeksList::class.java)
+        val userFavorite = ViewModelProviders.of(this.activity!!).get(User::class.java)
+
         val eventList = arguments!!.getString(ARG_TYPE)
 
         val parentActivity = activity!! as TelaPrincipal
@@ -39,7 +43,7 @@ class FragmentTelaPrincipal : androidx.fragment.app.Fragment() {
         swiperefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
 
         swiperefresh.setOnRefreshListener {
-            swiperefresh.isRefreshing = true
+            swiperefresh.isRefreshing = eventList != EventList.saved
             model.loadWeeks()
         }
 
@@ -61,9 +65,14 @@ class FragmentTelaPrincipal : androidx.fragment.app.Fragment() {
             adapter= viewAdapter
         }
 
+        if (eventList == EventList.saved) userFavorite.changed.observe(this, Observer {
+            swiperefresh.isRefreshing = true
+            model.loadWeeks()
+        })
+
         model.weeks.observe(this, Observer<MutableList<Evento>>{ weekList ->
-            //TODO mostrar eventos favoritos do usuário
-            viewAdapter.eventos = if (eventList == EventList.saved) weekList!!.filter { it.nome.contains("Computacao") } as MutableList else weekList!!
+            Log.d("aaaaaa", userFavorite.favoriteEvents.toString())
+            viewAdapter.eventos = if (eventList == EventList.saved) weekList!!.filter { it.id in userFavorite.favoriteEvents } as MutableList<Evento> else  weekList!!
             swiperefresh.isRefreshing = false
         })
     }

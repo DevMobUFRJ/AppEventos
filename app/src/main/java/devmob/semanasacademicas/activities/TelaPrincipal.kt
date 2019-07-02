@@ -36,6 +36,7 @@ import devmob.semanasacademicas.fragments.*
 
 class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    lateinit var user: User
     lateinit var model: WeeksList
     var showSearchButton = false
 
@@ -53,7 +54,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         nav_view.setNavigationItemSelectedListener(this)
 
         model = ViewModelProviders.of(this).get(WeeksList::class.java)
-        ViewModelProviders.of(this).get(User::class.java)
+        user = ViewModelProviders.of(this).get(User::class.java)
 
         intent.extras?.getParcelableArrayList<Evento>("WEEKS")?.also {
             model.setWeeks(it)

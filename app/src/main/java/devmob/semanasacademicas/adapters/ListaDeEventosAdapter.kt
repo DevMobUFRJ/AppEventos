@@ -13,6 +13,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import devmob.semanasacademicas.ARG_EVENT
 import devmob.semanasacademicas.R
@@ -22,6 +23,7 @@ import devmob.semanasacademicas.fragments.FragmentTelaDeEvento
 import kotlinx.android.synthetic.main.content_tela_de_evento.*
 import org.jetbrains.anko.activityManager
 import org.jetbrains.anko.ctx
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import kotlin.properties.Delegates
 
 
@@ -56,6 +58,7 @@ class ListaDeEventosAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<L
         private val descricao = itemView.descPagPrincipal as TextView
         private val periodo = itemView.dataPagPrincipal as TextView
         private val imageView = itemView.imageView2 as ImageView
+        private val but = itemView.botaoFavoritar as Button
 
         fun bindItems(event: Evento){
             Glide.with(itemView).load(event.link)
@@ -68,6 +71,17 @@ class ListaDeEventosAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<L
             nome.text = event.nome
             descricao.text = event.descricao
             periodo.text = event.periodo()
+
+            (itemView.context as TelaPrincipal).run {
+                user.changed.observe(this, Observer {
+                    val isFavorited = event.id in user.favoriteEvents
+                    but.text = if(isFavorited) "des" else "fav"
+                    but.onClick {
+                        if (isFavorited) user.favoriteEvents[event.id]?.run { user.removeFavorite(this) }
+                        else user.addFavorite(event.id, "")
+                    }
+                })
+            }
 
             itemView.setOnClickListener {
                 val activity = it.context as TelaPrincipal

@@ -52,17 +52,18 @@
                 android:fontFamily="@font/roboto"
                 android:layout_marginBottom="20sp"
                 android:textSize="14sp"/>
-        <!--<Button-->
-                <!--android:text="VER EVENTO"-->
-                <!--android:layout_marginTop="35dp"-->
-                <!--android:layout_marginStart="20dp"-->
-                <!--android:textColor="@android:color/white"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:fontFamily="@font/roboto"-->
-                <!--android:backgroundTint="@color/colorSecondary"-->
-                <!--android:layout_marginBottom="20dp"-->
-                <!--android:id="@+id/botaoAbrirEvento"/>-->
+        <Button
+                android:text="Favorite"
+                android:layout_marginTop="35dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:fontFamily="@font/roboto"
+                android:backgroundTint="@color/colorSecondary"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/botaoFavoritar"/>
 
     </LinearLayout>
 

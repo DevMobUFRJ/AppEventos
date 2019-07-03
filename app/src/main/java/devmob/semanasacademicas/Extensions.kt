@@ -65,6 +65,8 @@ const val ARG_TYPE = "TIPO"
 const val ARG_LISTA_ATIVIDADES ="lista_de_atividades"
 const val ARG_SECTION_NUMBER = "section_number"
 const val ARG_ATIVIDADE = "atividade"
+const val ARG_PRIMARY_COLOR = "color1"
+const val ARG_SECUNDARY_COLOR = "color2"
 const val ACTIVITY_ID = "id"
 const val WEEK_ID = "weekId"
 

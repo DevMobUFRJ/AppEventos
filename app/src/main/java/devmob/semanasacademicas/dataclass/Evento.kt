@@ -14,7 +14,9 @@ data class Evento (
     var id: String = "",
     var inicio: Timestamp = Timestamp.now(),
     var fim: Timestamp = Timestamp.now(),
-    var listaTipos: List<String> = listOf()
+    var listaTipos: List<String> = listOf(),
+    var color1: String = "#000000",
+    var color2: String = "#D18C22"
 ):Parcelable {
 
     //fun periodo() = inicio.formata() + " ate " + fim.formata()

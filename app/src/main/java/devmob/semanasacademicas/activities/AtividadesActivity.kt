@@ -1,13 +1,11 @@
 package devmob.semanasacademicas.activities
 
+import android.graphics.Color
 import com.google.android.material.tabs.TabLayout
 import androidx.appcompat.app.AppCompatActivity
 
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -24,6 +22,7 @@ import devmob.semanasacademicas.dataclass.Evento
 import kotlinx.android.synthetic.main.activity_atividades.*
 import kotlinx.android.synthetic.main.fragment_atividades.view.*
 import org.jetbrains.anko.alert
+import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.okButton
 import java.util.*
 import kotlin.collections.HashMap
@@ -35,6 +34,7 @@ class AtividadesActivity : AppCompatActivity() {
     private lateinit var listener: ListenerRegistration
 
     private lateinit var mSectionsPagerAdapter: SectionsPagerAdapter
+    private lateinit var evento: Evento
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +50,12 @@ class AtividadesActivity : AppCompatActivity() {
 
         val extras = intent?.extras!!
 
-        val evento = extras[ARG_EVENT] as Evento
+        evento = extras[ARG_EVENT] as Evento
         val tipo = extras[ARG_TYPE] as String
+
+        toolbar.backgroundColor = Color.parseColor(evento.color1)
+        appbar.backgroundColor = Color.parseColor(evento.color1)
+        tabs.setSelectedTabIndicatorColor(Color.parseColor(evento.color2))
 
         Log.d("mydebug", tipo)
 
@@ -127,12 +131,12 @@ class AtividadesActivity : AppCompatActivity() {
         listener.remove()
     }
 
-    inner class SectionsPagerAdapter(fm: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fm) {
+    inner class SectionsPagerAdapter(fm: FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fm) {
 
         var tabItems = emptyList<String>()
 
         override fun getItem(position: Int)
-                = PlaceholderFragment.newInstance(position, atividades[tabItems[position]]!!)
+                = PlaceholderFragment.newInstance(position, atividades[tabItems[position]]!!, evento.color1, evento.color2)
 
         override fun getCount() = tabItems.size
 
@@ -149,7 +153,10 @@ class AtividadesActivity : AppCompatActivity() {
             val atividades = arguments!!.getParcelableArrayList<Atividade>(ARG_LISTA_ATIVIDADES)
             val atividadesOrdenadas = atividades!!.sortedWith(compareBy { it.inicio })
 
-            val viewAdapter = AtividadesListAdapter(atividadesOrdenadas)
+            val color1 = arguments!!.getString(ARG_PRIMARY_COLOR)
+            val color2 = arguments!!.getString(ARG_SECUNDARY_COLOR)
+
+            val viewAdapter = AtividadesListAdapter(atividadesOrdenadas, color1!!, color2!!)
             val viewManager = androidx.recyclerview.widget.LinearLayoutManager(this.context)
 
             rootView.listaAtividades.apply {
@@ -162,10 +169,17 @@ class AtividadesActivity : AppCompatActivity() {
         }
 
         companion object {
-            fun newInstance(sectionNumber: Int, atividadesDoDia: ArrayList<Atividade>): PlaceholderFragment {
+            fun newInstance(
+                sectionNumber: Int,
+                atividadesDoDia: ArrayList<Atividade>,
+                color1: String,
+                color2: String
+            ): PlaceholderFragment {
                 val fragment = PlaceholderFragment()
                 val args = Bundle()
                 args.putInt(ARG_SECTION_NUMBER, sectionNumber)
+                args.putString(ARG_PRIMARY_COLOR, color1)
+                args.putString(ARG_SECUNDARY_COLOR, color2)
                 args.putParcelableArrayList(ARG_LISTA_ATIVIDADES, atividadesDoDia)
                 fragment.arguments = args
                 return fragment

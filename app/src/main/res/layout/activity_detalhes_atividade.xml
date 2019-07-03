@@ -132,8 +132,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="50dp"
             android:fontFamily="@font/roboto"
-            android:backgroundTint="@color/colorSecondary"
+
             android:textColor="@color/white"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="INSCREVER-ME"/>
 
 

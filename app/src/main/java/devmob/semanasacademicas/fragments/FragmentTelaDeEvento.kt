@@ -1,18 +1,15 @@
 package devmob.semanasacademicas.fragments
 
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import devmob.semanasacademicas.*
-import devmob.semanasacademicas.activities.Loja
 import devmob.semanasacademicas.activities.AtividadesActivity
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.adapters.ListaTiposAdapter
@@ -21,13 +18,14 @@ import devmob.semanasacademicas.dataclass.Evento
 import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.content_tela_de_evento.*
+import org.jetbrains.anko.backgroundColor
 
 class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 
     private lateinit var evento: Evento
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-            = inflater.inflate(R.layout.content_tela_de_evento, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.content_tela_de_evento, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,11 +33,13 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 
         evento = model.item
 
-        val parentActivity = activity!! as TelaPrincipal
-        parentActivity.showSearchButton = false //desabilita o botao de pesquisa
-        parentActivity.invalidateOptionsMenu()
-        parentActivity.toolbar.title = evento.nome //seta o titulo da toolbar
+        (activity!! as TelaPrincipal).apply {
+            showSearchButton = false //desabilita o botao de pesquisa
+            invalidateOptionsMenu()
 
+            toolbar.title = evento.nome //seta o titulo da toolbar
+            toolbar.backgroundColor = Color.parseColor(evento.color1)
+        }
 
         val tipos = listOf(Types.all).plus(evento.listaTipos)
         val viewAdapter = ListaTiposAdapter(tipos, evento)
@@ -47,7 +47,6 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 
         listaDeTipos.apply {
             setHasFixedSize(true)
-            //overScrollMode = View.OVER_SCROLL_NEVER
             isNestedScrollingEnabled = false
             layoutManager = viewManager
             adapter = viewAdapter
@@ -67,7 +66,7 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 //            Log.d("teste", temp.groupBy { it.tipo }.keys.toString())
         }
 
-        evento.run{
+        evento.run {
             periodoEvento.text = periodo()
             nomeEvento.text = nome
             descricaoEvento.text = descricao
@@ -84,7 +83,6 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
             descricaoEvento.transitionName = resources.getString(R.string.descriptionTransition)
             imageView.transitionName = "imagem"
         }
-
 
 
 //        btnProgramacao.setOnClickListener {
@@ -104,7 +102,7 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 //        }
     }
 
-    private fun createIntent(type: String){
+    private fun createIntent(type: String) {
         val intent = Intent(this.context, AtividadesActivity::class.java)
         intent.putExtra(ARG_EVENT, evento)
         intent.putExtra(ARG_TYPE, type)

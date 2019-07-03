@@ -1,5 +1,6 @@
 package devmob.semanasacademicas.activities
 
+import android.graphics.Color
 import androidx.lifecycle.ViewModelProviders
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -132,6 +133,8 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun replace(frag: androidx.fragment.app.Fragment){
+        toolbar.setBackgroundColor(Color.parseColor("#000000"))
+
         val transaction = supportFragmentManager.beginTransaction()
         val oldFrag = supportFragmentManager.findFragmentByTag(frag.javaClass.name)
 

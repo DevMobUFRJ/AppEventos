@@ -71,7 +71,7 @@ class FragmentDetalhesAtividade : Fragment() {
 
     private fun favoriteOrUnfavorite() {
         selected.atividade.let {
-            var temp = user.favorites[it.weekId]?.filter { it.first == selected.atividade.id }
+            var temp = user.favoriteActivities[it.weekId]?.filter { it.first == selected.atividade.id }
             if(temp.isNullOrEmpty()) {
                 favorite = true
                 favBtn.isFavorited(false)

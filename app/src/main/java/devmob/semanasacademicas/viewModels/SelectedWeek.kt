@@ -1,5 +1,6 @@
 package devmob.semanasacademicas.viewModels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.DocumentChange
@@ -23,30 +24,32 @@ class SelectedWeek: ViewModel(){
 
     var atividade = Atividade()
     var selectedWeek = Evento()
-    set(value) {
-        if (value.id == field.id) {
-            return
-        } else if(true){
-            if(::listener.isInitialized){
-                listener.remove()
-                atividades.clear()
+        set(value) {
+            if (value.id == field.id) {
+                return
+            } else if(true){
+                if(::listener.isInitialized){
+                    typeList.clear()
+                    listener.remove()
+                }
+                typeList = hashMapOf()
+                listener = createListener(value.id)
+                field = value
             }
-            listener = createListener(value.id)
-            field = value
         }
-    }
     lateinit var listener: ListenerRegistration
 
     val atividades = HashMap<String, ArrayList<Atividade>>()
     val hasChanges = MutableLiveData<Boolean>()
 
     var filtered = HashMap<String, ArrayList<Atividade>>()
+    var typeList = hashMapOf<String, Boolean>()
 
     var tipo = Types.all
-    set(value) {
-        filterBy(value)
-        field = value
-    }
+        set(value) {
+            filterBy(value)
+            field = value
+        }
 
     init{
         hasChanges.postValue(false)
@@ -54,11 +57,13 @@ class SelectedWeek: ViewModel(){
 
     private fun createListener(weekId: String) = FirebaseFirestore.getInstance().weeks[weekId].activities
         .addSnapshotListener { querySnapshot, _ ->
+            typeList[Types.all] = true
             for (change in querySnapshot!!.documentChanges) {
-
                 val temp = change.document.toObject(Atividade::class.java)
                 temp.id = change.document.id
                 temp.weekId = selectedWeek.id
+
+                typeList[temp.tipo] = true
 
                 when (change.type) {
                     DocumentChange.Type.ADDED ->
@@ -82,22 +87,19 @@ class SelectedWeek: ViewModel(){
                         }
                 }
             }
-            filterBy(tipo)
+//            filterBy(tipo)
+            hasChanges.postValue(true)
+//            Log.d("aaaaaa", typeList.keys.toString())
         }
 
     fun filterBy(tipo: String) {
-            filtered = when (tipo) {
-                Types.all -> atividades
-                else ->
-                    hashMapOf<String, ArrayList<Atividade>>().apply {
-                        atividades.forEach {
-                            var temp = arrayListOf<Atividade>()
-                            for (atividade in it.value) if (atividade.tipo == tipo) temp.add(atividade)
-                            if (temp.size > 0) this[it.key] = temp
-                        }
-                    }
+        filtered = hashMapOf<String, ArrayList<Atividade>>().apply {
+            atividades.forEach {
+                val temp = it.value.filter { tipo == Types.all || it.tipo == tipo }
+                if (temp.isNotEmpty()) this[it.key] = temp as ArrayList<Atividade>
             }
-            hasChanges.postValue(true)
+        }
+        hasChanges.postValue(true)
     }
 
     override fun onCleared() {

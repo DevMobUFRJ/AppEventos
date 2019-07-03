@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentChange.Type.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -13,7 +14,8 @@ import devmob.semanasacademicas.dataclass.Atividade
 
 
 class User: ViewModel() {
-    var favorites = hashMapOf<String, MutableList<Pair<String, String> > >()
+    var favoriteActivities = hashMapOf<String, MutableList<Pair<String, String> > >()
+    var favoriteEvents = hashMapOf<String, String>()
     var changed = MutableLiveData<Boolean>()
 
     var user: FirebaseUser? = null
@@ -40,44 +42,58 @@ class User: ViewModel() {
     private fun clearAll(){
         if(::listener.isInitialized) listener.remove()
 
-        favorites.clear()
+        favoriteActivities.clear()
         tempHM.clear()
 
         postClone()
     }
 
     private fun createFavoriteListener() = FirebaseFirestore.getInstance().users[user!!.uid].favorites.addSnapshotListener { snapshot, _ ->
-        Log.e("seila", favorites.toString())
+        Log.e("seila", favoriteActivities.toString())
         if(snapshot != null) {
             for(docChange in snapshot.documentChanges) {
-                val weekId = docChange.document["weekId"] as String
-                val activityId = docChange.document["id"] as String
-
-                var pair = Pair(activityId, docChange.document.id)
-                if(!favorites.containsKey(weekId)) favorites[weekId] = mutableListOf()
-
-                favorites[weekId]?.apply {
-                    when(docChange.type) {
-                        ADDED -> {
-                            loadNewAct(weekId, activityId)
-                            add(pair)
-                        }
-                        MODIFIED -> {}
-                        REMOVED -> {
-                            for(p in this) if (p.first == pair.first) pair = p
-                            remove(pair)
-                            removeAct(activityId)
-                        }
-                    }
-                }
+                if(docChange.document["id"] == null) weekListener(docChange)
+                else activityListener(docChange)
             }
             changed.postValue(true)
         }
     }
 
+    private fun weekListener(docChange: DocumentChange) {
+        val weekId = docChange.document["weekId"] as String
+        when(docChange.type){
+            ADDED -> favoriteEvents[weekId] = docChange.document.id
+            MODIFIED -> TODO()
+            REMOVED -> favoriteEvents.remove(weekId)
+        }
+    }
+
+    private fun activityListener(docChange: DocumentChange) {
+        val weekId = docChange.document["weekId"] as String
+        val activityId = docChange.document["id"] as String
+
+        var pair = Pair(activityId, docChange.document.id)
+        if(!favoriteActivities.containsKey(weekId)) favoriteActivities[weekId] = mutableListOf()
+
+        favoriteActivities[weekId]?.apply {
+            when(docChange.type) {
+                ADDED -> {
+                    loadNewAct(weekId, activityId)
+                    add(pair)
+                }
+                MODIFIED -> {}
+                REMOVED -> {
+                    for(p in this) if (p.first == pair.first) pair = p
+                    remove(pair)
+                    removeAct(activityId)
+                }
+            }
+        }
+    }
+
     fun addFavorite(weekId: String, activityId: String) = FirebaseFirestore.getInstance().users[user!!.uid].favorites.add(
         HashMap<String, Any>().apply {
-            this[ACTIVITY_ID] = activityId
+            if(activityId.isNotBlank()) this[ACTIVITY_ID] = activityId
             this[WEEK_ID] = weekId
         })
 

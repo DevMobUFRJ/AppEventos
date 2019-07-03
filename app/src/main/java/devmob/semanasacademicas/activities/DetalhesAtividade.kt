@@ -69,7 +69,7 @@ class DetalhesAtividade : AppCompatActivity() {
     }
 
     private fun favoriteOrUnfavorite() {
-        user.favorites[atividade.weekId]?.apply {
+        user.favoriteActivities[atividade.weekId]?.apply {
             val item = filter { it.first == atividade.id }
             if(item.isEmpty()) {
                 favorite = true

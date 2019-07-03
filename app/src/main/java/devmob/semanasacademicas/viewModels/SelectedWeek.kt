@@ -32,6 +32,7 @@ class SelectedWeek: ViewModel(){
                     typeList.clear()
                     listener.remove()
                 }
+                atividades.clear()
                 typeList = hashMapOf()
                 listener = createListener(value.id)
                 field = value

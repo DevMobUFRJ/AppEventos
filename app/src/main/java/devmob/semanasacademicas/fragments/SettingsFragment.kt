@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.activities.TelaPrincipal
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
+import kotlinx.android.synthetic.main.fragment_settings.*
+import org.jetbrains.anko.support.v4.toast
 
 class SettingsFragment : androidx.fragment.app.Fragment() {
 
@@ -27,6 +29,17 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
         parentActivity.invalidateOptionsMenu()
         parentActivity.toolbar.title = "Configurações" //seta o titulo da toolbar
 
+
+        val sharedPref = parentActivity.getSharedPreferences("NOTIFICATION", Context.MODE_PRIVATE)
+        val show = sharedPref.getBoolean("onoffNotification", true)
+        switch1.isChecked = show
+
+        switch1.setOnCheckedChangeListener { buttonView, isChecked ->
+            with(sharedPref.edit()){
+                putBoolean("onoffNotification", isChecked)
+                apply()
+            }
+        }
 
 
     }

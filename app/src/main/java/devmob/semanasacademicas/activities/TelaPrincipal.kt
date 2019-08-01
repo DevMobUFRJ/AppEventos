@@ -1,5 +1,6 @@
 package devmob.semanasacademicas.activities
 
+import android.content.Context
 import android.graphics.Color
 import androidx.lifecycle.ViewModelProviders
 import android.graphics.PorterDuff
@@ -232,10 +233,17 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 toast("Ainda não implementado")
                 return false
             }
-            nav_config -> {
-                toast("Ainda não implementado")
-                return false
-            }
+//            nav_config -> {
+//                val sharedPref = getPreferences(Context.MODE_PRIVATE)
+//                val total = sharedPref.getInt("alex", 0)
+//
+//                with(sharedPref.edit()){
+//                    putInt("alex", total+1)
+//                    apply()
+//                }
+//                toast("Ainda não implementado $total")
+//                return false
+//            }
             nav_historico -> {
                 toast("Ainda não implementado")
                 return false

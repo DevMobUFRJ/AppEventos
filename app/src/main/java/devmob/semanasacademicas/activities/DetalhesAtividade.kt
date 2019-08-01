@@ -35,8 +35,8 @@ class DetalhesAtividade : AppCompatActivity() {
         setContentView(R.layout.activity_detalhes_atividade)
 
         atividade = intent?.extras!!.getParcelable(ARG_ATIVIDADE)!!
-        color1 = intent?.extras!!.getString(ARG_PRIMARY_COLOR)!!
-        color2 = intent?.extras!!.getString(ARG_SECUNDARY_COLOR)!!
+        color1 = intent?.extras!!.getString(ARG_PRIMARY_COLOR) ?: resources.getString(0+R.color.colorPrimary)
+        color2 = intent?.extras!!.getString(ARG_SECUNDARY_COLOR) ?: resources.getString(0+R.color.colorSecondary)
 
         user = ViewModelProviders.of(this).get(User::class.java)
 
@@ -96,10 +96,10 @@ class DetalhesAtividade : AppCompatActivity() {
         val drawableContainerState = favBtn.background.constantState as DrawableContainer.DrawableContainerState
         val children = drawableContainerState.children
 
-        (children[0] as GradientDrawable).setColor(Color.parseColor(color2))
-        (children[1] as GradientDrawable).setColor(Color.parseColor(color2))
-        (children[2] as GradientDrawable).setColor(Color.parseColor(color1))
-        (children[3] as GradientDrawable).setColor(Color.parseColor(color1))
+//        (children[0] as GradientDrawable).setColor(Color.parseColor(color1))
+//        (children[1] as GradientDrawable).setColor(Color.parseColor(color1))
+        (children[2] as GradientDrawable).setColor(Color.parseColor(color2))
+        (children[3] as GradientDrawable).setColor(Color.parseColor(color2))
 
 
         tipoAtividade.text = atividade.tipo.formataTipo()

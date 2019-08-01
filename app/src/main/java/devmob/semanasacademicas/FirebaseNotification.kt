@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.graphics.Color
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -38,6 +39,10 @@ class FirebaseNotification: FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage?) {
         super.onMessageReceived(message)
+
+        val sharedPref = getSharedPreferences("NOTIFICATION", Context.MODE_PRIVATE)
+        val show = sharedPref.getBoolean("onoffNotification", true)
+        if(!show) return
 
         val data = message?.data!!
         val atividade = Atividade()

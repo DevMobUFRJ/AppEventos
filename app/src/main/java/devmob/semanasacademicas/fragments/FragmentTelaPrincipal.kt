@@ -22,6 +22,7 @@ class FragmentTelaPrincipal : Fragment() {
             = inflater.inflate(R.layout.content_tela_principal, container, false)
 
 
+    var first = true
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
@@ -47,6 +48,10 @@ class FragmentTelaPrincipal : Fragment() {
         model.weeks.observe(this, Observer<MutableList<Any>>{ weekList ->
             viewAdapter.eventos = weekList!!
             swiperefresh.isRefreshing = false
+            if(first){
+                lista.scheduleLayoutAnimation()
+                first = false
+            }
         })
     }
 }

@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import devmob.semanasacademicas.R
-import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.adapters.TypeListAdapter
 import devmob.semanasacademicas.databinding.ContentEventDetailsBinding
 import devmob.semanasacademicas.viewModels.SelectedWeek
@@ -26,7 +23,7 @@ class FragmentTelaDeEvento : Fragment() {
         fragment = this@FragmentTelaDeEvento
 
         model.hasChanges.observe(this@FragmentTelaDeEvento, Observer {
-            val viewAdapter = TypeListAdapter(model.typeList.keys.toMutableList(), model.selectedWeek, context)
+            val viewAdapter = TypeListAdapter(model.typeList.keys.sortedByDescending { model.typeList[it] }, model.selectedWeek, context)
             val viewManager = LinearLayoutManager(context)
 
             listaDeTipos.apply {
@@ -34,6 +31,8 @@ class FragmentTelaDeEvento : Fragment() {
                 isNestedScrollingEnabled = false
                 layoutManager = viewManager
                 adapter = viewAdapter
+
+                scheduleLayoutAnimation()
             }
         })
         return root

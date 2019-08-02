@@ -69,7 +69,7 @@ val FirebaseFirestore.users: CollectionReference
     get() = this.collection("users")
 
 val DocumentReference.favorites: CollectionReference
-    get() = this.collection("favoriteActivities")
+    get() = this.collection("favorites")
 
 operator fun CollectionReference.get(id: String) = this.document(id)
 

@@ -44,7 +44,7 @@ class SelectedWeek: ViewModel(){
     val hasChanges = MutableLiveData<Boolean>()
 
     var filtered = HashMap<String, ArrayList<Atividade>>()
-    var typeList = hashMapOf<String, Boolean>()
+    var typeList = hashMapOf<String, Int>()
 
     var tipo = Types.all
         set(value) {
@@ -58,13 +58,13 @@ class SelectedWeek: ViewModel(){
 
     private fun createListener(weekId: String) = FirebaseFirestore.getInstance().weeks[weekId].activities
         .addSnapshotListener { querySnapshot, _ ->
-            typeList[Types.all] = true
             for (change in querySnapshot!!.documentChanges) {
                 val temp = change.document.toObject(Atividade::class.java)
                 temp.id = change.document.id
                 temp.weekId = selectedWeek.id
 
-                typeList[temp.tipo] = true
+                typeList[Types.all] = typeList[Types.all]?.plus(1) ?: 1
+                typeList[temp.tipo] = typeList[temp.tipo]?.plus(1) ?: 1
 
                 when (change.type) {
                     DocumentChange.Type.ADDED ->

@@ -50,11 +50,11 @@ class FragmentTelaPrincipal : androidx.fragment.app.Fragment() {
         FirebaseAuth.getInstance().addAuthStateListener {
             if (eventList == EventList.saved){
                 if (it.currentUser == null){
-                    lista.visibility = View.GONE
+                    lista?.visibility = View.GONE
                     textNotLogged.visibility = View.VISIBLE
                 }
                 else {
-                    lista.visibility = View.VISIBLE
+                    lista?.visibility = View.VISIBLE
                     textNotLogged.visibility = View.GONE
                 }
             }

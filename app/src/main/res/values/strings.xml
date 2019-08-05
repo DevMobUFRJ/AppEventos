@@ -43,9 +43,12 @@
     <string name="descriptionTransition">tdesc</string>
     <string name="dateTransition">tdate</string>
 
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="help_appeventos">O objetivo do aplicativo é fazer com que alunos conheçam e frequentem Semanas
+        Acadêmicas de outros cursos, como atividades complementares a sua formação, além de  facilitar o trabalho das
+        comissões que podem divulgar sua programação e criar notificações caso haja imprevistos.</string>
 
+    <string name="help_devmob">Esse aplicativo foi desenvolvido pela DevMob, que é um grupo de extensão e interesse em
+        desenvolvimento de aplicativos móveis de Ciência da Computação da UFRJ</string>
 
+    <string name="help_integrantes">Programadores: Alex Santos (t.me/OiAlex) e Breno Coll\nDesigner: Maria Gabriela</string>
 </resources>

@@ -119,6 +119,9 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 //toolbar.title = "Configurações"
                 replace(SettingsFragment())
             }
+            nav_ajuda -> {
+                replace(HelpFragment())
+            }
             //TODO: Criar um id pra tela de evento
             20 -> {
                 //showSearchButton = false
@@ -221,16 +224,12 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
             nav_logout -> {
                 alert("Deseja sair?") {
-                    negativeButton("Não") {  }
+                    negativeButton("Não") { }
                     positiveButton("Sim") {
                         FirebaseAuth.getInstance().signOut()
                         drawer_layout.closeDrawer(GravityCompat.START)
                     }
                 }.show()
-                return false
-            }
-            nav_ajuda -> {
-                toast("Ainda não implementado")
                 return false
             }
 //            nav_config -> {

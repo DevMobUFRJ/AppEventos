@@ -1,5 +1,16 @@
+<!DOCTYPE resources [
+        <!ENTITY appname "Eventos Minerva">
+        <!ENTITY group "Devmob UFRJ">
+        ]>
+
 <resources>
-    <string name="app_name">Eventos Minerva</string>
+    <string name="app_name">&appname;</string>
+    <string name="group_name">&group;</string>
+    <string name="app_description">O &appname; eh um projeto desenvolvido pelo grupo de extensao &group; e tem como
+        objetivo divulgar os eventos da Universidade a fim de contribuir para a integracao da comunidade academica</string>
+    <string name="group_description">O aplicativo foi desenvolvido pela &group;, Grupo de Desenvolvimento de Aplicativos
+        do Departamento de Ciencia da Computacao da UFRJ. O app foi desenvolvido em Kotlin, e o seu codigo fonte esta
+        aberto, disponivel no Github</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -42,13 +53,4 @@
     <string name="nomeTransition">tnome1</string>
     <string name="descriptionTransition">tdesc</string>
     <string name="dateTransition">tdate</string>
-
-    <string name="help_appeventos">O objetivo do aplicativo é fazer com que alunos conheçam e frequentem Semanas
-        Acadêmicas de outros cursos, como atividades complementares a sua formação, além de  facilitar o trabalho das
-        comissões que podem divulgar sua programação e criar notificações caso haja imprevistos.</string>
-
-    <string name="help_devmob">Esse aplicativo foi desenvolvido pela DevMob, que é um grupo de extensão e interesse em
-        desenvolvimento de aplicativos móveis de Ciência da Computação da UFRJ</string>
-
-    <string name="help_integrantes">Programadores: Alex Santos (t.me/OiAlex) e Breno Coll\nDesigner: Maria Gabriela</string>
 </resources>

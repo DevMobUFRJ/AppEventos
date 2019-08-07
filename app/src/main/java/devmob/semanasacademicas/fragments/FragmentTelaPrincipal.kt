@@ -51,11 +51,11 @@ class FragmentTelaPrincipal : androidx.fragment.app.Fragment() {
             if (eventList == EventList.saved){
                 if (it.currentUser == null){
                     lista?.visibility = View.GONE
-                    textNotLogged.visibility = View.VISIBLE
+                    textNotLogged?.visibility = View.VISIBLE
                 }
                 else {
                     lista?.visibility = View.VISIBLE
-                    textNotLogged.visibility = View.GONE
+                    textNotLogged?.visibility = View.GONE
                 }
             }
         }

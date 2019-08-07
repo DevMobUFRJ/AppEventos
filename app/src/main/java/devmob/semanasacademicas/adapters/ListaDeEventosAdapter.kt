@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -58,7 +59,7 @@ class ListaDeEventosAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<L
         private val descricao = itemView.descPagPrincipal as TextView
         private val periodo = itemView.dataPagPrincipal as TextView
         private val imageView = itemView.imageView2 as ImageView
-        private val but = itemView.botaoFavoritar as Button
+        private val but = itemView.salvar as ImageButton
 
         fun bindItems(event: Evento){
             Glide.with(itemView).load(event.link)
@@ -75,7 +76,10 @@ class ListaDeEventosAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<L
             (itemView.context as TelaPrincipal).run {
                 user.changed.observe(this, Observer {
                     val isFavorited = event.id in user.favoriteEvents
-                    but.text = if(isFavorited) "des" else "fav"
+
+                    if(isFavorited) but.setImageResource(R.drawable.btn_remover_salvo)
+                    else but.setImageResource(R.drawable.btn_salvar_semana)
+
                     but.onClick {
                         if (isFavorited) user.favoriteEvents[event.id]?.run { user.removeFavorite(this) }
                         else user.addFavorite(event.id, "")

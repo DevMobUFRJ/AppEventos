@@ -114,13 +114,22 @@ class DetalhesAtividade : AppCompatActivity() {
 //        if (atividade.tipo != Types.workshop)
 //            btnInscrever.visibility = View.INVISIBLE
 
+        btnInscrever.visibility = if (atividade.inscricao == "n") View.GONE else View.VISIBLE
+
         btnInscrever.setOnClickListener { view ->
-            val builder = CustomTabsIntent.Builder()
-            builder.setToolbarColor(Color.parseColor(color1))
-            val customTabsIntent = builder.build()
-            if (!atividade.link.startsWith("https://") && !atividade.link.startsWith("http://"))
-                atividade.link = "https://" + atividade.link
-            customTabsIntent.launchUrl(view.context, Uri.parse(atividade.link))
+            if (atividade.linkInscricao != ""){
+                val builder = CustomTabsIntent.Builder()
+                builder.setToolbarColor(Color.parseColor(color1))
+                val customTabsIntent = builder.build()
+                if (!atividade.linkInscricao.startsWith("https://") && !atividade.linkInscricao.startsWith("http://"))
+                    atividade.linkInscricao = "https://" + atividade.linkInscricao
+                customTabsIntent.launchUrl(view.context, Uri.parse(atividade.linkInscricao))
+            }
+            else {
+                alert ("Não temos informações sobre a inscrição desse evento. Compareça ao credenciamento.", "Ops!"){
+                    okButton {  }
+                }.show()
+            }
         }
     }
 

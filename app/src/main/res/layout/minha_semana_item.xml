@@ -5,28 +5,29 @@
 
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toBottomOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_margin="12dp">
 
             <TextView
-                    android:text="Inicio"
-                    android:layout_width="0dp"
+                    android:text="08:00"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/horaInicio"
                     android:textSize="14sp"
-                    android:layout_marginStart="10dp"
                     app:layout_constraintTop_toTopOf="@+id/nomePalestra"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textColor="@color/black"/>
             <TextView
-                    android:text="Final"
-                    android:layout_width="0dp"
+                    android:text="17:00"
+                    android:layout_width="50dp"
                     android:textSize="14sp"
                     android:layout_height="wrap_content"
                     android:id="@+id/horaFim"
@@ -34,16 +35,15 @@
                     app:layout_constraintBottom_toBottomOf="@id/sala"
                     app:layout_constraintStart_toStartOf="@id/horaInicio"
                     app:layout_constraintEnd_toEndOf="@id/horaInicio"
-                    android:textColor="@color/colorSecondary"/>
+                    android:textColor="@color/black"/>
             <TextView
                     android:text="Nome da Palestra"
                     android:textStyle="bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="8dp"
-                    android:textSize="20dp"
+                    android:textSize="16dp"
                     android:textColor="@color/black"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/horaInicio"
@@ -52,7 +52,7 @@
             <TextView
                     android:text="Sala"
                     android:textColor="@color/colorAccent"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/sala"

@@ -6,11 +6,14 @@
 <resources>
     <string name="app_name">&appname;</string>
     <string name="group_name">&group;</string>
-    <string name="app_description">O &appname; eh um projeto desenvolvido pelo grupo de extensao &group; e tem como
-        objetivo divulgar os eventos da Universidade a fim de contribuir para a integracao da comunidade academica</string>
-    <string name="group_description">O aplicativo foi desenvolvido pela &group;, Grupo de Desenvolvimento de Aplicativos
-        do Departamento de Ciencia da Computacao da UFRJ. O app foi desenvolvido em Kotlin, e o seu codigo fonte esta
-        aberto, disponivel no Github</string>
+    <string name="app_description">O &appname; é um projeto desenvolvido pelo grupo de extensão &group; e tem como
+        objetivo divulgar os eventos da Universidade a fim de contribuir para a integracao da comunidade acadêmica.</string>
+    <string name="group_description">O aplicativo foi desenvolvido pela &group;, Grupo de Desenvolvimento de Aplicativos Mobile
+        do Departamento de Ciencia da Computacao da UFRJ. O app foi desenvolvido em Kotlin, e o seu codigo fonte está
+        aberto, disponivel no Github.</string>
+    <string name="developers">Breno Coll\nAlex Santos</string>
+    <string name="designers">Maria Gabriela</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -149,9 +149,40 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutCourse"
+                    android:textColorHint="@color/gray_light"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layoutConfirmPassword"
+                    android:paddingStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="40dp"
+                    android:visibility="gone"
+                    android:layout_marginEnd="40dp">
+
+                <EditText
+                        android:id="@+id/txtCourse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Curso"
+                        android:inputType="textPassword"
+                        android:drawableStart="@drawable/ic_college"
+                        android:textColor="@color/gray_dark"
+                        android:drawablePadding="10dp"
+                        android:paddingEnd="20dp"
+                        android:fontFamily="@font/ubuntu_light"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:singleLine="true"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <RadioGroup
                     android:id="@+id/radioGroup"
-                    android:layout_below="@id/layoutConfirmPassword"
+                    android:layout_below="@id/layoutCourse"
                     android:layout_marginStart="50dp"
                     android:layout_marginEnd="40dp"
                     android:layout_marginTop="30dp"

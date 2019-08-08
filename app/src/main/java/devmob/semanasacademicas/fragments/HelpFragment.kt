@@ -1,12 +1,14 @@
 package devmob.semanasacademicas.fragments
 
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.text.bold
 import devmob.semanasacademicas.R
 import devmob.semanasacademicas.activities.TelaPrincipal
@@ -34,10 +36,18 @@ class HelpFragment : Fragment() {
             toolbar.title = "Ajuda"
         }
 
-        help.text = SpannableStringBuilder()
-            .bold{ append(resources.getString(R.string.app_name)).append("\n")}
-            .append(resources.getString(R.string.app_description)).append("\n\n")
-            .bold { append(resources.getString(R.string.group_name)).append("\n") }
-            .append(resources.getString(R.string.group_description)).append("\n")
+        github.setOnClickListener {
+            val builder = CustomTabsIntent.Builder()
+            val customTabsIntent = builder.build()
+            customTabsIntent.launchUrl(view.context, Uri.parse("https://github.com/devmobufrj"))
+
+        }
+        facebook.setOnClickListener {
+            val builder = CustomTabsIntent.Builder()
+            val customTabsIntent = builder.build()
+            customTabsIntent.launchUrl(view.context, Uri.parse("https://facebook.com/devmobufrj"))
+
+        }
+
     }
 }

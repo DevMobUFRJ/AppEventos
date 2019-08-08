@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.transition.Fade
 import android.transition.Slide
 import android.util.Log
+import android.view.View
 import android.view.Window
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -36,6 +37,15 @@ class RegisterActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == btnUFRJStudent.id || checkedId == btnOtherStudent.id){
+                layoutCourse.visibility = View.VISIBLE
+            }
+            else {
+                layoutCourse.visibility = View.GONE
+            }
+        }
+
         btnRegister.setOnClickListener{
             register()
         }
@@ -65,6 +75,7 @@ class RegisterActivity : AppCompatActivity() {
         val email = txtEmail.text.toString().trim()
         val pwd = txtPassword.text.toString().trim()
         val confirmPwd = txtConfirmPassword.text.toString().trim()
+        val course = txtCourse.text.toString().trim()
         val type = when {
             btnUFRJStudent.isChecked -> "Aluno da UFRJ"
             btnUFRJTeacher.isChecked -> "Professor da UFRJ"
@@ -103,6 +114,10 @@ class RegisterActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 alert("Por favor, selecione uma opção") { okButton {} }.show()
             }
+            (type == "Aluno da UFRJ" || type == "Aluno de outra instituição") && course.isEmpty() -> {
+                progressDialog.dismiss()
+                txtCourse.setErrorAndFocus("Curso não informado")
+            }
             else -> {
                 mAuth.createUserWithEmailAndPassword(email, pwd)
                     .addOnSuccessListener {
@@ -119,6 +134,7 @@ class RegisterActivity : AppCompatActivity() {
                                 map["token"] = it.token
                                 map["name"] = name
                                 map["type"] = type
+                                if (type == "Aluno da UFRJ" || type == "Aluno de outra instituição") map["course"] = course
                                 db.users[user.uid].set(map)
                             }
                         }

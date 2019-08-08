@@ -82,6 +82,8 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 nav_view.menu.findItem(nav_logout).icon
                     .setColorFilter(ContextCompat.getColor(this, R.color.Red), PorterDuff.Mode.SRC_ATOP)
             }
+            if (userIsNull)
+                displayScreen(nav_eventos)
 
             nav_view.menu.run {
                 findItem(nav_login).isVisible = userIsNull
@@ -93,6 +95,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 findItem(nav_sorteio).isVisible = false
                 findItem(nav_logout).isVisible = !userIsNull
             }
+
         }
     }
 

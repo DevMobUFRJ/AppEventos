@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import devmob.semanasacademicas.R
 
-class SettingsFragment : androidx.fragment.app.Fragment() {
+class Settings : androidx.fragment.app.Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment

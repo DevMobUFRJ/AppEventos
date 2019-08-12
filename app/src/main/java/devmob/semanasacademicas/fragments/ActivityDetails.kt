@@ -20,7 +20,7 @@ import org.jetbrains.anko.support.v4.act
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
 
-class FragmentDetalhesAtividade : Fragment() {
+class ActivityDetails : Fragment() {
 
     private var favorite: Boolean = false
     lateinit private var favoriteId: String
@@ -87,13 +87,14 @@ class FragmentDetalhesAtividade : Fragment() {
         tipoAtividade.text = atividade.tipo.formataTipo()
         nomeAtividade.text = atividade.nome
         diaAtividade.text = atividade.inicio.formataDia()
-        apresentadorAtividade.text = atividade.apresentador
-        empresaAtividade.text = atividade.grupo
         horasalaAtividade.text = getString(R.string.activity_period_and_date, atividade.inicio.formataHora(), atividade.fim.formataHora(), atividade.local)
 
-        if (atividade.tipo == Types.others || atividade.tipo == Types.mesaRedonda)
-            cardView.visibility = View.INVISIBLE
-        if (atividade.tipo != Types.workshop)
+        if(atividade.apresentador.isNotEmpty() || atividade.grupo.isNotEmpty()) {
+            apresentadorAtividade.text = if(atividade.apresentador.isNotEmpty()) atividade.apresentador else atividade.grupo
+            empresaAtividade.text = if(atividade.apresentador.isNotEmpty()) atividade.grupo else ""
+        } else cardView.visibility = View.INVISIBLE
+
+        if (atividade.link.isEmpty())
             btnInscrever.visibility = View.INVISIBLE
 
         btnInscrever.setOnClickListener { view ->

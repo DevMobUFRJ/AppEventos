@@ -13,7 +13,7 @@ import devmob.semanasacademicas.dismiss
 import devmob.semanasacademicas.viewModels.User
 import kotlinx.android.synthetic.main.fragment_minha_semana.*
 
-class FragmentMinhaSemana : androidx.fragment.app.Fragment() {
+class MyWeek : androidx.fragment.app.Fragment() {
 
     lateinit var user: User
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?

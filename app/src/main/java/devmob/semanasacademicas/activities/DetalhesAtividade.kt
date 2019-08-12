@@ -12,7 +12,7 @@ import devmob.semanasacademicas.*
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.dialogs.LoginDialog
 import devmob.semanasacademicas.viewModels.User
-import kotlinx.android.synthetic.main.activity_detalhes_atividade.*
+import kotlinx.android.synthetic.main.fragment_activity_details.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
 
@@ -27,7 +27,7 @@ class DetalhesAtividade : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detalhes_atividade)
+        setContentView(R.layout.fragment_activity_details)
 
         atividade = intent?.extras!!.getParcelable(ARG_ATIVIDADE)!!
         setViews()

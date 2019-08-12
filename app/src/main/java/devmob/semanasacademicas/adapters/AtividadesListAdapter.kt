@@ -6,18 +6,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.findNavController
 import devmob.semanasacademicas.R
-import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.formataHora
 import devmob.semanasacademicas.formataTipo
-import kotlinx.android.synthetic.main.atividades_lista_items.view.*
+import kotlinx.android.synthetic.main.list_item_activity.view.*
 
 class AtividadesListAdapter(private val items: List<Atividade>): androidx.recyclerview.widget.RecyclerView.Adapter<AtividadesListAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int)
-            = ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.atividades_lista_items, p0, false))
+            = ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.list_item_activity, p0, false))
 
     override fun getItemCount() = items.size
 
@@ -37,7 +36,7 @@ class AtividadesListAdapter(private val items: List<Atividade>): androidx.recycl
             tipo.text = atividade.tipo.formataTipo()
 
             itemView.setOnClickListener {
-                if(atividade.tipo != Types.pause) (it.context as TelaPrincipal).run {
+                (it.context as TelaPrincipal).run {
                     activitiesList.atividade = atividade
                     it.findNavController().navigate(R.id.atividades_to_detailsAtividade)
                 }

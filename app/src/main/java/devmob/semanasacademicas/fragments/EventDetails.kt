@@ -9,21 +9,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.adapters.TypeListAdapter
 import devmob.semanasacademicas.databinding.ContentEventDetailsBinding
 import devmob.semanasacademicas.viewModels.SelectedWeek
 
-class FragmentTelaDeEvento : Fragment() {
+class EventDetails : Fragment() {
     lateinit var model: SelectedWeek
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?):View?
             = ContentEventDetailsBinding.inflate(layoutInflater, container, false).run {
         model = ViewModelProviders.of(activity!!).get(SelectedWeek::class.java)
         event = model.selectedWeek
-        fragment = this@FragmentTelaDeEvento
+        fragment = this@EventDetails
 
-        model.hasChanges.observe(this@FragmentTelaDeEvento, Observer {
-            val viewAdapter = TypeListAdapter(model.typeList.keys.sortedByDescending { model.typeList[it] }, model.selectedWeek, context)
+        model.hasChanges.observe(this@EventDetails, Observer {
+            val viewAdapter = TypeListAdapter(listOf(Types.all) + event!!.listaTipos, model.selectedWeek, context)
             val viewManager = LinearLayoutManager(context)
 
             listaDeTipos.apply {
@@ -31,8 +32,6 @@ class FragmentTelaDeEvento : Fragment() {
                 isNestedScrollingEnabled = false
                 layoutManager = viewManager
                 adapter = viewAdapter
-
-                scheduleLayoutAnimation()
             }
         })
         return root

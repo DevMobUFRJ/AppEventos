@@ -13,26 +13,26 @@ class WeeksList: ViewModel() {
     private var hasValue = false
     var screen: Int? = null
     var query = ""
-    var copy = mutableListOf<Any>()
+    var copy = mutableListOf<Evento>()
 
     var hasChanges = false
-    var weeks = MutableLiveData<MutableList<Any>>()
+    var weeks = MutableLiveData<MutableList<Evento>>()
         get() {
             if(!hasValue) loadWeeks()
             return field
         }
 
     fun makeQuery()
-            = setWeeks(copy.filter { (it as Evento).nome.contains(query, ignoreCase = true) } as MutableList<Any>)
+            = setWeeks(copy.filter { (it).nome.contains(query, ignoreCase = true) } as MutableList)
 
-    fun setWeeks(weeksList: MutableList<Any>){
+    fun setWeeks(weeksList: MutableList<Evento>){
         hasChanges = true
         hasValue = true
         weeks.postValue(weeksList)
     }
 
     fun loadWeeks() = FirebaseFirestore.getInstance().weeks.get().addOnSuccessListener {
-        val temp = mutableListOf<Any>()
+        val temp = mutableListOf<Evento>()
         for (document in it.documents) {
 
             var aux =

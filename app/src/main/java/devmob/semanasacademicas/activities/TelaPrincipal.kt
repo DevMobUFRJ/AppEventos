@@ -23,7 +23,7 @@ import devmob.semanasacademicas.R.id.*
 import devmob.semanasacademicas.viewModels.SelectedWeek
 import devmob.semanasacademicas.viewModels.User
 import devmob.semanasacademicas.viewModels.WeeksList
-import kotlinx.android.synthetic.main.activity_tela_principal.*
+import kotlinx.android.synthetic.main.activity_principal.*
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.nav_header_tela_principal.view.*
 import org.jetbrains.anko.alert
@@ -34,6 +34,8 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     lateinit var weeksList: WeeksList
     lateinit var activitiesList: SelectedWeek
+    lateinit var user: User
+
     lateinit var navController: NavController
     lateinit var searchButton: MenuItem
 
@@ -41,7 +43,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tela_principal)
+        setContentView(R.layout.activity_principal)
 
         setSupportActionBar(toolbar)
         supportActionBar?.run {
@@ -54,6 +56,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         nav_view.setupWithNavController(navController)
         nav_view.setNavigationItemSelectedListener(this)
 
+        user = ViewModelProviders.of(this).get(User::class.java)
         weeksList = ViewModelProviders.of(this).get(WeeksList::class.java)
         activitiesList = ViewModelProviders.of(this).get(SelectedWeek::class.java)
 

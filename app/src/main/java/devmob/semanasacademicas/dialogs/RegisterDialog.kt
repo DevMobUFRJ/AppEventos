@@ -15,7 +15,7 @@ import devmob.semanasacademicas.R
 import devmob.semanasacademicas.get
 import devmob.semanasacademicas.setErrorAndFocus
 import devmob.semanasacademicas.users
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.fragment_register.*
 import org.jetbrains.anko.okButton
 import org.jetbrains.anko.support.v4.alert
 
@@ -34,7 +34,7 @@ class RegisterDialog: DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
-            = inflater.inflate(R.layout.activity_register, container, false)
+            = inflater.inflate(R.layout.fragment_register, container, false)
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore

@@ -31,7 +31,7 @@ fun String.formataTipo() = when (this){
     "workshop" -> "Workshop"
     "palestra" -> "Palestra"
     "mesaRedonda" -> "Mesa Redonda"
-    else -> ""
+    else -> this
 }
 
 class Types{
@@ -39,8 +39,6 @@ class Types{
         const val others = "outros"
         const val workshop = "workshop"
         const val mesaRedonda = "mesaRedonda"
-        const val lecture = "palestra"
-        const val pause = "intervalo"
         const val all = "todos"
 
     }

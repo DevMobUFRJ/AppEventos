@@ -4,11 +4,11 @@
     <data>
         <import type="devmob.semanasacademicas.Types"/>
         <variable name="event" type="devmob.semanasacademicas.dataclass.Evento"/>
-        <variable name="fragment" type="devmob.semanasacademicas.fragments.FragmentTelaDeEvento"/>
+        <variable name="fragment" type="devmob.semanasacademicas.fragments.EventDetails"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
                                                        android:layout_height="match_parent"
-                                                       tools:context=".fragments.FragmentTelaDeEvento">
+                                                       tools:context=".fragments.EventDetails">
         <TextView
                 android:text="@{event.periodo()}"
                 android:fontFamily="@font/roboto"

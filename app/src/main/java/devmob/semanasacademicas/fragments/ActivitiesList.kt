@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.content_atividades.*
 import kotlinx.android.synthetic.main.fragment_atividades.view.*
 import java.util.*
 
-class FragmentAtividades: androidx.fragment.app.Fragment() {
+class ActivitiesList: androidx.fragment.app.Fragment() {
 
     lateinit var model: SelectedWeek
     private lateinit var mSectionsPagerAdapter: SectionsPagerAdapter

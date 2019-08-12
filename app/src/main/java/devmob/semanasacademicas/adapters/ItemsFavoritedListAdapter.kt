@@ -7,7 +7,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import devmob.semanasacademicas.R
-import devmob.semanasacademicas.Types
 import devmob.semanasacademicas.activities.TelaPrincipal
 import devmob.semanasacademicas.dataclass.Atividade
 import devmob.semanasacademicas.formataHora
@@ -50,7 +49,7 @@ class ItemsFavoritedListAdapter : RecyclerView.Adapter<ItemsFavoritedListAdapter
             teste1.text = item.nome
             teste2.text = item.inicio.formataHora() + "h | " + item.local
             itemView.setOnClickListener {
-                if(item.tipo != Types.pause) (it.context as TelaPrincipal).run {
+                (it.context as TelaPrincipal).run {
                     activitiesList.atividade = item
                     it.findNavController().navigate(R.id.minhaSemana_to_detailsAtividade)
 //                    displayScreen(40)

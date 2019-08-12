@@ -18,7 +18,7 @@ import devmob.semanasacademicas.R
 import devmob.semanasacademicas.get
 import devmob.semanasacademicas.setErrorAndFocus
 import devmob.semanasacademicas.users
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.okButton
 import org.jetbrains.anko.support.v4.alert
 
@@ -32,7 +32,7 @@ class LoginDialog : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
-            = inflater.inflate(R.layout.activity_login, container, false)
+            = inflater.inflate(R.layout.fragment_login, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -3,7 +3,7 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    xmlns:tools="http://schemas.android.com/tools"
-                                                   tools:context=".fragments.FragmentAtividades"
+                                                   tools:context=".fragments.ActivitiesList"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"

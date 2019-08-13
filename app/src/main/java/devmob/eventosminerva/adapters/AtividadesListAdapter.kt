@@ -43,12 +43,11 @@ class AtividadesListAdapter(
             tipo.text = atividade.tipo.formataTipo()
 
             itemView.setOnClickListener {
-                if(atividade.tipo != Types.pause)
-                    it.context.startActivity<DetalhesAtividade>(
-                        ARG_ATIVIDADE to atividade,
-                        ARG_PRIMARY_COLOR to color1,
-                        ARG_SECUNDARY_COLOR to color2
-                    )
+                it.context.startActivity<DetalhesAtividade>(
+                    ARG_ATIVIDADE to atividade,
+                    ARG_PRIMARY_COLOR to color1,
+                    ARG_SECUNDARY_COLOR to color2
+                )
             }
         }
     }

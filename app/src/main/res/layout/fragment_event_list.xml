@@ -18,14 +18,12 @@
 
     <TextView
             android:id="@+id/textNotLogged"
-            android:text="Voce precisa estar logado para acessar a essa função"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="200dp"
+            android:layout_margin="50dp"
             android:textAlignment="center"
             android:textSize="16sp"
             android:visibility="gone"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
 

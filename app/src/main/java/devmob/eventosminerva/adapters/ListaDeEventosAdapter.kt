@@ -16,6 +16,7 @@ import devmob.eventosminerva.R
 import devmob.eventosminerva.activities.TelaPrincipal
 import devmob.eventosminerva.dataclass.Evento
 import devmob.eventosminerva.fragments.FragmentTelaDeEvento
+import kotlinx.android.synthetic.main.content_tela_de_evento.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import kotlin.properties.Delegates
 
@@ -62,8 +63,11 @@ class ListaDeEventosAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<L
                 .into(imageView)
 
             nome.text = event.nome
-            descricao.text = event.descricao
             periodo.text = event.periodo()
+
+            descricao.text = event.descricao
+            if(event.descricao.isEmpty()) descricao.visibility = View.GONE
+            else descricao.text = event.descricao
 
             (itemView.context as TelaPrincipal).run {
                 user.changed.observe(this, Observer {

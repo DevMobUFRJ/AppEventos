@@ -31,7 +31,7 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
         val show = sharedPref.getBoolean("onoffNotification", true)
         switch1.isChecked = show
 
-        switch1.setOnCheckedChangeListener { buttonView, isChecked ->
+        switch1.setOnCheckedChangeListener { _, isChecked ->
             with(sharedPref.edit()){
                 putBoolean("onoffNotification", isChecked)
                 apply()

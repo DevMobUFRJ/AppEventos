@@ -6,7 +6,7 @@
              tools:context=".fragments.SettingsFragment">
     <Switch
             android:layout_margin="20dp"
-            android:text="Notificacoes"
+            android:text="Notificações"
             android:textAlignment="viewStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/switch1"/>

@@ -44,6 +44,7 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
 
             toolbar.title = evento.nome //seta o titulo da toolbar
             toolbar.backgroundColor = Color.parseColor(evento.color1)
+            btnRegister.backgroundColor = Color.parseColor(evento.color1)
         }
 
         val tipos = listOf(Types.all).plus(evento.listaTipos)
@@ -74,7 +75,9 @@ class FragmentTelaDeEvento : androidx.fragment.app.Fragment() {
         evento.run {
             periodoEvento.text = periodo()
             nomeEvento.text = nome
-            descricaoEvento.text = descricao
+
+            if(descricao.isEmpty()) descricaoEvento.visibility = View.GONE
+            else descricaoEvento.text = descricao
 
             Glide.with(context!!).load(link)
                 .placeholder(R.drawable.thumb_placeholder)

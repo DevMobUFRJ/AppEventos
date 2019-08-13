@@ -1,12 +1,14 @@
 package devmob.eventosminerva.adapters
 
-import androidx.recyclerview.widget.DiffUtil
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import devmob.eventosminerva.*
+import androidx.recyclerview.widget.DiffUtil
+import devmob.eventosminerva.ARG_ATIVIDADE
+import devmob.eventosminerva.R
 import devmob.eventosminerva.activities.DetalhesAtividade
 import devmob.eventosminerva.dataclass.Atividade
+import devmob.eventosminerva.formataHora
 import kotlinx.android.synthetic.main.minha_semana_item.view.*
 import org.jetbrains.anko.startActivity
 import kotlin.properties.Delegates
@@ -52,10 +54,9 @@ class ItemsFavoritedListAdapter : androidx.recyclerview.widget.RecyclerView.Adap
             sala.text = item.local
 
             itemView.setOnClickListener {
-                if(item.tipo != Types.pause)
-                    it.context.startActivity<DetalhesAtividade>(
-                        ARG_ATIVIDADE to item
-                    )
+                it.context.startActivity<DetalhesAtividade>(
+                    ARG_ATIVIDADE to item
+                )
             }
         }
 

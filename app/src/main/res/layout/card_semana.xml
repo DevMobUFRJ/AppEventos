@@ -38,6 +38,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="17dp"
+                android:paddingBottom="15dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/nomePagPrincipal"
@@ -51,7 +52,6 @@
                 app:layout_constraintRight_toRightOf="@id/nomePagPrincipal"
                 app:layout_constraintBottom_toBottomOf="parent"
 
-                android:layout_marginTop="6dp"
                 android:layout_marginBottom="20sp"
 
                 android:layout_width="0dp"

@@ -33,7 +33,7 @@ fun String.formataTipo() = when (this){
     "workshop" -> "Workshop"
     "palestra" -> "Palestra"
     "mesaRedonda" -> "Mesa Redonda"
-    else -> ""
+    else -> this
 }
 
 class Types{

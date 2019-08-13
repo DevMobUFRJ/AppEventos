@@ -31,7 +31,7 @@
         <item
                 android:id="@+id/nav_config"
                 android:icon="@drawable/drawer_configuracoes_icon"
-                android:title="Configuracoes"/>
+                android:title="Configurações"/>
         <item
                 android:id="@+id/nav_ajuda"
                 android:icon="@drawable/drawer_ajuda_icon"

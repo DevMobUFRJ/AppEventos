@@ -102,14 +102,15 @@ class DetalhesAtividade : AppCompatActivity() {
         tipoAtividade.text = atividade.tipo.formataTipo()
         nomeAtividade.text = atividade.nome
         diaAtividade.text = atividade.inicio.formataDia()
-        apresentadorAtividade.text = atividade.apresentador
-        empresaAtividade.text = atividade.grupo
         horasalaAtividade.text = getString(R.string.activity_period_and_date, atividade.inicio.formataHora(), atividade.fim.formataHora(), atividade.local)
 
-        if (atividade.apresentador == "" || atividade.grupo == "")
-            cardView.visibility = View.INVISIBLE
-//        if (atividade.tipo != Types.workshop)
-//            btnInscrever.visibility = View.INVISIBLE
+        if(atividade.apresentador.isNotEmpty() || atividade.grupo.isNotEmpty()) {
+            apresentadorAtividade.text = if(atividade.apresentador.isNotEmpty()) atividade.apresentador else atividade.grupo
+            empresaAtividade.text = if(atividade.apresentador.isNotEmpty()) atividade.grupo else ""
+
+            empresaAtividade.visibility = if (empresaAtividade.text.isEmpty()) View.GONE else View.VISIBLE
+        } else cardView.visibility = View.INVISIBLE
+
 
         btnInscrever.visibility = if (atividade.inscricao == "n") View.GONE else View.VISIBLE
 

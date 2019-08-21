@@ -1,0 +1,6 @@
+/tokens
+/build
+.idea
+.gradle
+/src/main/resources
+/out

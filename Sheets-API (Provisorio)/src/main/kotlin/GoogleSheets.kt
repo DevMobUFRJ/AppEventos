@@ -4,19 +4,18 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.sheets.v4.Sheets
 import com.google.api.services.sheets.v4.SheetsScopes
-import com.google.cloud.Timestamp
 import java.io.FileNotFoundException
-import java.text.SimpleDateFormat
 import com.google.api.services.sheets.v4.model.ValueRange
 import java.util.*
 
-
-
-class GoogleSheets {
+class GoogleSheets(private val sheet_id: String) {
 
     companion object {
         const val ACTIVITIES = "A11:N"
-        const val SHEET_ID = "1uMZiPnAk8MpD6phijjFmmXkB1oVrcXXSxEHtzAN5TXk"
+        const val EVENT = "A3:H3"
+
+        const val EVENT_ID = 3
+        const val ACTIVITY_ID = 11
 
         const val name = "Semanas UFRJ"
         const val credentials_path = "google-sheets.json"
@@ -26,37 +25,30 @@ class GoogleSheets {
         private val http_transport = GoogleNetHttpTransport.newTrustedTransport()
     }
 
-    private val credential: Credential
+    private val credential = getCredentials()
 
-    lateinit var atividades: MutableList<MutableList<Any>>
+    fun getEvent() = getRange(EVENT)
+    fun getActivities() = getRange(ACTIVITIES)
 
-    init {
-        credential = getCredentials()
-        updateActivities()
-    }
-
-    fun updateActivities() {
-        atividades = getRange()
-    }
+    fun setCell(id: String, row: Int, type: Int) = Sheets.Builder(http_transport, json, credential)
+        .setApplicationName(name).build()
+        .spreadsheets().values()
+        .update(sheet_id, "'Sheet1'!A${row + type}", cellId(id))
+        .setValueInputOption("RAW").execute()
 
     private fun cellId(actId: String) = ValueRange()
         .setValues(listOf(
             listOf(actId)
         ))
 
-    fun setCell(id: String, row: Int) =
-        Sheets.Builder(http_transport, json, credential).setApplicationName(name).build().spreadsheets().values()
-            .update(SHEET_ID, "'Sheet1'!A${row + 11}", cellId(id)).setValueInputOption("RAW").execute()
-
-    private fun getRange() = Sheets.Builder(http_transport, json, credential)
+    private fun getRange(range: String) = Sheets.Builder(http_transport, json, credential)
         .setApplicationName(name).build()
-        .spreadsheets().values().get(SHEET_ID, GoogleSheets.ACTIVITIES)
+        .spreadsheets().values().get(sheet_id, range)
         .execute().getValues()
 
     private fun getCredentials(): Credential {
         val input = GoogleSheets::class.java.getResourceAsStream(credentials_path)
             ?: throw FileNotFoundException("Resource not found: $credentials_path")
-
         return GoogleCredential.fromStream(input).createScoped(scopes)
     }
 

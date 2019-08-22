@@ -19,23 +19,29 @@ data class Atividade (
             val df = SimpleDateFormat("dd/MM/yyyy HH:mm z").apply {
                 timeZone = TimeZone.getTimeZone("GMT")
             }
-
-            nome = row[1].toString()
-            apresentador = row[2].toString()
-            grupo = row[3].toString()
-            local = row[4].toString()
-
-            inicio = Timestamp.of(df.parse(row[5].toString() + " " + row[6].toString() + " GMT-03:00"))
-
-            val temp = if(row[7].toString().isEmpty()) row[5].toString() else row[7].toString()
-            fim = Timestamp.of(df.parse(temp + " " + row[8].toString() + " GMT-03:00"))
-
-            temInscricao = row[9].toString() == "s"
-
-            link = row[10].toString()
-            tipo = row[11].toString()
-
-            linkPalestrante = if(row.size > 12) row[12].toString() else ""
+            for((idx, cell) in row.withIndex()) if(cell.toString().isNotEmpty())
+                when(idx){
+                    1 -> nome = cell.strAndTrim()
+                    2 -> apresentador = cell.strAndTrim()
+                    3 -> grupo = cell.strAndTrim()
+                    4 -> local = cell.strAndTrim()
+                    5 -> {}
+                    6 -> inicio = Timestamp.of(df.parse(row[5].strAndTrim() + " " + cell.strAndTrim() + " GMT-03:00"))
+                    7 -> {}
+                    8 -> {
+                        fim =
+                            if(row[7].toString().isEmpty())
+                                Timestamp.of(df.parse(row[5].strAndTrim() + " " + cell.strAndTrim() + " GMT-03:00"))
+                            else
+                                Timestamp.of(df.parse(row[7].strAndTrim() + " " + cell.strAndTrim() + " GMT-03:00"))
+                    }
+                    9 -> temInscricao = cell.strAndTrim() == "s"
+                    10 -> link = cell.strAndTrim()
+                    11 -> tipo = cell.strAndTrim()
+                    12 -> linkPalestrante = row[12].strAndTrim()
+                }
         }
     }
 }
+
+fun Any.strAndTrim() = toString().trim()

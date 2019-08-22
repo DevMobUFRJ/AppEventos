@@ -44,4 +44,3 @@ data class Atividade (
     }
 }
 
-fun Any.strAndTrim() = toString().trim()

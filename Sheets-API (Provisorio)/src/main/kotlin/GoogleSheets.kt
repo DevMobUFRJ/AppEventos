@@ -12,7 +12,7 @@ class GoogleSheets(private val sheet_id: String) {
 
     companion object {
         const val ACTIVITIES = "A11:N"
-        const val EVENT = "A3:H3"
+        const val EVENT = "A3:I3"
 
         const val EVENT_ID = 3
         const val ACTIVITY_ID = 11
@@ -30,16 +30,18 @@ class GoogleSheets(private val sheet_id: String) {
     fun getEvent() = getRange(EVENT)
     fun getActivities() = getRange(ACTIVITIES)
 
-    fun setCell(id: String, row: Int, type: Int) = Sheets.Builder(http_transport, json, credential)
+    fun setCell(values: List<String>, type: Int) = Sheets.Builder(http_transport, json, credential)
         .setApplicationName(name).build()
         .spreadsheets().values()
-        .update(sheet_id, "'Sheet1'!A${row + type}", cellId(id))
+        .update(sheet_id, "'Sheet1'!A$type:A${type + values.size- 1 }", cellId(values))
         .setValueInputOption("RAW").execute()
 
-    private fun cellId(actId: String) = ValueRange()
-        .setValues(listOf(
-            listOf(actId)
-        ))
+    private fun cellId(values: List<String>): ValueRange {
+        val acumulator = mutableListOf<List<String>>()
+        for(value in values) acumulator += listOf(value)
+
+        return ValueRange().setValues(acumulator.toList())
+    }
 
     private fun getRange(range: String) = Sheets.Builder(http_transport, json, credential)
         .setApplicationName(name).build()

@@ -2,13 +2,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    kotlin("jvm") version "1.3.21"
+    kotlin("jvm") version "1.3.41"
 }
 
 group = "ru"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    jcenter()
     mavenCentral()
     maven {
         url = uri("https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
@@ -25,12 +26,12 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     implementation("com.google.firebase:firebase-admin:6.8.1")
-//    implementation("com.google.firebase:firebase-core:16.0.8")
-//    implementation("com.google.firebase:firebase-database:16.0.6")
+
     implementation("com.google.api-client:google-api-client:1.23.0")
     implementation("com.google.oauth-client:google-oauth-client-jetty:1.23.0")
     implementation("com.google.apis:google-api-services-sheets:v4-rev516-1.23.0")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0-RC2")
     testCompile("junit", "junit", "4.12")
 }
 

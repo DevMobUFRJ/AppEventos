@@ -9,11 +9,9 @@ class EventListener(sheet_id: String ) {
         val activities = gs.getActivities().map { Atividade.fromRow(it) to it[0].toString().trim() }
 
         evento.listaTipos = activities.map { it.first.tipo }.distinct()
-
         val eventId = db.sendEvento(evento, temp[0].toString())
-        gs.setCell(eventId, 0, GoogleSheets.EVENT_ID)
 
-        for((idx, act) in activities.withIndex())
-            gs.setCell(db.sendAtividade(act.first, eventId, act.second), idx, GoogleSheets.ACTIVITY_ID)
+        gs.setCell(listOf(eventId), GoogleSheets.EVENT_ID)
+        gs.setCell(activities.map { db.sendAtividade(it.first, eventId, it.second) }, GoogleSheets.ACTIVITY_ID)
     }
 }

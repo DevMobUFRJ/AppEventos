@@ -21,16 +21,18 @@ data class Evento (
                 timeZone = TimeZone.getTimeZone("GMT")
             }
 
-            tipo = row[1].toString().trim()
+            tipo = row[1].strAndTrim()
 
-            inicio = Timestamp.of(df.parse(row[2].toString().trim() + " GMT-03:00"))
-            fim = Timestamp.of(df.parse(row[3].toString().trim() + " GMT-03:00"))
+            inicio = Timestamp.of(df.parse(row[2].strAndTrim() + " GMT-03:00"))
+            fim = Timestamp.of(df.parse(row[3].strAndTrim() + " GMT-03:00"))
 
-            nome = row[4].toString().trim()
-            descricao = row[5].toString().trim()
+            nome = row[4].strAndTrim()
+            descricao = row[5].strAndTrim()
 
-            linkInscricao = row[6].toString().trim()
-            linkEvento = row[7].toString().trim()
+            linkInscricao = row[6].strAndTrim()
+            linkEvento = row[7].strAndTrim()
+
+            link = row[8].strAndTrim()
         }
     }
 }

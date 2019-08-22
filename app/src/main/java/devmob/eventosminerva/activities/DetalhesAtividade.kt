@@ -31,6 +31,11 @@ class DetalhesAtividade : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhes_atividade)
 
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+
         atividade = intent?.extras!!.getParcelable(ARG_ATIVIDADE)!!
         color1 = intent?.extras!!.getString(ARG_PRIMARY_COLOR) ?: resources.getString(0+R.color.colorPrimary)
         color2 = intent?.extras!!.getString(ARG_SECUNDARY_COLOR) ?: resources.getString(0+R.color.colorSecondary)

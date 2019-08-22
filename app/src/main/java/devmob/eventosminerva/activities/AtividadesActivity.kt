@@ -20,6 +20,9 @@ import devmob.eventosminerva.dataclass.Atividade
 import devmob.eventosminerva.dataclass.Evento
 
 import kotlinx.android.synthetic.main.activity_atividades.*
+import kotlinx.android.synthetic.main.activity_atividades.appbar
+import kotlinx.android.synthetic.main.activity_atividades.toolbar
+import kotlinx.android.synthetic.main.activity_detalhes_atividade.*
 import kotlinx.android.synthetic.main.fragment_atividades.view.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.backgroundColor
@@ -41,6 +44,10 @@ class AtividadesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_atividades)
 
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         container.adapter = mSectionsPagerAdapter
@@ -115,16 +122,6 @@ class AtividadesActivity : AppCompatActivity() {
             notifyDataSetChanged()
         }
     }
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_atividades, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) =
-        if (item.itemId == R.id.action_settings) true
-        else super.onOptionsItemSelected(item)
 
     override fun onDestroy() {
         super.onDestroy()

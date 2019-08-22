@@ -33,7 +33,7 @@ class FragmentMinhaSemana : androidx.fragment.app.Fragment() {
         parentActivity.invalidateOptionsMenu()
         parentActivity.toolbar.title = "Minha Semana" //seta o titulo da toolbar
 
-        textNotLogged.text = "Adicione uma atividade na \"Minha Semana\" clicando no icone ao lado ;)"
+        textNotLogged.text = "Adicione uma atividade na \"Minha Semana\" clicando no icone ao lado em alguma atividade;)"
         textNotLogged.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.add_favorite, 0)
 
         listFavorite_Days.apply {

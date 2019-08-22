@@ -103,7 +103,7 @@ class User: ViewModel() {
     fun removeFavorite(favoriteId: String) = bd.users[user!!.uid].favorites[favoriteId].delete()
 
     private fun loadNewAct(weekId: String, activityId: String) = bd.weeks[weekId].activities[activityId].get().addOnSuccessListener { docSnapshot ->
-        docSnapshot.toObject(Atividade::class.java)!!.run {
+        docSnapshot?.toObject(Atividade::class.java)?.run {
             this.id = activityId
             this.weekId = weekId
             this.inicio.formataBarra().also {

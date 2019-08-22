@@ -12,7 +12,10 @@ import devmob.eventosminerva.adapters.ListaDeFavoritosAdapter
 import devmob.eventosminerva.dataclass.Atividade
 import devmob.eventosminerva.viewModels.User
 import kotlinx.android.synthetic.main.app_bar_tela_principal.*
+import kotlinx.android.synthetic.main.fragment_event_list.*
 import kotlinx.android.synthetic.main.fragment_minha_semana.*
+import kotlinx.android.synthetic.main.fragment_minha_semana.progressBar
+import kotlinx.android.synthetic.main.fragment_event_list.textNotLogged as textNotLogged1
 
 class FragmentMinhaSemana : androidx.fragment.app.Fragment() {
 
@@ -30,6 +33,8 @@ class FragmentMinhaSemana : androidx.fragment.app.Fragment() {
         parentActivity.invalidateOptionsMenu()
         parentActivity.toolbar.title = "Minha Semana" //seta o titulo da toolbar
 
+        textNotLogged.text = "Adicione uma atividade na \"Minha Semana\" clicando no icone ao lado ;)"
+        textNotLogged.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.add_favorite, 0)
 
         listFavorite_Days.apply {
             adapter = viewAdapter
@@ -39,6 +44,12 @@ class FragmentMinhaSemana : androidx.fragment.app.Fragment() {
         user = ViewModelProviders.of(this.requireActivity()).get(User::class.java)
 
         user.atividades.observe(this, Observer<HashMap<String, MutableList<Atividade>>>{ atividades ->
+
+            if(atividades.size == 0) {
+                textNotLogged.visibility = View.VISIBLE
+            } else {
+                textNotLogged.visibility = View.GONE
+            }
             viewAdapter.eventosFavoritados = atividades!!
             progressBar.dismiss()
         })

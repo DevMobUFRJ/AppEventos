@@ -4,6 +4,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <TextView
+            android:id="@+id/textNotLogged"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="50dp"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     <ProgressBar
             android:id="@+id/progressBar"
             android:layout_centerHorizontal="true"

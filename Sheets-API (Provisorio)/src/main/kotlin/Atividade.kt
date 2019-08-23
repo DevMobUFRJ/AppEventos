@@ -19,7 +19,7 @@ data class Atividade (
             val df = SimpleDateFormat("dd/MM/yyyy HH:mm z").apply {
                 timeZone = TimeZone.getTimeZone("GMT")
             }
-            for((idx, cell) in row.withIndex()) if(cell.toString().isNotEmpty())
+            for((idx, cell) in row.withIndex()) if(cell.strAndTrim().isNotEmpty())
                 when(idx){
                     1 -> nome = cell.strAndTrim()
                     2 -> apresentador = cell.strAndTrim()

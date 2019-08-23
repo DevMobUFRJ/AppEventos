@@ -1,4 +1,5 @@
 import com.google.auth.oauth2.GoogleCredentials
+import com.google.cloud.firestore.FirestoreOptions
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.cloud.FirestoreClient
@@ -14,9 +15,8 @@ class Firestore {
         lateinit var db: com.google.cloud.firestore.Firestore
 
         fun start() = with(GoogleCredentials.fromStream(serviceAccount)) {
-            FirebaseOptions.Builder().setCredentials(this).build().also {
-                FirebaseApp.initializeApp(it)
-                db = FirestoreClient.getFirestore()
+            FirestoreOptions.newBuilder().setTimestampsInSnapshotsEnabled(true).setCredentials(this).build().also {
+                db = it.service
             }
         }
     }

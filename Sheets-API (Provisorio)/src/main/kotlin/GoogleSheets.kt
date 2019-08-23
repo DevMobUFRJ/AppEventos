@@ -13,6 +13,8 @@ class GoogleSheets(private val sheet_id: String) {
     companion object {
         const val ACTIVITIES = "A11:N"
         const val EVENT = "A3:I3"
+        const val LAST_UPDATE = "I1"
+        const val LIST_EVENTS = "A2:B"
 
         const val EVENT_ID = 3
         const val ACTIVITY_ID = 11
@@ -29,6 +31,8 @@ class GoogleSheets(private val sheet_id: String) {
 
     fun getEvent() = getRange(EVENT)
     fun getActivities() = getRange(ACTIVITIES)
+    fun getLastUpdate() = getRange(LAST_UPDATE)
+    fun getListOfEvents() = getRange(LIST_EVENTS)
 
     fun setCell(values: List<String>, type: Int) = Sheets.Builder(http_transport, json, credential)
         .setApplicationName(name).build()

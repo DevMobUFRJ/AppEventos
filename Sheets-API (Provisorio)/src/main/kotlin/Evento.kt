@@ -20,19 +20,17 @@ data class Evento (
             val df = SimpleDateFormat("dd/MM/yyyy").apply {
                 timeZone = TimeZone.getTimeZone("GMT")
             }
-
-            tipo = row[1].strAndTrim()
-
-            inicio = Timestamp.of(df.parse(row[2].strAndTrim() + " GMT-03:00"))
-            fim = Timestamp.of(df.parse(row[3].strAndTrim() + " GMT-03:00"))
-
-            nome = row[4].strAndTrim()
-            descricao = row[5].strAndTrim()
-
-            linkInscricao = row[6].strAndTrim()
-            linkEvento = row[7].strAndTrim()
-
-            link = row[8].strAndTrim()
+            for((idx, cell) in row.withIndex()) if(cell.strAndTrim().isNotEmpty())
+                when(idx){
+                    1 -> tipo = cell.strAndTrim()
+                    2 -> inicio = Timestamp.of(df.parse(cell.strAndTrim() + " GMT-03:00"))
+                    3 -> fim = Timestamp.of(df.parse(cell.strAndTrim() + " GMT-03:00"))
+                    4 -> nome = cell.strAndTrim()
+                    5 -> descricao = cell.strAndTrim()
+                    6 -> linkInscricao = cell.strAndTrim()
+                    7 -> linkEvento = cell.strAndTrim()
+                    8 -> link = cell.strAndTrim()
+                }
         }
     }
 }

@@ -7,8 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -16,6 +18,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import devmob.semanasacademicas.R
@@ -24,7 +27,6 @@ import devmob.semanasacademicas.viewModels.SelectedWeek
 import devmob.semanasacademicas.viewModels.User
 import devmob.semanasacademicas.viewModels.WeeksList
 import kotlinx.android.synthetic.main.activity_principal.*
-import kotlinx.android.synthetic.main.app_bar_tela_principal.*
 import kotlinx.android.synthetic.main.nav_header_tela_principal.view.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
@@ -95,6 +97,7 @@ class TelaPrincipal : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     fun addDestinationListener(){
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            appBar.setExpanded(true, true)
             when (destination.id) {
                 nav_eventos -> {
                     searchButton.isVisible = true

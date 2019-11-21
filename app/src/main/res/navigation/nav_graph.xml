@@ -2,22 +2,23 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
-            app:startDestination="@id/tabsFragment">
-    <!--<fragment-->
-            <!--android:name="devmob.semanasacademicas.fragments.EventsList"-->
-            <!--android:label="Eventos" tools:layout="@layout/content_tela_principal"-->
-            <!--android:id="@+id/nav_eventos">-->
-        <!--<action android:id="@+id/eventos_to_details"-->
-                <!--app:destination="@id/fragmentTelaDeEvento"/>-->
-        <!--<action android:id="@+id/evento_to_detailsAtividade"-->
-                <!--app:destination="@id/fragmentDetalhesAtividade"/>-->
-    <!--</fragment>-->
+            app:startDestination="@id/nav_eventos">
+    <fragment
+            android:name="devmob.semanasacademicas.fragments.TabsFragment"
+            android:label="Eventos" tools:layout="@layout/tab_lay"
+            android:id="@+id/nav_eventos">
+        <action android:id="@+id/eventos_to_details"
+                app:destination="@id/fragmentTelaDeEvento"/>
+        <action android:id="@+id/evento_to_detailsAtividade"
+                app:destination="@id/fragmentDetalhesAtividade"/>
+    </fragment>
     <fragment android:id="@+id/fragmentTelaDeEvento"
               android:name="devmob.semanasacademicas.fragments.EventDetails"
               android:label=" Detalhes do Evento" tools:layout="@layout/content_event_details">
         <action android:id="@+id/details_to_atividades"
                 app:destination="@id/fragmentAtividades"/>
     </fragment>
+
     <fragment android:id="@+id/nav_agenda"
               android:name="devmob.semanasacademicas.fragments.MyWeek"
               android:label="Minha Semana" tools:layout="@layout/fragment_minha_semana">
@@ -40,11 +41,4 @@
     </dialog>
     <fragment android:id="@+id/registerDialog" android:name="devmob.semanasacademicas.dialogs.RegisterDialog"
               android:label="activity_register" tools:layout="@layout/fragment_register"/>
-    <fragment android:id="@+id/tabsFragment" android:name="devmob.semanasacademicas.fragments.TabsFragment"
-              android:label="TabsFragment">
-        <action android:id="@+id/eventos_to_details"
-                app:destination="@id/fragmentTelaDeEvento"/>
-        <action android:id="@+id/evento_to_detailsAtividade"
-                app:destination="@id/fragmentDetalhesAtividade"/>
-    </fragment>
 </navigation>

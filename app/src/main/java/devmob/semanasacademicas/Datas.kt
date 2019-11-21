@@ -9,6 +9,7 @@ class CalendarRangeIterator(val start:Calendar, val endInclusive: Calendar): Ite
     override fun next(): Calendar{
         val next = Calendar.getInstance()
         next.time = atual.time
+
         atual.add(Calendar.DATE, 1)
         return next
     }

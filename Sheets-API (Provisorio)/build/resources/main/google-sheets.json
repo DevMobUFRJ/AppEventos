@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "quickstart-1558388530457",
+  "private_key_id": "8ddcd527daf7214369365110af621d46d893fad3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDVHGy1VXpd8j+p\neRrLwxwnzXz0n3aKfFOVRBCfNC3/TP/I/jqPHCRNe/agVQR0eJw7xaGt1uY4qPqV\nHyeL6OImhA52ZLs75fH9zLXNoIv4dFtqkYDBEHOyi9QTYCzo2PcaosmUVYWj6skY\nZcjzRmhJshVwHrVf/PtKdtxmqITsfEKAnprRDS5pgHdYS3jd5DoehZr/S3Ih/CLW\n23+c7f8bUoJqQ3lpXXCabD/g6dVE+KBpuQerqaWKBkrbGm0sGYYxh7pEKMZaCI9Y\nXeHh7hsrg0EKvlw61XnR6o/wV4AcLDwaNM7/sn4onMnnqjfeXQIHVt5m5u30ZUzo\nSMu3/RvtAgMBAAECggEAGDbbGT2FomAQoLp8c3OPYuxjys3Fo9Wdj6PEubotkckX\ndSiB0dnyPAWeT7hpQaykn9wEU2LMFNsKYeBA15JWA+dUV1p5tcQaW2qjq6IW1Vuv\nOWwf84/hfYOKzMrMP4bLiPC/M8YF4cqfH9EM5Kt21QzRh8RNeoMdsGfSAi4asF33\nAH31q8SWvE5HVdhi988P4sEQdL7gXN0gOWU/xDcAGuKaqjPsoe+nV0GcfXrAJx0o\neppkR1d08hEfumLpcmK5DC+QWiiZQQyLoolZ37oh1HOthnHnV/SumFIhfpx9U3p8\nQ6BuX2hDd7ayXPTR4z0ljpgdG0QFz2+/+uF7ElWrFwKBgQDtP8fpRzzPzwxgmLYX\nqgl105L4uEyffXsX7HYt23a7BOBCK85f4MJJ3/7X7xpPV314ImGlVXxXwiAMMyHE\nVqmQ5wywKTNKQVpCNcRle0VLNe91HecVsMC0XupAU2N6Sq7so/TxlykLv/eG/TU0\nBMLzyXasH7tmMiS5mtskiQF7swKBgQDl9EL/YXqcsdSVq3bkb57jyjOnWs2flQi7\nWH56mUSmVBAL/sSffpeQ/tek/273ZhZsyUMscLEiwVkPHDe3LTMyQ7RHSqBiNEsy\n4mGA5uQqPAkzPueub61x245NAlp0sLdMd5Vhr3juq78yh3mTWBi2mjpY6A6quSPN\nrDqEPnq53wKBgQDU5ZlFUvHVIV1gCWnODn3yx+tpWikYLggZzc23FOuUo6mCd8D3\n9L8kf+c2ao/XhxFGjsPFE9NDBSaxC+lPQN1k9JFEO5SVG9Qc+hbFYjsqZLn/BNhr\ndHNY6JuZIbtw8DfMjsytRxJEQv2imvH1Phibn7vodYk7CeA+1iG0xWUZVQKBgH/M\nxBt4ypMhhht0gwwsOOsyaoi9P4BMbODqKsjqO6wRFiYEfrSBv6y25ZRu3fYjR51I\nMcwWCWxedqeeMBzewxBRbnUctYw+sfhitnvUVsReP2K6uDpLGOMpeam1AB7QQ978\nqwnyYsyKqSVlA51vHbUGfB0DQ3uAj7Rz3sW2j7CTAoGAKHULT3aZCdLIBNzVroZP\nBqtLeoR3ZmqSpOPSN/oGhWVOnGtAfFkoPSk9aps7CDF5VUhLaDqf7RDdJfjPaLor\nRdobZQs0uB798uc8NHBDXrZK5RLBvYXcW5Bd5X0hZmPFJFUnXziSdM/Qrn5atiw+\nianDJ4so3hQQa+t1xNtFXHU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "alex-googlesheets-minervaevent@quickstart-1558388530457.iam.gserviceaccount.com",
+  "client_id": "105498001731894355994",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/alex-googlesheets-minervaevent%40quickstart-1558388530457.iam.gserviceaccount.com"
+}

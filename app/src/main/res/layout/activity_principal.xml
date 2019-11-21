@@ -9,34 +9,51 @@
         android:fitsSystemWindows="true"
         tools:openDrawer="start">
     <!--<FrameLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/contentHome"-->
-            <!--android:paddingTop="?attr/actionBarSize">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:id="@+id/contentHome"-->
+    <!--android:paddingTop="?attr/actionBarSize">-->
     <!--</FrameLayout>-->
 
-    <include
-            layout="@layout/app_bar_tela_principal"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:theme="@style/AppTheme.AppBarOverlay"/>
+            android:fitsSystemWindows="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                       android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBar"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+
+
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimary"
+                        app:layout_scrollFlags="scroll|enterAlways"
+                        app:title="Eventos"
+                        app:popupTheme="@style/AppTheme.PopupOverlay"
+                />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
         <fragment
                 android:id="@+id/nav_host_fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
 
-                android:layout_marginTop="?attr/actionBarSize"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
                 app:defaultNavHost="true"
-                app:navGraph="@navigation/nav_graph"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                app:navGraph="@navigation/nav_graph"/>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"

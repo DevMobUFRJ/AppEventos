@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "semanas-academicas",
+  "private_key_id": "d4461dbcf01a88c4079d45cf637c66e98fbfdacc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCvDErGPwCPweq3\nRHq20KDjdL2wey0Hf/rrVwkQTQS8o0FwjY6pNoMuVfMVMbV5RrwKHES8alErrmV9\n+QcYslE49QyYNRrYy7U73d7eB9X0+2x/tf1zDILdjNEgMreLksU76soKCTdEzwhV\nrcmLPwp/NuIoOEZoDRJ9khSPNd0zPPd5DBub3jxZx6DRMiz+cO8fjasFo1Du3eJe\nQ8DSNKQTmbTaNEdEAy8SihlEu//4g7w/E2UCJzUWobQBohUBmAY75PsFNJzAXfgy\nxd0l9zt6yWj2Xnv3bo0KjFwY+yElFpZjf2f1hN4z4e720VS/OVBKF2L7BYJ/pMVZ\n7CIVJjhNAgMBAAECggEABIO7BzIJ2eZhHxfRk+9zhs8qqUAqKuiodcv6nt0VCGxw\n2bL4AS0QWw3OHfyCSqozNBfboB906J+ScDfUq7c7xX8h+Gg0XqqOABy6jKrwJQND\nno6qBn7jaq80q2LDeKAiMLZpFxWiOYHaCHxGF7ht95F/84peKsu/0hpU7PMT1wD0\nODl3JSTi9SvynCIZ9P3LNe8cR7nXc5f7mHTp9nWn3cDG2VuAVdPWDBk5HYwODsFe\ncfbDAaM3zSlWxXVHZxAO22zUpELzib8louqMml0vqu5JqCwSmAO6PbUy8h4F9GiX\n+HaIft0HVf4si7CxTdrDPgUi82rrtWmJhYErwzo4HQKBgQDYzeuqqhqOE4UDAgaI\n4FNHO6TqUjTqVLPiVQtOOcRWC/4m9tvOvl1GbqL5SSeTrmAnolYhY9XiHYyl/6bg\nmT4bAh6NmrvsBjQj8LIvkdgGed1rfgTBABJygQkRRXp1yRGeQzIRWYwr36cWAm0N\n4I8uYTqJg9eUtN0cy1cV/Cb4pwKBgQDOsdC3zfr7kVn2ZnmJD/mIDicHLV83Zc9j\nOLCPiZJtRew/rh5wVBVgwb7uxSsvJwGBxPMJU/PUuii4NUKHIkLQ6kuDs4lAw3M3\nhhmrXdCtQXMwR2aC+LuE0YdjNa/7w+IxXnO10RDRd829MDp2pdiItohf+1E/B0GX\ntyZZSvgx6wKBgQCmvUBJYkfICyUaGh2yeWwy9aExAYZmzjwGjseCIxVn5BNUHjkQ\n+QE9oOtAc823W73h3Y0GYwTkwTshk8vhIppMJUYgO+fZby/8kCpKQY119ZWgDSxU\nztxhKfIyUVAMdFZTdHR2OXt/ZqPXXohGyvTzg52Ek1xipvMDKTPR2bqTMwKBgQCT\nRDH3o7TdJLS6UEzrkQwzGhJIlNUwfUOD6FI0EsrXPGiU/pQFaINKywAk0ypvkBUM\nxqx6yuwBdxmoFZpu+cQtYaGoFnUGRbuDpfIIHPGfX/CYR2cMjffdLASQdSIL+Ybh\nsfAzbN/Uvs1BrGkbPBLJZXRJHqDGjX74f6+9EyM/PQKBgEOjJwVnbpt4xbzswSgZ\nHmZQ13sOxyr17cO88gWrN4y3fBnAK35zNrkIy8TZOHg6eCBUt5wZexWPtH3eCkKD\nT7rZ3cBiK952pnjasfWmVYQej50iMspAPyMpVo31zsvcxCLpK+fdXB712BCWaXj2\n2zp77mVptFBrHM9RvHuff2Hp\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-tz8ia@semanas-academicas.iam.gserviceaccount.com",
+  "client_id": "105637916924087208055",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-tz8ia%40semanas-academicas.iam.gserviceaccount.com"
+}
